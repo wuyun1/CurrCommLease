@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-1 17:09:34 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.CCL.beans.Order" table="T_ORDER">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="customer" class="com.CCL.beans.Customer" fetch="join">
+            <column name="CUSTOMER_ID" />
+        </many-to-one>
+        <many-to-one name="opeUser" class="com.CCL.beans.OpeUser" fetch="join">
+            <column name="OPEUSER_ID" />
+        </many-to-one>
+        <many-to-one name="bicycle" class="com.CCL.beans.Bicycle" fetch="join">
+            <column name="BICYCLE_ID" />
+        </many-to-one>
+        <many-to-one name="orderState" class="com.CCL.beans.OrderState" fetch="join">
+            <column name="ORDER_STATE" />
+        </many-to-one>
+        <property name="time" type="java.sql.Date">
+            <column name="TIME" />
+        </property>
+        <property name="deposit" type="java.lang.Float">
+            <column name="DEPOSIT" />
+        </property>
+    </class>
+</hibernate-mapping>
