@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-1 17:48:09 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.CCL.beans.Opeper" table="OPE_PER">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="oid" type="java.lang.Integer">
+            <column name="OID" />
+        </property>
+        <property name="toChange" type="int">
+            <column name="TO_CHANGE" />
+        </property>
+        <property name="billPrint" type="int">
+            <column name="BILL_PRINT" />
+        </property>
+        <property name="pointsFor" type="int">
+            <column name="POINT_SFOR" />
+        </property>
+        <property name="upgrade" type="int">
+            <column name="UPGRADE" />
+        </property>
+        <property name="reCard" type="int">
+            <column name="RE_CARD" />
+        </property>
+        <property name="cardTopup" type="int">
+            <column name="CARD_TOPUP" />
+        </property>
+        <property name="moneyQuery" type="int">
+            <column name="MONEY_QUERY" />
+        </property>
+        <property name="reInfo" type="int">
+            <column name="RE_INFO" />
+        </property>
+        <property name="reCordQuery" type="int">
+            <column name="RE_CORD_QUERY" />
+        </property>
+        <property name="chargingSet" type="int">
+            <column name="CHARGING_SET" />
+        </property>
+        <property name="discountSet" type="int">
+            <column name="DISCOUNT_SET" />
+        </property>
+        <property name="carManager" type="int">
+            <column name="CAR_MANAGER" />
+        </property>
+        <property name="dataBackup" type="int">
+            <column name="DATA_BACKUP" />
+        </property>
+        <property name="messageTel" type="int">
+            <column name="MESSAGE_TEL" />
+        </property>
+    </class>
+</hibernate-mapping>
