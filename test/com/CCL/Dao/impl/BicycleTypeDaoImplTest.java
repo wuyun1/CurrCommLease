@@ -40,6 +40,7 @@ public class BicycleTypeDaoImplTest {
 		bicycle.setName("abce");
 
 		dao.add(bicycle);
+		
 //		
 //		bicycle = new BicycleType();
 //		bicycle.setName("abssce");

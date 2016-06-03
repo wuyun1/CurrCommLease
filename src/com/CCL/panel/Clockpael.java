@@ -1,9 +1,18 @@
 package com.CCL.panel;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.text.DateFormat;
-import java.util.*;
-import javax.swing.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.swing.ImageIcon;
 
 //Êý×ÖÊ±ÖÓ
 public class Clockpael extends MPanel implements Runnable {

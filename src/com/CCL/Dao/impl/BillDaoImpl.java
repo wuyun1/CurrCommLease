@@ -8,9 +8,7 @@ import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.BillDao;
 import com.CCL.Dao.base.BaseDao;
-import com.CCL.beans.Bicycle;
 import com.CCL.beans.Bill;
-import com.CCL.beans.Customer;
 
 public class BillDaoImpl extends BaseDao implements BillDao {
 	

@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import com.CCL.view.kaitaimgr.KaiTaiPanel;
 
 public class TesetF extends JFrame {

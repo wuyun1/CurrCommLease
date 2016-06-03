@@ -5,7 +5,6 @@ import java.util.List;
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.BicycleState;
 import com.CCL.beans.BicycleType;
-import com.CCL.beans.Bill;
 
 //用来封装基本的操作数据库方法，继承了BaseDao
 public interface BicycleDao {

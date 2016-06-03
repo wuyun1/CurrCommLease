@@ -1,9 +1,11 @@
 package com.CCL.panel;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.io.Serializable;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 public class BGPanel extends JPanel implements Serializable {
 

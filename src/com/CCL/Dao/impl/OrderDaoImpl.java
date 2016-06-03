@@ -8,8 +8,6 @@ import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.OrderDao;
 import com.CCL.Dao.base.BaseDao;
-import com.CCL.beans.Bicycle;
-import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 

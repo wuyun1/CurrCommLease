@@ -2,18 +2,12 @@ package com.CCL.Dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import com.CCL.Dao.CustomerDao;
 import com.CCL.Dao.base.BaseDao;
-import com.CCL.beans.Bicycle;
-import com.CCL.beans.BicycleState;
-import com.CCL.beans.BicycleType;
 import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
 import com.CCL.beans.CustomerType;

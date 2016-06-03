@@ -1,7 +1,5 @@
 package com.CCL.Dao.base;
 
-import java.sql.Connection;
-
 import org.hibernate.Session;
 
 //用来封装基本的操作数据库方法

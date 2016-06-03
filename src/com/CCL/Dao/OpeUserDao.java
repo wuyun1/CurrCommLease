@@ -2,8 +2,6 @@ package com.CCL.Dao;
 
 import java.util.List;
 
-import com.CCL.beans.Bicycle;
-import com.CCL.beans.Customer;
 import com.CCL.beans.OpeUser;
 
 //用来封装基本的操作数据库方法，继承了BaseDao

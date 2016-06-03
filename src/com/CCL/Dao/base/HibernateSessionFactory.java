@@ -3,11 +3,7 @@ package com.CCL.Dao.base;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.boot.model.naming.ImplicitNamingStrategy;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.DefaultComponentSafeNamingStrategy;
-import org.hibernate.cfg.DefaultNamingStrategy;
-import org.hibernate.cfg.ImprovedNamingStrategy;
 /**
  * Configures and provides access to Hibernate sessions, tied to the
  * current thread of execution.  Follows the Thread Local Session

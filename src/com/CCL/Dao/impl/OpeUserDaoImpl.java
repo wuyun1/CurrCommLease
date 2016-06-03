@@ -8,8 +8,6 @@ import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.OpeUserDao;
 import com.CCL.Dao.base.BaseDao;
-import com.CCL.beans.Bicycle;
-import com.CCL.beans.Customer;
 import com.CCL.beans.OpeUser;
 
 public class OpeUserDaoImpl extends BaseDao implements OpeUserDao {

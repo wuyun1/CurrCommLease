@@ -1,7 +1,7 @@
 package com.CCL.view.kaitaimgr;
 
-import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class KaiTaiPanel extends JPanel {
 

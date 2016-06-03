@@ -1,12 +1,20 @@
 package com.CCL.panel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.MultipleGradientPaint.CycleMethod;
-import java.awt.event.*;
+import java.awt.RadialGradientPaint;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
-import javax.swing.*;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 
 public class GlassButton extends JToggleButton implements Serializable {
 

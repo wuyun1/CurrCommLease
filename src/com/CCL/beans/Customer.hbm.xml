@@ -20,7 +20,7 @@
         <property name="sex" type="java.lang.String">
             <column name="SEX" />
         </property>
-        <property name="birthday" type="java.lang.String">
+        <property name="birthday" type="java.util.Date">
             <column name="BIRTHDAY" />
         </property>
         <property name="phone" type="java.lang.String">

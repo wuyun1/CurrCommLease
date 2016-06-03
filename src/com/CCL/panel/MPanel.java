@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;

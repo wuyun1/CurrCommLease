@@ -1,12 +1,22 @@
 package com.CCL.panel;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.Serializable;
-import javax.swing.*;
 
-import com.CCL.mwing.MJLable;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.Serializable;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 /**
  * ÒÆ¶¯Ãæ°å
