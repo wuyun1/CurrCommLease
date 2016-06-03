@@ -11,7 +11,7 @@ public interface OpeUserDao {
 
 	List<OpeUser> queryAll();
 	//通过对象查询
-		List<OpeUser> queryByExample(OpeUser instance);
+	List<OpeUser> queryByExample(OpeUser instance);
 
 	void remove(int id);
 

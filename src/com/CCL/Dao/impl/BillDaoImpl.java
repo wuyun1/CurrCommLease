@@ -1,6 +1,8 @@
 package com.CCL.Dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -9,6 +11,7 @@ import org.hibernate.criterion.Example;
 import com.CCL.Dao.BillDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.Bill;
+import com.CCL.beans.Customer;
 
 public class BillDaoImpl extends BaseDao implements BillDao {
 	
@@ -58,6 +61,33 @@ public class BillDaoImpl extends BaseDao implements BillDao {
 		Session session = getSession();
 		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
 		return results;
+	}
+	
+	@Override
+	public List<Bill> queryByUseLikeAndPage(String property, String value, int pageSize, int pageNumber) {
+		String hql = "from " + mClassName + " where "+property+" like '%"+value+"%'";
+		Query query = getSession().createQuery(hql);
+		query.setFirstResult(pageSize*(pageNumber-1));
+		query.setMaxResults(pageSize);
+		return query.list();
+	}
+
+	@Override
+	public List<Bill> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
+		
+		String hql = "from " + mClassName + " where 1=1 and ";
+		List<String> keyOrder = new ArrayList<String>();
+		for (String property : entrys.keySet()) {
+			hql+=property + " like ? ";
+			keyOrder.add(property);
+		}
+		Query query = getSession().createQuery(hql);
+		for(int i=0,n=keyOrder.size();i<n;i++){
+			query.setString(i, "%" + entrys.get(keyOrder.get(i)) + "%");
+		}
+		query.setFirstResult(pageSize*(pageNumber-1));
+		query.setMaxResults(pageSize);
+		return query.list();
 	}
 
 }
