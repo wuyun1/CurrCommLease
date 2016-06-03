@@ -8,10 +8,10 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="customerState" class="com.CCL.beans.CustomerState" fetch="select">
+        <many-to-one name="customerState" class="com.CCL.beans.CustomerState" fetch="join">
             <column name="CUSTOMER_STATE_ID" />
         </many-to-one>
-        <many-to-one name="customerType" class="com.CCL.beans.CustomerType" fetch="select">
+        <many-to-one name="customerType" class="com.CCL.beans.CustomerType" fetch="join">
             <column name="CUSTOMER_TYPE_ID" />
         </many-to-one>
         <property name="name" type="java.lang.String">

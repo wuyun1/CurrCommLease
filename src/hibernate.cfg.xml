@@ -11,9 +11,11 @@
   <property name="hibernate.format_sql">true</property>
   <property name="hibernate.hbm2ddl.auto">create</property>
   <property name="hibernate.show_sql">true</property>
-  <mapping resource="com/CCL/beans/BicycleState.hbm.xml"/>
-  <mapping resource="com/CCL/beans/Bicycle.hbm.xml"/>
+  
   <mapping resource="com/CCL/beans/BicycleType.hbm.xml"/>
+
+
+ 
   <mapping resource="com/CCL/beans/Bill.hbm.xml"/>
   <mapping resource="com/CCL/beans/Customer.hbm.xml"/>
   <mapping resource="com/CCL/beans/CustomerState.hbm.xml"/>
@@ -22,5 +24,11 @@
   <mapping resource="com/CCL/beans/OrderState.hbm.xml"/>
   <mapping resource="com/CCL/beans/OpeUser.hbm.xml"/>
   <mapping resource="com/CCL/beans/Order.hbm.xml"/>
+
+    <mapping resource="com/CCL/beans/Bicycle.hbm.xml"/>
+   <mapping resource="com/CCL/beans/BicycleState.hbm.xml"/>
+    <mapping resource="com/CCL/beans/Customer.hbm.xml"/>
+  <mapping resource="com/CCL/beans/CustomerState.hbm.xml"/>
+  <mapping resource="com/CCL/beans/CustomerType.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

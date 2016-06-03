@@ -11,6 +11,7 @@ public class BicycleState {
 	private String name;
 	//×´Ì¬ÃèÊö
 	private String descript;
+	
 	public Integer getId() {
 		return id;
 	}

@@ -32,6 +32,25 @@ public class Bicycle {
 	
 	
 	
+	public BicycleState getState() {
+		return state;
+	}
+
+	public void setState(BicycleState state) {
+		this.state = state;
+	}
+
+	public BicycleType getType() {
+		return type;
+	}
+
+	public void setType(BicycleType type) {
+		this.type = type;
+	}
+
+	public Bicycle() {
+	}
+
 	public Integer getIsDaZhe() {
 		return isDaZhe;
 	}
