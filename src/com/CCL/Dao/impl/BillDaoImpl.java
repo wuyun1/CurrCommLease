@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.BillDao;
 import com.CCL.Dao.base.BaseDao;
+import com.CCL.beans.Bicycle;
 import com.CCL.beans.Bill;
+import com.CCL.beans.Customer;
 
 public class BillDaoImpl extends BaseDao implements BillDao {
 	
@@ -50,6 +53,13 @@ public class BillDaoImpl extends BaseDao implements BillDao {
 		Session session = getSession();
 		session.update(billDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public List<Bill> queryByExample(Bill instance) {
+		Session session = getSession();
+		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
+		return results;
 	}
 
 }

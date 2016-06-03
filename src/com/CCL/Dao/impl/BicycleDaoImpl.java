@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.BicycleDao;
 import com.CCL.Dao.base.BaseDao;
@@ -50,6 +51,13 @@ public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 		Session session = getSession();
 		session.update(bicycleDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public List<Bicycle> queryByExample(Bicycle instance) {
+		Session session = getSession();
+		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
+		return results;
 	}
 
 }

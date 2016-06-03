@@ -6,7 +6,7 @@
     <class name="com.CCL.beans.Bill" table="BILL">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="outTime" type="java.util.Date">
             <column name="OUTTIME" />

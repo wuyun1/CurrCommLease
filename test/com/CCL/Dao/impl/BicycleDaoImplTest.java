@@ -37,23 +37,51 @@ public class BicycleDaoImplTest {
 	public void testAdd() {
 		Bicycle bicycle = new Bicycle();
 		bicycle.setName("abce");
-		bicycle.setId(332);
 
 		dao.add(bicycle);
+		
+		bicycle = new Bicycle();
+		bicycle.setName("abssce");
+		dao.add(bicycle);
+		
+		bicycle = new Bicycle();
+		bicycle.setName("eee");
+		dao.add(bicycle);
+		
+		bicycle = new Bicycle();
+		bicycle.setName("bbabadfdssce");
+		dao.add(bicycle);
+		
+
 
 	}
 
 	@Test
 	public void testUpdate() {
 		Bicycle bicycle = dao.get(32);
+		if(bicycle == null) return;
 		bicycle.setName("323443");
-
 		dao.update(bicycle);
+		
+		
+		
 
 	}
 
 	public static void main(String[] args) {
 		BicycleDaoImplTest bicycleDaoTest = new BicycleDaoImplTest();
 		bicycleDaoTest.testAdd();
+		
+		bicycleDaoTest.testqueryByExample();
+		
+	}
+	
+	@Test
+	public void testqueryByExample() {
+		Bicycle instance = new Bicycle();
+		instance.setName("eee");
+		List<Bicycle> queryAll = dao.queryByExample(instance );
+		System.out.println("list:");
+		System.out.println(StringUtils.join(queryAll, "\n"));
 	}
 }

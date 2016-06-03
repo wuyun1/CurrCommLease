@@ -9,6 +9,9 @@ public class KaiTaiPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public KaiTaiPanel() {
+		
+		JButton btnNewButton = new JButton("New button");
+		add(btnNewButton);
 
 	}
 

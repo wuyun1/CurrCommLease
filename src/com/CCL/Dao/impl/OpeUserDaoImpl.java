@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 
 import com.CCL.Dao.OpeUserDao;
 import com.CCL.Dao.base.BaseDao;
+import com.CCL.beans.Bicycle;
+import com.CCL.beans.Customer;
 import com.CCL.beans.OpeUser;
 
 public class OpeUserDaoImpl extends BaseDao implements OpeUserDao {
@@ -50,6 +53,13 @@ public class OpeUserDaoImpl extends BaseDao implements OpeUserDao {
 		Session session = getSession();
 		session.update(opeUserDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public List<OpeUser> queryByExample(OpeUser instance) {
+		Session session = getSession();
+		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
+		return results;
 	}
 
 }

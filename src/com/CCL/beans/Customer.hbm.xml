@@ -6,7 +6,7 @@
     <class name="com.CCL.beans.Customer" table="CUSTOMER">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="customerState" class="com.CCL.beans.CustomerState" fetch="join">
             <column name="CUSTOMER_STATE_ID" />
@@ -32,10 +32,10 @@
         <property name="address" type="java.lang.String">
             <column name="ADDRESS" />
         </property>
-        <property name="integral" type="java.lang.String">
+        <property name="integral" type="java.lang.Integer">
             <column name="INTEGRAL" />
         </property>
-        <property name="money" type="java.lang.String">
+        <property name="money" type="java.lang.Float">
             <column name="MONEY" />
         </property>
     </class>

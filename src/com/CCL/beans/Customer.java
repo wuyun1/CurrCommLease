@@ -22,9 +22,9 @@ public class Customer {
 	//	×¡Ö·
 	private String address;
 	// »ý·Ö
-	private String integral;
+	private Integer integral;
 	// Óà¶î
-	private String money;
+	private Float money;
 	public Integer getId() {
 		return id;
 	}
@@ -79,16 +79,16 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getIntegral() {
+	public Integer getIntegral() {
 		return integral;
 	}
-	public void setIntegral(String integral) {
+	public void setIntegral(Integer integral) {
 		this.integral = integral;
 	}
-	public String getMoney() {
+	public Float getMoney() {
 		return money;
 	}
-	public void setMoney(String money) {
+	public void setMoney(Float money) {
 		this.money = money;
 	}
 	

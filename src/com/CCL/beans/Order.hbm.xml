@@ -6,7 +6,7 @@
     <class name="com.CCL.beans.Order" table="T_ORDER">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="customer" class="com.CCL.beans.Customer" fetch="join">
             <column name="CUSTOMER_ID" />

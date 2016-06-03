@@ -2,15 +2,20 @@ package com.CCL.Dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.CCL.Dao.CustomerDao;
 import com.CCL.Dao.base.BaseDao;
+import com.CCL.beans.Bicycle;
 import com.CCL.beans.Customer;
 
 public class CustomerDaoImpl extends BaseDao implements CustomerDao {
-	
+
 	private final static String mClassName = Customer.class.getName();
 
 	@Override
@@ -42,7 +47,7 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 		Session session = getSession();
 		session.save(customerDao);
 		session.beginTransaction().commit();
-		
+
 	}
 
 	@Override
@@ -50,6 +55,14 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 		Session session = getSession();
 		session.update(customerDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public List<Customer> queryByExample(Customer instance) {
+		Session session = getSession();
+		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
+		return results;
+
 	}
 
 }
