@@ -11,6 +11,7 @@ import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
+import com.CCL.beans.OrderState;
 
 public class OrderDaoImpl extends BaseDao implements OrderDao {
 
@@ -60,6 +61,14 @@ public class OrderDaoImpl extends BaseDao implements OrderDao {
 		Session session = getSession();
 		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
 		return results;
+	}
+
+	@Override
+	public List<Order> queryByState(OrderState bicycleState) {
+		String hql = "from " + mClassName + " where ORDER_STATE_ID=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, bicycleState.getId());
+		return query.list();
 	}
 
 }

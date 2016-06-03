@@ -18,7 +18,7 @@
             <column name="BICYCLE_ID" />
         </many-to-one>
         <many-to-one name="orderState" class="com.CCL.beans.OrderState" fetch="join">
-            <column name="ORDER_STATE" />
+            <column name="ORDER_STATE_ID" />
         </many-to-one>
         <property name="time" type="java.sql.Date">
             <column name="TIME" />

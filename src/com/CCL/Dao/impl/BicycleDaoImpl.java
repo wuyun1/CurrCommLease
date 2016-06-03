@@ -9,6 +9,8 @@ import org.hibernate.criterion.Example;
 import com.CCL.Dao.BicycleDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.Bicycle;
+import com.CCL.beans.BicycleState;
+import com.CCL.beans.BicycleType;
 
 public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 	
@@ -24,7 +26,6 @@ public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 
 	@Override
 	public List<Bicycle> queryAll() {
-		// TODO Auto-generated method stub
 		Session session = getSession();
 		return session.createQuery("from " + mClassName).list();
 	}
@@ -58,6 +59,22 @@ public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 		Session session = getSession();
 		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
 		return results;
+	}
+
+	@Override
+	public List<Bicycle> queryByType(BicycleType bicycleType) {
+		String hql = "from " + mClassName + " where TYPE_ID=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, bicycleType.getId());
+		return query.list();
+	}
+
+	@Override
+	public List<Bicycle> queryByState(BicycleState bicycleState) {
+		String hql = "from " + mClassName + " where STATE_ID=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, bicycleState.getId());
+		return query.list();
 	}
 
 }

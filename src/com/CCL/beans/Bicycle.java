@@ -11,9 +11,9 @@ public class Bicycle {
 	// 直行车ID号
 	private Integer id;
 	// 直行车状态
-	private BicycleState bicycleState;
+	private BicycleState state;
 	// 直行车类别
-	private BicycleType bicycleType;
+	private BicycleType type;
 	// 名称
 	private String name;
 	// 描述
@@ -57,19 +57,19 @@ public class Bicycle {
 	}
 
 	public BicycleState getBicycleState() {
-		return bicycleState;
+		return state;
 	}
 
 	public void setBicycleState(BicycleState bicycleState) {
-		this.bicycleState = bicycleState;
+		this.state = bicycleState;
 	}
 
 	public BicycleType getBicycleType() {
-		return bicycleType;
+		return type;
 	}
 
 	public void setBicycleType(BicycleType bicycleType) {
-		this.bicycleType = bicycleType;
+		this.type = bicycleType;
 	}
 
 	public String getName() {
@@ -114,9 +114,40 @@ public class Bicycle {
 
 	@Override
 	public String toString() {
-		return "Bicycle [id=" + id + ", bicycleState=" + bicycleState + ", bicycleType=" + bicycleType + ", name="
-				+ name + ", descript=" + descript + ", price=" + price + ", inventory=" + inventory + ", factory="
-				+ factory + "]";
+		return "Bicycle [id=" + id + ", bicycleState=" + state
+				+ ", bicycleType=" + type + ", name=" + name
+				+ ", descript=" + descript + ", price=" + price
+				+ ", inventory=" + inventory + ", factory=" + factory
+				+ ", isDaZhe=" + isDaZhe + ", isJiFen=" + isJiFen + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bicycle other = (Bicycle) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	
+	
+	
 
 }

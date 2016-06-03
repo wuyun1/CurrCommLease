@@ -12,7 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import com.CCL.Dao.CustomerDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.Bicycle;
+import com.CCL.beans.BicycleState;
+import com.CCL.beans.BicycleType;
 import com.CCL.beans.Customer;
+import com.CCL.beans.CustomerState;
+import com.CCL.beans.CustomerType;
 
 public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 
@@ -63,6 +67,22 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
 		return results;
 
+	}
+
+	@Override
+	public List<Customer> queryByType(CustomerType customerType) {
+		String hql = "from " + mClassName + " where CUSTOMER_TYPE_ID=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, customerType.getId());
+		return query.list();
+	}
+
+	@Override
+	public List<Customer> queryByState(CustomerState customerState) {
+		String hql = "from " + mClassName + " where CUSTOMER_STATE_ID=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, customerState.getId());
+		return query.list();
 	}
 
 }

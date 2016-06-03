@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.CCL.Dao.BicycleDao;
 import com.CCL.beans.Bicycle;
+import com.CCL.beans.BicycleType;
 
 public class BicycleDaoImplTest {
 
@@ -79,7 +80,13 @@ public class BicycleDaoImplTest {
 	@Test
 	public void testqueryByExample() {
 		Bicycle instance = new Bicycle();
-		instance.setName("eee");
+		
+		BicycleType bicycleType = new BicycleType();
+		
+		bicycleType.setId(3);
+		bicycleType.setName("ABC");
+		instance.setBicycleType(bicycleType);
+		instance.setName("abce");
 		List<Bicycle> queryAll = dao.queryByExample(instance );
 		System.out.println("list:");
 		System.out.println(StringUtils.join(queryAll, "\n"));

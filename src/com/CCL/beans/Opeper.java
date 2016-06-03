@@ -134,6 +134,86 @@ public class Opeper {
 	public void setMessageTel(int messageTel) {
 		this.messageTel = messageTel;
 	}
+	@Override
+	public String toString() {
+		return "Opeper [id=" + id + ", oid=" + oid + ", toChange=" + toChange
+				+ ", billPrint=" + billPrint + ", pointsFor=" + pointsFor
+				+ ", upgrade=" + upgrade + ", reCard=" + reCard
+				+ ", cardTopup=" + cardTopup + ", moneyQuery=" + moneyQuery
+				+ ", reInfo=" + reInfo + ", reCordQuery=" + reCordQuery
+				+ ", chargingSet=" + chargingSet + ", discountSet="
+				+ discountSet + ", carManager=" + carManager + ", dataBackup="
+				+ dataBackup + ", messageTel=" + messageTel + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + billPrint;
+		result = prime * result + carManager;
+		result = prime * result + cardTopup;
+		result = prime * result + chargingSet;
+		result = prime * result + dataBackup;
+		result = prime * result + discountSet;
+		result = prime * result + messageTel;
+		result = prime * result + moneyQuery;
+		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
+		result = prime * result + pointsFor;
+		result = prime * result + reCard;
+		result = prime * result + reCordQuery;
+		result = prime * result + reInfo;
+		result = prime * result + toChange;
+		result = prime * result + upgrade;
+		return result;
+	}
+	
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Opeper other = (Opeper) obj;
+		if (billPrint != other.billPrint)
+			return false;
+		if (carManager != other.carManager)
+			return false;
+		if (cardTopup != other.cardTopup)
+			return false;
+		if (chargingSet != other.chargingSet)
+			return false;
+		if (dataBackup != other.dataBackup)
+			return false;
+		if (discountSet != other.discountSet)
+			return false;
+		if (messageTel != other.messageTel)
+			return false;
+		if (moneyQuery != other.moneyQuery)
+			return false;
+		if (oid == null) {
+			if (other.oid != null)
+				return false;
+		} else if (!oid.equals(other.oid))
+			return false;
+		if (pointsFor != other.pointsFor)
+			return false;
+		if (reCard != other.reCard)
+			return false;
+		if (reCordQuery != other.reCordQuery)
+			return false;
+		if (reInfo != other.reInfo)
+			return false;
+		if (toChange != other.toChange)
+			return false;
+		if (upgrade != other.upgrade)
+			return false;
+		return true;
+	}
+	
 	
 	
 }

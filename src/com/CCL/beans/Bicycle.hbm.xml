@@ -8,11 +8,11 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="bicycleState" class="com.CCL.beans.BicycleState" fetch="join">
-            <column name="BICYCLE_STATE_ID" />
+        <many-to-one name="state" class="com.CCL.beans.BicycleState" fetch="join">
+            <column name="STATE_ID" />
         </many-to-one>
-        <many-to-one name="bicycleType" class="com.CCL.beans.BicycleType" fetch="join">
-            <column name="BICYCLE_TYPE_ID" />
+        <many-to-one name="type" class="com.CCL.beans.BicycleType" fetch="join">
+            <column name="TYPE_ID" />
         </many-to-one>
         <property name="name" type="java.lang.String">
             <column name="NAME" />
