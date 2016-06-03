@@ -20,7 +20,7 @@
         <many-to-one name="orderState" class="com.CCL.beans.OrderState" fetch="join">
             <column name="ORDER_STATE_ID" />
         </many-to-one>
-        <property name="time" type="java.sql.Date">
+        <property name="time" type="java.util.Date">
             <column name="TIME" />
         </property>
         <property name="deposit" type="java.lang.Float">

@@ -84,10 +84,10 @@ public class OrderDaoImpl extends BaseDao implements OrderDao {
 	@Override
 	public List<Order> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
 		
-		String hql = "from " + mClassName + " where 1=1 and ";
+		String hql = "from " + mClassName + " where 1=1";
 		List<String> keyOrder = new ArrayList<String>();
 		for (String property : entrys.keySet()) {
-			hql+=property + " like ? ";
+			hql+=" and "+property + " like ?";
 			keyOrder.add(property);
 		}
 		Query query = getSession().createQuery(hql);
@@ -98,5 +98,4 @@ public class OrderDaoImpl extends BaseDao implements OrderDao {
 		query.setMaxResults(pageSize);
 		return query.list();
 	}
-
 }

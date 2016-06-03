@@ -93,10 +93,10 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 	@Override
 	public List<Customer> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
 		
-		String hql = "from " + mClassName + " where 1=1 and ";
+		String hql = "from " + mClassName + " where 1=1";
 		List<String> keyOrder = new ArrayList<String>();
 		for (String property : entrys.keySet()) {
-			hql+=property + " like ? ";
+			hql+=" and "+property + " like ?";
 			keyOrder.add(property);
 		}
 		Query query = getSession().createQuery(hql);
