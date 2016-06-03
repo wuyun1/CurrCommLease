@@ -9,7 +9,7 @@
   <property name="hibernate.connection.username">YM</property>
   <property name="hibernate.connection.password">admin</property>
   <property name="hibernate.format_sql">true</property>
-  <property name="hibernate.hbm2ddl.auto">create</property>
+  <property name="hibernate.hbm2ddl.auto">update</property>
   <property name="hibernate.show_sql">true</property>
   
   <mapping resource="com/CCL/beans/BicycleType.hbm.xml"/>

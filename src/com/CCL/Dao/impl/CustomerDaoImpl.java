@@ -1,6 +1,8 @@
 package com.CCL.Dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -78,5 +80,34 @@ public class CustomerDaoImpl extends BaseDao implements CustomerDao {
 		query.setInteger(0, customerState.getId());
 		return query.list();
 	}
+
+	@Override
+	public List<Customer> queryByUseLikeAndPage(String property, String value, int pageSize, int pageNumber) {
+		String hql = "from " + mClassName + " where "+property+" like '%"+value+"%'";
+		Query query = getSession().createQuery(hql);
+		query.setFirstResult(pageSize*(pageNumber-1));
+		query.setMaxResults(pageSize);
+		return query.list();
+	}
+
+	@Override
+	public List<Customer> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
+		
+		String hql = "from " + mClassName + " where 1=1 and ";
+		List<String> keyOrder = new ArrayList<String>();
+		for (String property : entrys.keySet()) {
+			hql+=property + " like ? ";
+			keyOrder.add(property);
+		}
+		Query query = getSession().createQuery(hql);
+		for(int i=0,n=keyOrder.size();i<n;i++){
+			query.setString(i, "%" + entrys.get(keyOrder.get(i)) + "%");
+		}
+		query.setFirstResult(pageSize*(pageNumber-1));
+		query.setMaxResults(pageSize);
+		return query.list();
+	}
+	
+	
 
 }

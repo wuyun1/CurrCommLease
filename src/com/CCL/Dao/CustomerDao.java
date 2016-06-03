@@ -1,6 +1,7 @@
 package com.CCL.Dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
@@ -14,6 +15,10 @@ public interface CustomerDao  {
 	List<Customer> queryAll();
 	
 	List<Customer> queryByType(CustomerType customerType);
+	
+	List<Customer> queryByUseLikeAndPage(String  property,String value,int pageSize,int pageNumber);
+	
+	List<Customer> queryByUseLikeAndPage(Map<String,String> entrys,int pageSize,int pageNumber);
 
 	List<Customer> queryByState(CustomerState customerState);
 	
