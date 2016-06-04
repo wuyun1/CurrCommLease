@@ -9,7 +9,7 @@ import com.CCL.Dao.BicycleStateDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.BicycleState;
 
-public class BicycleStateDaoImpl extends BaseDao implements BicycleStateDao {
+public class BicycleStateDaoImpl extends BaseDao<BicycleState> implements BicycleStateDao {
 	
 	private final static String mClassName = BicycleState.class.getName();
 
@@ -50,6 +50,12 @@ public class BicycleStateDaoImpl extends BaseDao implements BicycleStateDao {
 		Session session = getSession();
 		session.update(bicycleStateDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 
 }

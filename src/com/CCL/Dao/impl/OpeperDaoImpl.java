@@ -10,7 +10,7 @@ import com.CCL.Dao.OpeperDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.Opeper;
 
-public class OpeperDaoImpl extends BaseDao implements OpeperDao {
+public class OpeperDaoImpl extends BaseDao<Opeper> implements OpeperDao {
 
 	private final static String mClassName = Opeper.class.getName();
 
@@ -58,6 +58,11 @@ public class OpeperDaoImpl extends BaseDao implements OpeperDao {
 		Session session = getSession();
 		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
 		return results;
+	}
+
+	@Override
+	public String getClassName() {
+		return mClassName;
 	}
 
 }

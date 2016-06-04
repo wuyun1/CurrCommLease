@@ -12,7 +12,7 @@ import com.CCL.beans.Bicycle;
 import com.CCL.beans.BicycleState;
 import com.CCL.beans.BicycleType;
 
-public class BicycleDaoImpl extends BaseDao implements BicycleDao {
+public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 	
 	private final static String mClassName = Bicycle.class.getName();
 
@@ -54,13 +54,7 @@ public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 		session.beginTransaction().commit();
 	}
 
-	@Override
-	public List<Bicycle> queryByExample(Bicycle instance) {
-		Session session = getSession();
-		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
-		return results;
-	}
-
+	
 	@Override
 	public List<Bicycle> queryByType(BicycleType bicycleType) {
 		String hql = "from " + mClassName + " where TYPE_ID=?";
@@ -75,6 +69,12 @@ public class BicycleDaoImpl extends BaseDao implements BicycleDao {
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, bicycleState.getId());
 		return query.list();
+	}
+
+	@Override
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 
 }

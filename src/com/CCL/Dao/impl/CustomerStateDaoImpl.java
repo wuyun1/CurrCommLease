@@ -9,7 +9,7 @@ import com.CCL.Dao.CustomerStateDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.CustomerState;
 
-public class CustomerStateDaoImpl extends BaseDao implements CustomerStateDao {
+public class CustomerStateDaoImpl extends BaseDao<CustomerState> implements CustomerStateDao {
 
 	private final static String mClassName = CustomerState.class.getName();
 
@@ -50,6 +50,12 @@ public class CustomerStateDaoImpl extends BaseDao implements CustomerStateDao {
 		Session session = getSession();
 		session.update(customerStateDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 
 }

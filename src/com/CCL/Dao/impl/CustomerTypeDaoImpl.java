@@ -9,7 +9,7 @@ import com.CCL.Dao.CustomerTypeDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.CustomerType;
 
-public class CustomerTypeDaoImpl extends BaseDao implements CustomerTypeDao {
+public class CustomerTypeDaoImpl extends BaseDao<CustomerType> implements CustomerTypeDao {
 
 	private final static String mClassName = CustomerType.class.getName();
 
@@ -50,6 +50,11 @@ public class CustomerTypeDaoImpl extends BaseDao implements CustomerTypeDao {
 		Session session = getSession();
 		session.update(customerTypeDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public String getClassName() {
+		return mClassName;
 	}
 
 }

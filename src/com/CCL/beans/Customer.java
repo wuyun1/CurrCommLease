@@ -15,6 +15,14 @@ public class Customer {
 	private String sex;
 	//	出生日期
 	private Date birthday;
+	// 密码
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	//	联系电话
 	private String phone;
 	//	邮箱
@@ -91,9 +99,12 @@ public class Customer {
 	public void setMoney(Float money) {
 		this.money = money;
 	}
+	
 	@Override
 	public String toString() {
-		return name;
+		return "Customer [id=" + id + ", customerState=" + customerState + ", customerType=" + customerType + ", name="
+				+ name + ", sex=" + sex + ", birthday=" + birthday + ", phone=" + phone + ", email=" + email
+				+ ", address=" + address + ", integral=" + integral + ", money=" + money + "]";
 	}
 	@Override
 	public int hashCode() {

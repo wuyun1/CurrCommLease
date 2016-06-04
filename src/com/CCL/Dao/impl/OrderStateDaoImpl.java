@@ -9,7 +9,7 @@ import com.CCL.Dao.OrderStateDao;
 import com.CCL.Dao.base.BaseDao;
 import com.CCL.beans.OrderState;
 
-public class OrderStateDaoImpl extends BaseDao implements OrderStateDao {
+public class OrderStateDaoImpl extends BaseDao<OrderState> implements OrderStateDao {
 	
 	private final static String mClassName = OrderState.class.getName();
 
@@ -50,6 +50,12 @@ public class OrderStateDaoImpl extends BaseDao implements OrderStateDao {
 		Session session = getSession();
 		session.update(orderStateDao);
 		session.beginTransaction().commit();
+	}
+
+	@Override
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 
 }

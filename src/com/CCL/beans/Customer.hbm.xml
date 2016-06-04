@@ -26,6 +26,9 @@
         <property name="phone" type="java.lang.String">
             <column name="PHONE" />
         </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
         <property name="email" type="java.lang.String">
             <column name="EMAIL" />
         </property>

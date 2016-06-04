@@ -14,7 +14,7 @@ import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 
-public class OrderDaoImpl extends BaseDao implements OrderDao {
+public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
 
 	private final static String mClassName = Order.class.getName();
 
@@ -72,30 +72,11 @@ public class OrderDaoImpl extends BaseDao implements OrderDao {
 		return query.list();
 	}
 	
-	@Override
-	public List<Order> queryByUseLikeAndPage(String property, String value, int pageSize, int pageNumber) {
-		String hql = "from " + mClassName + " where "+property+" like '%"+value+"%'";
-		Query query = getSession().createQuery(hql);
-		query.setFirstResult(pageSize*(pageNumber-1));
-		query.setMaxResults(pageSize);
-		return query.list();
-	}
+
 
 	@Override
-	public List<Order> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
-		
-		String hql = "from " + mClassName + " where 1=1";
-		List<String> keyOrder = new ArrayList<String>();
-		for (String property : entrys.keySet()) {
-			hql+=" and "+property + " like ?";
-			keyOrder.add(property);
-		}
-		Query query = getSession().createQuery(hql);
-		for(int i=0,n=keyOrder.size();i<n;i++){
-			query.setString(i, "%" + entrys.get(keyOrder.get(i)) + "%");
-		}
-		query.setFirstResult(pageSize*(pageNumber-1));
-		query.setMaxResults(pageSize);
-		return query.list();
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 }
