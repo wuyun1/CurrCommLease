@@ -39,7 +39,9 @@
         </property>
         
         
-        
+         <property name="overTimePrice" type="java.lang.Integer">
+            <column name="OVERTIME_PRICE" />
+        </property>
         
         
         

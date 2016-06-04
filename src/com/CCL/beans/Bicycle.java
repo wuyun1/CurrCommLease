@@ -33,7 +33,7 @@ public class Bicycle {
 	
 	private Integer chargeTime;
 	
-	
+	private Integer overTimePrice;
 
 	public Integer getBaseTime() {
 		return baseTime;
@@ -178,6 +178,14 @@ public class Bicycle {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Integer getOverTimePrice() {
+		return overTimePrice;
+	}
+
+	public void setOverTimePrice(Integer overTimePrice) {
+		this.overTimePrice = overTimePrice;
 	}
 
 	
