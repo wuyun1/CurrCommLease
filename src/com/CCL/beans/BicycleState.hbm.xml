@@ -13,6 +13,13 @@
         </property>
         <property name="descript" type="java.lang.String">
             <column name="DESCRIPT" />
+            
+            
+        </property>
+        
+                
+          <property name="isShow" type="java.lang.Boolean">
+            <column name="IS_SHOW" default="1"/>
         </property>
     </class>
 </hibernate-mapping>

@@ -26,5 +26,10 @@
         <property name="deposit" type="java.lang.Float">
             <column name="DEPOSIT" />
         </property>
+        
+                
+          <property name="isShow" type="java.lang.Boolean">
+            <column name="IS_SHOW" default="1"/>
+        </property>
     </class>
 </hibernate-mapping>

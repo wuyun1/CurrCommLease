@@ -38,6 +38,17 @@ public class Opeper {
 	private int dataBackup;
 	//∂Ãœ¢Ã·–—
 	private int messageTel;
+	
+	private Boolean isShow = true;
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

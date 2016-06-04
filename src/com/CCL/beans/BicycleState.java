@@ -12,6 +12,10 @@ public class BicycleState {
 	//×´Ì¬ÃèÊö
 	private String descript;
 	
+	private Boolean isShow = true;
+	
+
+	
 	public Integer getId() {
 		return id;
 	}
@@ -56,6 +60,12 @@ public class BicycleState {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	public Boolean getIsShow() {
+		return isShow;
+	}
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
 	}
 	
 	

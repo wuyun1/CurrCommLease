@@ -43,6 +43,9 @@
             <column name="OVERTIME_PRICE" />
         </property>
         
+         <property name="isShow" type="java.lang.Boolean">
+            <column name="IS_SHOW" default="1"/>
+        </property>
         
         
         <property name="inventory" type="java.lang.Integer">

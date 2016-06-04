@@ -20,6 +20,10 @@ public class Bill {
 	private String payWay;
 	// ×Ü½ð¶î
 	private float total;
+	
+	private Boolean isShow = true;
+	
+
 
 	public Integer getId() {
 		return id;
@@ -90,6 +94,14 @@ public class Bill {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
 	}
 
 	

@@ -42,9 +42,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
 import javax.swing.BoxLayout;
+import java.awt.Insets;
 
 public class KaiTaiPanel extends JPanel {
-	private JList<Customer> list;
 	private JTextField textCustomerId;
 
 	/**
@@ -65,72 +65,8 @@ public class KaiTaiPanel extends JPanel {
 		lblNewLabel_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
-		
-				JLabel label = new JLabel("\u7F16\u53F7:");
-		
-				textCustomerId = new JTextField();
-				textCustomerId.addCaretListener(new CaretListener() {
-					public void caretUpdate(CaretEvent arg0) {
-						System.out.println(32);
-						upDateCustomerList();
-					}
-				});
-				textCustomerId.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						System.out.println(32);
-						upDateCustomerList();
-					}
-				});
-				textCustomerId.addInputMethodListener(new InputMethodListener() {
-					public void caretPositionChanged(InputMethodEvent arg0) {
-					}
-					public void inputMethodTextChanged(InputMethodEvent arg0) {
-						
-					}
-				});
-				textCustomerId.setColumns(10);
-		
-				JScrollPane scrollPane = new JScrollPane();
-				
-						list = new JList<Customer>();
-						scrollPane.setViewportView(list);
-						
-								list.setCellRenderer(new MyCellRenderer());
-								
-										list.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "\u6B22\u8FCE\u5149\u4E34",
-												TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(label)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textCustomerId, GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label)
-						.addComponent(textCustomerId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		panel_1.setLayout(gl_panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
@@ -149,68 +85,140 @@ public class KaiTaiPanel extends JPanel {
 					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
-		
-		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
-		
-				JLabel lblNewLabel = new JLabel("\u62BC\u91D1\uFF1A");
-		
-				JSpinner spinner = new JSpinner();
-				spinner.setModel(new SpinnerNumberModel(new Integer(200), null, null, new Integer(1)));
-		
-				JLabel lblNewLabel_1 = new JLabel("");
-				lblNewLabel_1
-						.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addComponent(lblNewLabel)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(spinner, GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		panel_3.setLayout(gl_panel_3);
 		setLayout(new BorderLayout(0, 0));
 		add(lblNewLabel_2, BorderLayout.NORTH);
 		add(panel);
+								
+								JPanel panel_3 = new JPanel();
+								
+										JLabel lblNewLabel = new JLabel("\u62BC\u91D1\uFF1A");
+										
+												JSpinner spinner = new JSpinner();
+												spinner.setModel(new SpinnerNumberModel(new Integer(200), null, null, new Integer(1)));
+												
+														JLabel lblNewLabel_1 = new JLabel("");
+														lblNewLabel_1
+																.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+														GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+														gl_panel_3.setHorizontalGroup(
+															gl_panel_3.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_panel_3.createSequentialGroup()
+																	.addContainerGap()
+																	.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+																		.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+																		.addGroup(gl_panel_3.createSequentialGroup()
+																			.addComponent(lblNewLabel)
+																			.addPreferredGap(ComponentPlacement.RELATED)
+																			.addComponent(spinner, GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+																	.addContainerGap())
+														);
+														gl_panel_3.setVerticalGroup(
+															gl_panel_3.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_panel_3.createSequentialGroup()
+																	.addContainerGap()
+																	.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+																		.addComponent(lblNewLabel)
+																		.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+																	.addPreferredGap(ComponentPlacement.RELATED)
+																	.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+																	.addContainerGap())
+														);
+														panel_3.setLayout(gl_panel_3);
+														GroupLayout gl_panel = new GroupLayout(panel);
+														gl_panel.setHorizontalGroup(
+															gl_panel.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_panel.createSequentialGroup()
+																	.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+																		.addGroup(gl_panel.createSequentialGroup()
+																			.addGap(54)
+																			.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE))
+																		.addGroup(gl_panel.createSequentialGroup()
+																			.addGap(183)
+																			.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)))
+																	.addContainerGap(80, Short.MAX_VALUE))
+														);
+														gl_panel.setVerticalGroup(
+															gl_panel.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_panel.createSequentialGroup()
+																	.addGap(62)
+																	.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+																	.addGap(18)
+																	.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+																	.addContainerGap(23, Short.MAX_VALUE))
+														);
+														panel.setLayout(gl_panel);
 		
 		JPanel panel_4 = new JPanel();
 		add(panel_4, BorderLayout.SOUTH);
 		
 				JButton button = new JButton("\u786E\u5B9A");
 				panel_4.add(button);
+				
+				JPanel panel_1 = new JPanel();
+				add(panel_1, BorderLayout.WEST);
+				
+						JLabel label = new JLabel("\u67E5\u8BE2\u7528\u6237:");
+						
+								textCustomerId = new JTextField();
+								textCustomerId.addCaretListener(new CaretListener() {
+									public void caretUpdate(CaretEvent arg0) {
+										System.out.println(32);
+										upDateCustomerList();
+									}
+								});
+								textCustomerId.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										System.out.println(32);
+										upDateCustomerList();
+									}
+								});
+								textCustomerId.addInputMethodListener(new InputMethodListener() {
+									public void caretPositionChanged(InputMethodEvent arg0) {
+									}
+									public void inputMethodTextChanged(InputMethodEvent arg0) {
+										
+									}
+								});
+								textCustomerId.setColumns(10);
+																GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+																gl_panel_1.setHorizontalGroup(
+																	gl_panel_1.createParallelGroup(Alignment.LEADING)
+																		.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+																			.addContainerGap(20, Short.MAX_VALUE)
+																			.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+																				.addGroup(gl_panel_1.createSequentialGroup()
+																					.addComponent(textCustomerId, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+																					.addContainerGap())
+																				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+																					.addComponent(label, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+																					.addGap(40))))
+																);
+																gl_panel_1.setVerticalGroup(
+																	gl_panel_1.createParallelGroup(Alignment.LEADING)
+																		.addGroup(gl_panel_1.createSequentialGroup()
+																			.addGap(24)
+																			.addComponent(label, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+																			.addGap(67)
+																			.addComponent(textCustomerId, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+																			.addContainerGap(118, Short.MAX_VALUE))
+																);
+																panel_1.setLayout(gl_panel_1);
 				button.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
 				});
 
-		upDateCustomerList();
+//		upDateCustomerList();
 
 	}
 
 	void upDateCustomerList() {
-		String text = textCustomerId.getText();
-		if("".equals(text)){
-			list.setModel(new MyCustomerModel(CustomerService.getAll()));
-		}else{
-			list.setModel(new MyCustomerModel(CustomerService.getAllByIdUseLike(text)));
-		}
+//		String text = textCustomerId.getText();
+//		if("".equals(text)){
+//			list.setModel(new MyCustomerModel(CustomerService.getAll()));
+//		}else{
+//			list.setModel(new MyCustomerModel(CustomerService.getAllByIdUseLike(text)));
+//		}
 	}
 
 	class MyCustomerModel extends AbstractListModel<Customer> {

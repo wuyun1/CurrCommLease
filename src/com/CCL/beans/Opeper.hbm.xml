@@ -53,5 +53,10 @@
         <property name="messageTel" type="int">
             <column name="MESSAGE_TEL" />
         </property>
+        
+                
+         <property name="isShow" type="java.lang.Boolean">
+            <column name="IS_SHOW" default="1"/>
+        </property>
     </class>
 </hibernate-mapping>

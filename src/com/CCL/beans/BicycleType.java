@@ -15,6 +15,9 @@ public class BicycleType {
 	private String descript;
 	//×ÔÐÐ³µÕÛ¿Û
 	private Float discount;
+	
+	private Boolean isShow = true;
+	
 
 	public Float getDiscount() {
 		return discount;
@@ -76,6 +79,14 @@ public class BicycleType {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
 	}
 
 	

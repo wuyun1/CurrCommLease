@@ -10,6 +10,16 @@ public class CustomerType {
 	//©м╩╖уш©ш
 	private Float discount;
 	
+	private Boolean isShow = true;
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
+
+	
 	public Float getDiscount() {
 		return discount;
 	}

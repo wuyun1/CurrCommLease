@@ -7,6 +7,16 @@ public class OrderState {
 	private String name ;
 	// ×´Ì¬ÃèÊö
 	private String descript;
+	private Boolean isShow = true;
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

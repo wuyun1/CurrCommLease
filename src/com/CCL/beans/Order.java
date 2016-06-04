@@ -18,6 +18,17 @@ public class Order {
 	private Date time;
 	//Ñº½ð
 	private Float deposit;
+	
+	private Boolean isShow = true;
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

@@ -24,8 +24,12 @@ public class BicycleDaoImplTest {
 	@Test
 	public void testQueryAll() {
 		List<Bicycle> queryAll = dao.queryAll();
-
-		System.out.println(StringUtils.join(queryAll, "\n"));
+		
+		for (Bicycle bicycle : queryAll) {
+			System.out.println(bicycle.getId()+"\t:\t"+bicycle.getIsShow());
+		}
+		
+//		System.out.println(StringUtils.join(queryAll, "\n"));
 
 	}
 
@@ -38,32 +42,49 @@ public class BicycleDaoImplTest {
 	@Test
 	public void testAdd() {
 		Bicycle bicycle = new Bicycle();
+		bicycle.setName("tt");
+		bicycle.setIsShow(true);
+		dao.add(bicycle);
 		
-		BicycleStateDaoImpl bicycleDao = new BicycleStateDaoImpl();
-		bicycle.setName("abce");
-		BicycleState bicycleState = bicycleDao.get(1);
-		bicycle.setBicycleState(bicycleState);
+		
+		bicycle = new Bicycle();
+		bicycle.setName("ff");
+		bicycle.setIsShow(false);
+		dao.add(bicycle);
+		
+		bicycle = new Bicycle();
+		bicycle.setName("nn");
+		dao.add(bicycle);
+		
 
-		dao.add(bicycle);
 		
-		bicycle = new Bicycle();
-		bicycle.setName("bbbbbbbbbbb");
-		
-		bicycleState = new BicycleState();
-		bicycleState.setId(1);
-		bicycleState.setName("c");
-		bicycle.setBicycleState(bicycleState);
-		dao.add(bicycle);
-		
-		bicycle = new Bicycle();
-		bicycle.setName("eee");
-		dao.add(bicycle);
-		
-		bicycle = new Bicycle();
-		bicycle.setName("bbabadfdssce");
-		bicycleState = bicycleDao.get(2);
-		bicycle.setBicycleState(bicycleState);
-		dao.add(bicycle);
+//		BicycleStateDaoImpl bicycleDao = new BicycleStateDaoImpl();
+//		bicycle.setName("false");
+//		BicycleState bicycleState = bicycleDao.get(1);
+//		bicycle.setBicycleState(bicycleState);
+//		bicycle.setIsShow(false);
+//		dao.add(bicycle);
+//		
+//		bicycle = new Bicycle();
+//		bicycle.setName("true");
+//		
+//		bicycleState = new BicycleState();
+//		bicycleState.setId(1);
+//		bicycleState.setName("true");
+//		bicycle.setBicycleState(bicycleState);
+//		bicycle.setIsShow(true);
+//		dao.add(bicycle);
+//		
+//		bicycle = new Bicycle();
+//		bicycle.setName("null");
+//		bicycle.setIsShow(null);
+//		dao.add(bicycle);
+//		
+//		bicycle = new Bicycle();
+//		bicycle.setName("bbabadfdssce");
+//		bicycleState = bicycleDao.get(2);
+//		bicycle.setBicycleState(bicycleState);
+//		dao.add(bicycle);
 		
 
 

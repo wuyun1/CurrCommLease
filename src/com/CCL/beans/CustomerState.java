@@ -7,6 +7,15 @@ public class CustomerState {
 	private String name;
 	// ×´Ì¬ÃèÊö
 	private String descript;
+	
+	private Boolean isShow = true;
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
 
 	public Integer getId() {
 		return id;
@@ -61,6 +70,8 @@ public class CustomerState {
 	public String toString() {
 		return name;
 	}
+
+	
 	
 	
 }

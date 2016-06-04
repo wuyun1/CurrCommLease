@@ -17,5 +17,10 @@
         <property name="discount" type="java.lang.Float">
             <column name="DISCOUNT" />
         </property>
+        
+                
+         <property name="isShow" type="java.lang.Boolean">
+            <column name="IS_SHOW" default="1"/>
+        </property>
     </class>
 </hibernate-mapping>

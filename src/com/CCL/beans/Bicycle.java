@@ -34,6 +34,10 @@ public class Bicycle {
 	private Integer chargeTime;
 	
 	private Integer overTimePrice;
+	
+	private Boolean isShow = true;
+	
+	
 
 	public Integer getBaseTime() {
 		return baseTime;
@@ -187,6 +191,17 @@ public class Bicycle {
 	public void setOverTimePrice(Integer overTimePrice) {
 		this.overTimePrice = overTimePrice;
 	}
+
+	public Boolean getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
+	}
+
+	
+	
 
 	
 	

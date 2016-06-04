@@ -18,6 +18,10 @@ public class Customer {
 	// √‹¬Î
 	private String password;
 	
+	private Boolean isShow = true;
+	
+
+	
 	
 	public String getPassword() {
 		return password;
@@ -130,6 +134,12 @@ public class Customer {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	public Boolean getIsShow() {
+		return isShow;
+	}
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
 	}
 	
 	
