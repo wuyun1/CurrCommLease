@@ -17,6 +17,8 @@ public class Customer {
 	private Date birthday;
 	// ÃÜÂë
 	private String password;
+	
+	
 	public String getPassword() {
 		return password;
 	}

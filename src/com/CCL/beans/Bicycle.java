@@ -32,6 +32,7 @@ public class Bicycle {
 	
 	
 	
+
 	public BicycleState getState() {
 		return state;
 	}
@@ -133,11 +134,7 @@ public class Bicycle {
 
 	@Override
 	public String toString() {
-		return "Bicycle [id=" + id + ", bicycleState=" + state
-				+ ", bicycleType=" + type + ", name=" + name
-				+ ", descript=" + descript + ", price=" + price
-				+ ", inventory=" + inventory + ", factory=" + factory
-				+ ", isDaZhe=" + isDaZhe + ", isJiFen=" + isJiFen + "]";
+		return id.toString();
 	}
 
 	@Override
