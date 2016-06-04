@@ -16,54 +16,9 @@ import com.CCL.beans.OrderState;
 
 public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
 
-	private final static String mClassName = Order.class.getName();
+	private final static Class mClassName = Order.class;
 
-	@Override
-	public Order get(int id) {
-		Order order = null;
-		Session session = getSession();
-		order = session.get(Order.class, id);
-		return order;
-	}
-
-	@Override
-	public List<Order> queryAll() {
-		// TODO Auto-generated method stub
-		Session session = getSession();
-		return session.createQuery("from " + mClassName).list();
-	}
-
-	@Override
-	public void remove(int id) {
-		String hql = "delete " + mClassName + " where id=?";
-		Query query = getSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.executeUpdate();
-		getSession().beginTransaction().commit();
-	}
-
-	@Override
-	public void add(Order orderDao) {
-		Session session = getSession();
-		session.save(orderDao);
-		session.beginTransaction().commit();
-
-	}
-
-	@Override
-	public void update(Order orderDao) {
-		Session session = getSession();
-		session.update(orderDao);
-		session.beginTransaction().commit();
-	}
-
-	@Override
-	public List<Order> queryByExample(Order instance) {
-		Session session = getSession();
-		List results = getSession().createCriteria(mClassName).add(Example.create(instance)).list();
-		return results;
-	}
-
+	
 	@Override
 	public List<Order> queryByState(OrderState bicycleState) {
 		String hql = "from " + mClassName + " where ORDER_STATE_ID=?";
@@ -75,7 +30,7 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
 
 
 	@Override
-	public String getClassName() {
+	public Class getEntityClass() {
 		// TODO Auto-generated method stub
 		return mClassName;
 	}

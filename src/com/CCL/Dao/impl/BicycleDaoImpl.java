@@ -14,45 +14,14 @@ import com.CCL.beans.BicycleType;
 
 public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 	
-	private final static String mClassName = Bicycle.class.getName();
+	private final static Class mClassName = Bicycle.class;
 
 	@Override
-	public Bicycle get(int id) {
-		Bicycle bicycle = null;
-		Session session = getSession();
-		bicycle = session.get(Bicycle.class, id);
-		return bicycle;
+	public Class getEntityClass() {
+		// TODO Auto-generated method stub
+		return mClassName;
 	}
 
-	@Override
-	public List<Bicycle> queryAll() {
-		Session session = getSession();
-		return session.createQuery("from " + mClassName).list();
-	}
-
-	@Override
-	public void remove(int id) {
-		String hql = "delete " + mClassName + " where id=?";
-		Query query = getSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.executeUpdate();
-		getSession().beginTransaction().commit();
-	}
-
-	@Override
-	public void add(Bicycle bicycleDao) {
-		Session session = getSession();
-		session.save(bicycleDao);
-		session.beginTransaction().commit();
-		
-	}
-
-	@Override
-	public void update(Bicycle bicycleDao) {
-		Session session = getSession();
-		session.update(bicycleDao);
-		session.beginTransaction().commit();
-	}
 
 	
 	@Override
@@ -71,10 +40,6 @@ public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 		return query.list();
 	}
 
-	@Override
-	public String getClassName() {
-		// TODO Auto-generated method stub
-		return mClassName;
-	}
 
+	
 }

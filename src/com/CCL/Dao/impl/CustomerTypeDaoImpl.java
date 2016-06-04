@@ -11,7 +11,7 @@ import com.CCL.beans.CustomerType;
 
 public class CustomerTypeDaoImpl extends BaseDao<CustomerType> implements CustomerTypeDao {
 
-	private final static String mClassName = CustomerType.class.getName();
+	private final static Class mClassName = CustomerType.class;
 
 	@Override
 	public CustomerType get(int id) {
@@ -53,7 +53,7 @@ public class CustomerTypeDaoImpl extends BaseDao<CustomerType> implements Custom
 	}
 
 	@Override
-	public String getClassName() {
+	public Class getEntityClass() {
 		return mClassName;
 	}
 

@@ -21,10 +21,10 @@ public abstract class BaseDao<T> {
 		HibernateSessionFactory.closeSession();
 	}
 	
-	public abstract String getClassName();
+	public abstract Class getEntityClass();
 	
 	public List<T> queryByUseLikeAndPage(String property, String value, int pageSize, int pageNumber) {
-		String hql = "from " + getClassName() + " where "+property+" like '%"+value+"%'";
+		String hql = "from " + getEntityClass().getName() + " where "+property+" like '%"+value+"%'";
 		Query query = getSession().createQuery(hql);
 		int i = pageSize*(pageNumber-1);
 		query.setFirstResult(i<0?0:i);
@@ -34,7 +34,7 @@ public abstract class BaseDao<T> {
 
 	public List<T> queryByUseLikeAndPage(Map<String, String> entrys, int pageSize, int pageNumber) {
 		
-		String hql = "from " + getClassName() + " where 1=1";
+		String hql = "from " + getEntityClass().getName() + " where 1=1";
 		List<String> keyOrder = new ArrayList<String>();
 		for (String property : entrys.keySet()) {
 			hql+=" and "+property + " like ?";
@@ -52,12 +52,12 @@ public abstract class BaseDao<T> {
 	
 	public List<T> queryByExample(T instance) {
 		Session session = getSession();
-		List results = getSession().createCriteria( getClassName()).add(Example.create(instance)).list();
+		List results = getSession().createCriteria( getEntityClass()).add(Example.create(instance)).list();
 		return results;
 	}
 	
 	public List<T> queryByUsePage(String property, Object value, int pageSize, int pageNumber) {
-		String hql = "from " + getClassName() + " where "+property+"= ?";
+		String hql = "from " + getEntityClass().getName() + " where "+property+"= ?";
 		Query query = getSession().createQuery(hql);
 		query.setParameter(0, value);
 		int i = pageSize*(pageNumber-1);
@@ -68,7 +68,7 @@ public abstract class BaseDao<T> {
 
 	public List<T> queryByUsePage(Map<String, Object> entrys, int pageSize, int pageNumber) {
 		
-		String hql = "from " + getClassName() + " where 1=1";
+		String hql = "from " + getEntityClass().getName() + " where 1=1";
 		List<String> keyOrder = new ArrayList<String>();
 		for (String property : entrys.keySet()) {
 			hql+=" and "+property + " = ?";
@@ -84,5 +84,45 @@ public abstract class BaseDao<T> {
 		return query.list();
 	}
 	
+	public T get(int id) {
+		T bicycle = null;
+		Session session = getSession();
+		bicycle = (T) session.get(getEntityClass(), id);
+		return bicycle;
+	}
+
+	public List<T> queryAll() {
+		Session session = getSession();
+		return session.createQuery("from " + getEntityClass().getName()).list();
+	}
+
+	public void remove(int id) {
+		String hql = "delete " + getEntityClass().getName() + " where id=?";
+		Query query = getSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.executeUpdate();
+		getSession().beginTransaction().commit();
+	}
+
+	public void add(T obj) {
+		Session session = getSession();
+		session.save(obj);
+		session.beginTransaction().commit();
+		
+	}
+
+	public void update(T obj) {
+		Session session = getSession();
+		session.update(obj);
+		session.beginTransaction().commit();
+	}
+	
+	public long count() {
+		 String hql = "select count(*) from "+getEntityClass().getName();
+		 Query query =  getSession().createQuery( hql);
+		 return ((Long)query.uniqueResult()).intValue(); 
+		 
+	}
+
 	
 }

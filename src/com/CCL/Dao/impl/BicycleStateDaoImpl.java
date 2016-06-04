@@ -11,50 +11,10 @@ import com.CCL.beans.BicycleState;
 
 public class BicycleStateDaoImpl extends BaseDao<BicycleState> implements BicycleStateDao {
 	
-	private final static String mClassName = BicycleState.class.getName();
+	private final static Class mClassName = BicycleState.class;
 
 	@Override
-	public BicycleState get(int id) {
-		BicycleState bicycleState = null;
-		Session session = getSession();
-		bicycleState = session.get(BicycleState.class, id);
-		return bicycleState;
-	}
-
-	@Override
-	public List<BicycleState> queryAll() {
-		// TODO Auto-generated method stub
-		Session session = getSession();
-		return session.createQuery("from " + mClassName).list();
-	}
-
-	@Override
-	public void remove(int id) {
-		String hql = "delete " + mClassName + " where id=?";
-		Query query = getSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.executeUpdate();
-		getSession().beginTransaction().commit();
-	}
-
-	@Override
-	public void add(BicycleState bicycleStateDao) {
-		Session session = getSession();
-		session.save(bicycleStateDao);
-		session.beginTransaction().commit();
-		
-	}
-
-	@Override
-	public void update(BicycleState bicycleStateDao) {
-		Session session = getSession();
-		session.update(bicycleStateDao);
-		session.beginTransaction().commit();
-	}
-
-	@Override
-	public String getClassName() {
-		// TODO Auto-generated method stub
+	public Class getEntityClass() {
 		return mClassName;
 	}
 

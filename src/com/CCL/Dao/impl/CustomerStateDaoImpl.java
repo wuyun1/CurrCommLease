@@ -11,49 +11,11 @@ import com.CCL.beans.CustomerState;
 
 public class CustomerStateDaoImpl extends BaseDao<CustomerState> implements CustomerStateDao {
 
-	private final static String mClassName = CustomerState.class.getName();
+	private final static Class mClassName = CustomerState.class;
+
 
 	@Override
-	public CustomerState get(int id) {
-		CustomerState customerState = null;
-		Session session = getSession();
-		customerState = session.get(CustomerState.class, id);
-		return customerState;
-	}
-
-	@Override
-	public List<CustomerState> queryAll() {
-		// TODO Auto-generated method stub
-		Session session = getSession();
-		return session.createQuery("from " + mClassName).list();
-	}
-
-	@Override
-	public void remove(int id) {
-		String hql = "delete " + mClassName + " where id=?";
-		Query query = getSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.executeUpdate();
-		getSession().beginTransaction().commit();
-	}
-
-	@Override
-	public void add(CustomerState customerStateDao) {
-		Session session = getSession();
-		session.save(customerStateDao);
-		session.beginTransaction().commit();
-
-	}
-
-	@Override
-	public void update(CustomerState customerStateDao) {
-		Session session = getSession();
-		session.update(customerStateDao);
-		session.beginTransaction().commit();
-	}
-
-	@Override
-	public String getClassName() {
+	public Class getEntityClass() {
 		// TODO Auto-generated method stub
 		return mClassName;
 	}

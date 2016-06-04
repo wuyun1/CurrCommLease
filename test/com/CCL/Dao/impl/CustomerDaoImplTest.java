@@ -86,6 +86,13 @@ public class CustomerDaoImplTest {
 		dao.remove(2);
 
 	}
+	
+	@Test
+	public void testCount() {
+		System.out.println(dao.count());
+
+	}
+
 
 	@Test
 	public void testUpdate() {
