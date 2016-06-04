@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.CCL.Dao.BicycleDao;
 import com.CCL.beans.Bicycle;
+import com.CCL.beans.BicycleState;
 import com.CCL.beans.BicycleType;
 
 public class BicycleDaoImplTest {
@@ -37,12 +38,21 @@ public class BicycleDaoImplTest {
 	@Test
 	public void testAdd() {
 		Bicycle bicycle = new Bicycle();
+		
+		BicycleStateDaoImpl bicycleDao = new BicycleStateDaoImpl();
 		bicycle.setName("abce");
+		BicycleState bicycleState = bicycleDao.get(1);
+		bicycle.setBicycleState(bicycleState);
 
 		dao.add(bicycle);
 		
 		bicycle = new Bicycle();
-		bicycle.setName("abssce");
+		bicycle.setName("bbbbbbbbbbb");
+		
+		bicycleState = new BicycleState();
+		bicycleState.setId(1);
+		bicycleState.setName("c");
+		bicycle.setBicycleState(bicycleState);
 		dao.add(bicycle);
 		
 		bicycle = new Bicycle();
@@ -51,6 +61,8 @@ public class BicycleDaoImplTest {
 		
 		bicycle = new Bicycle();
 		bicycle.setName("bbabadfdssce");
+		bicycleState = bicycleDao.get(2);
+		bicycle.setBicycleState(bicycleState);
 		dao.add(bicycle);
 		
 

@@ -29,6 +29,20 @@
                 <property name="price" type="java.lang.Integer">
             <column name="PRICE" />
         </property>
+        
+        
+         <property name="baseTime" type="java.lang.Integer">
+            <column name="BASE_TIME" />
+        </property>
+         <property name="chargeTime" type="java.lang.Integer">
+            <column name="CHARGE_TIME" />
+        </property>
+        
+        
+        
+        
+        
+        
         <property name="inventory" type="java.lang.Integer">
             <column name="INVENTORY" />
         </property>

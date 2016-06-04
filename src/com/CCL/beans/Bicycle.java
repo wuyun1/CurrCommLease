@@ -29,9 +29,27 @@ public class Bicycle {
 	// 是否参加积分
 	private Integer isJiFen;
 
+	private Integer baseTime;
+	
+	private Integer chargeTime;
 	
 	
-	
+
+	public Integer getBaseTime() {
+		return baseTime;
+	}
+
+	public void setBaseTime(Integer baseTime) {
+		this.baseTime = baseTime;
+	}
+
+	public Integer getChargeTime() {
+		return chargeTime;
+	}
+
+	public void setChargeTime(Integer chargeTime) {
+		this.chargeTime = chargeTime;
+	}
 
 	public BicycleState getState() {
 		return state;
