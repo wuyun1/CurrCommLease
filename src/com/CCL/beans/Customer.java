@@ -20,9 +20,32 @@ public class Customer {
 	
 	private Boolean isShow = true;
 	
-
 	
 	
+	
+	public Customer(Integer id) {
+		super();
+		this.id = id;
+	}
+	public Customer(CustomerState customerState, CustomerType customerType, String name, String sex, Date birthday,
+			String password, String phone, String email, String address, Integer integral,
+			Float money) {
+		super();
+		this.customerState = customerState;
+		this.customerType = customerType;
+		this.name = name;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.integral = integral;
+		this.money = money;
+	}
+	public Customer() {
+		super();
+	}
 	public String getPassword() {
 		return password;
 	}

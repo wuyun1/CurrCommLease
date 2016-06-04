@@ -39,6 +39,41 @@ public class Opeper {
 	//∂Ãœ¢Ã·–—
 	private int messageTel;
 	
+	
+	
+	
+	public Opeper() {
+		super();
+	}
+
+	public Opeper(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public Opeper(Integer oid, int toChange, int billPrint, int pointsFor, int upgrade, int reCard, int cardTopup,
+			int moneyQuery, int reInfo, int reCordQuery, int chargingSet, int discountSet, int carManager,
+			int dataBackup, int messageTel) {
+		super();
+		this.oid = oid;
+		this.toChange = toChange;
+		this.billPrint = billPrint;
+		this.pointsFor = pointsFor;
+		this.upgrade = upgrade;
+		this.reCard = reCard;
+		this.cardTopup = cardTopup;
+		this.moneyQuery = moneyQuery;
+		this.reInfo = reInfo;
+		this.reCordQuery = reCordQuery;
+		this.chargingSet = chargingSet;
+		this.discountSet = discountSet;
+		this.carManager = carManager;
+		this.dataBackup = dataBackup;
+		this.messageTel = messageTel;
+	}
+
+
+
 	private Boolean isShow = true;
 	public Boolean getIsShow() {
 		return isShow;

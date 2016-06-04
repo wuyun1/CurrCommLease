@@ -73,6 +73,31 @@ public class Bicycle {
 
 	public Bicycle() {
 	}
+	
+	public Bicycle(BicycleState state, BicycleType type, String name, String descript, Integer price, Integer inventory,
+			String factory, Integer isDaZhe, Integer isJiFen, Integer baseTime, Integer chargeTime,
+			Integer overTimePrice) {
+		super();
+		this.state = state;
+		this.type = type;
+		this.name = name;
+		this.descript = descript;
+		this.price = price;
+		this.inventory = inventory;
+		this.factory = factory;
+		this.isDaZhe = isDaZhe;
+		this.isJiFen = isJiFen;
+		this.baseTime = baseTime;
+		this.chargeTime = chargeTime;
+		this.overTimePrice = overTimePrice;
+	}
+	
+	
+	
+	public Bicycle(Integer id) {
+		super();
+		this.id = id;
+	}
 
 	public Integer getIsDaZhe() {
 		return isDaZhe;

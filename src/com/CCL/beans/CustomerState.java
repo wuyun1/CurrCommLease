@@ -9,6 +9,24 @@ public class CustomerState {
 	private String descript;
 	
 	private Boolean isShow = true;
+	
+	
+	
+	public CustomerState(Integer id) {
+		super();
+		this.id = id;
+	}
+	
+	public CustomerState(String name, String descript) {
+		super();
+		this.name = name;
+		this.descript = descript;
+	}
+
+	public CustomerState() {
+		super();
+	}
+
 	public Boolean getIsShow() {
 		return isShow;
 	}

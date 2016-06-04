@@ -14,8 +14,20 @@ public class BicycleState {
 	
 	private Boolean isShow = true;
 	
-
 	
+	
+	public BicycleState(Integer id) {
+		super();
+		this.id = id;
+	}
+	public BicycleState(String name, String descript) {
+		super();
+		this.name = name;
+		this.descript = descript;
+	}
+	public BicycleState() {
+		super();
+	}
 	public Integer getId() {
 		return id;
 	}

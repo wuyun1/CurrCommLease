@@ -1,15 +1,8 @@
 package com.CCL.Dao.base;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import org.hibernate.Query;
-
-import com.CCL.beans.Bicycle;
-import com.CCL.beans.BicycleState;
-import com.CCL.beans.BicycleType;
-import com.CCL.beans.Bill;
 
 public interface BaseDaoInterface<T> {
 	T get(int id);
@@ -18,9 +11,9 @@ public interface BaseDaoInterface<T> {
 	
 	long count();
 
-	void remove(int id);
+	int remove(int id);
 
-	void add(T bicycle);
+	Serializable add(T bicycle);
 
 	void update(T bicycle);
 	

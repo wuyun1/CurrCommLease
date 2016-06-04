@@ -16,6 +16,21 @@ public class OrderState {
 		this.isShow = isShow;
 	}
 
+	
+	public OrderState() {
+		super();
+	}
+
+	public OrderState(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public OrderState(String name, String descript) {
+		super();
+		this.name = name;
+		this.descript = descript;
+	}
 
 	public Integer getId() {
 		return id;

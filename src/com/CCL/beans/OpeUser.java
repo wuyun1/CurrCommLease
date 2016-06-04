@@ -31,6 +31,34 @@ public class OpeUser {
 	private String photo;
 	// 操作员权限
 	private Opeper opePer;
+	
+	
+
+	public OpeUser() {
+		super();
+	}
+
+	public OpeUser(String userName, String password, Float salary, String name, String sex, Date birthday,
+			String address, String phone, String photo, Opeper opePer) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.salary = salary;
+		this.name = name;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.address = address;
+		this.phone = phone;
+		this.photo = photo;
+		this.opePer = opePer;
+	}
+
+	
+
+	public OpeUser(Integer id) {
+		super();
+		this.id = id;
+	}
 
 	public Integer getId() {
 		return id;

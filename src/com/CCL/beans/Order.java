@@ -19,6 +19,26 @@ public class Order {
 	//Ñº½ð
 	private Float deposit;
 	
+	
+	
+	public Order() {
+		super();
+	}
+
+	public Order(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public Order(Customer customer, OpeUser opeUser, Bicycle bicycle, OrderState orderState, Date time, Float deposit) {
+		super();
+		this.customer = customer;
+		this.opeUser = opeUser;
+		this.bicycle = bicycle;
+		this.orderState = orderState;
+		this.time = time;
+		this.deposit = deposit;
+	}
 	private Boolean isShow = true;
 	public Boolean getIsShow() {
 		return isShow;

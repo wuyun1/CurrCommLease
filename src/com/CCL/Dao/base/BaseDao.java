@@ -1,5 +1,6 @@
 package com.CCL.Dao.base;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,12 @@ import com.CCL.beans.Customer;
 
 //用来封装基本的操作数据库方法
 public abstract class BaseDao<T> {
+	
+	public BaseDao() {
+		
+		
+	}
+	
 	protected static Session getSession() {
 		return HibernateSessionFactory.getSession();
 	}
@@ -96,18 +103,20 @@ public abstract class BaseDao<T> {
 		return session.createQuery("from " + getEntityClass().getName()).list();
 	}
 
-	public void remove(int id) {
+	public int remove(int id) {
 		String hql = "delete " + getEntityClass().getName() + " where id=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, id);
-		query.executeUpdate();
+		int result = query.executeUpdate();
 		getSession().beginTransaction().commit();
+		return result;
 	}
 
-	public void add(T obj) {
+	public Serializable add(T obj) {
 		Session session = getSession();
-		session.save(obj);
+		 Serializable result = session.save(obj);
 		session.beginTransaction().commit();
+		return result;
 		
 	}
 

@@ -11,6 +11,25 @@ public class CustomerType {
 	private Float discount;
 	
 	private Boolean isShow = true;
+	
+	
+	
+	public CustomerType(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public CustomerType(String name, String descript, Float discount) {
+		super();
+		this.name = name;
+		this.descript = descript;
+		this.discount = discount;
+	}
+
+	public CustomerType() {
+		super();
+	}
+
 	public Boolean getIsShow() {
 		return isShow;
 	}

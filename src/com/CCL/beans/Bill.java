@@ -23,7 +23,24 @@ public class Bill {
 	
 	private Boolean isShow = true;
 	
+	
 
+	public Bill(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public Bill(Date outTime, Long delay, String payWay, float total) {
+		super();
+		this.outTime = outTime;
+		this.delay = delay;
+		this.payWay = payWay;
+		this.total = total;
+	}
+
+	public Bill() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;
