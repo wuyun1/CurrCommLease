@@ -44,9 +44,13 @@ import java.awt.CardLayout;
 import javax.swing.BoxLayout;
 import java.awt.Insets;
 import javax.swing.JComboBox;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLayeredPane;
+import javax.swing.UIManager;
 
 public class KaiTaiPanel extends JPanel {
-	private JComboBox textCustomerId;
 
 	/**
 	 * Create the panel.
@@ -66,43 +70,17 @@ public class KaiTaiPanel extends JPanel {
 		lblNewLabel_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		JPanel panel = new JPanel();
-		
-		JScrollPane panel_2 = new JScrollPane();
-		
-		JPanel scrollPane_1 = new JPanel();
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		panel_2.setLayout(gl_panel_2);
 		setLayout(new BorderLayout(0, 0));
 		add(lblNewLabel_2, BorderLayout.NORTH);
 		add(panel);
 														GroupLayout gl_panel = new GroupLayout(panel);
 														gl_panel.setHorizontalGroup(
 															gl_panel.createParallelGroup(Alignment.LEADING)
-																.addGroup(gl_panel.createSequentialGroup()
-																	.addContainerGap()
-																	.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
-																	.addContainerGap())
+																.addGap(0, 530, Short.MAX_VALUE)
 														);
 														gl_panel.setVerticalGroup(
-															gl_panel.createParallelGroup(Alignment.TRAILING)
-																.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-																	.addContainerGap()
-																	.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-																	.addContainerGap())
+															gl_panel.createParallelGroup(Alignment.LEADING)
+																.addGap(0, 333, Short.MAX_VALUE)
 														);
 														panel.setLayout(gl_panel);
 		
@@ -121,8 +99,8 @@ public class KaiTaiPanel extends JPanel {
 																
 																		JLabel lblNewLabel = new JLabel("\u62BC\u91D1\uFF1A");
 																		
-																				JSpinner spinner = new JSpinner();
-																				spinner.setModel(new SpinnerNumberModel(new Integer(200), null, null, new Integer(1)));
+																				JLabel spinner = new JLabel();
+																				spinner.setText("200");
 																				
 																						JPanel lblNewLabel_1 = new JPanel();
 																						lblNewLabel_1
@@ -157,15 +135,16 @@ public class KaiTaiPanel extends JPanel {
 																									.addContainerGap())
 																						);
 																						panel_3.setLayout(gl_panel_3);
-																
-																		textCustomerId = new JComboBox();
-																		textCustomerId.setEditable(true);
 																		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 																		
 																				JLabel label = new JLabel("\u67E5\u8BE2\u7528\u6237:");
 																		
 																		JPanel lblNewLabel_3 = new JPanel();
-																		lblNewLabel_3.setBorder(new TitledBorder(null, "\u7528\u6237\u4FE1\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+																		lblNewLabel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u5F53\u524D\u7528\u6237\u4FE1\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+																		
+																		JLayeredPane layeredPane = new JLayeredPane();
+																		
+																		JButton btnNewButton = new JButton("\u66F4\u6362\u7528\u6237");
 																		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
 																		gl_panel_5.setHorizontalGroup(
 																			gl_panel_5.createParallelGroup(Alignment.LEADING)
@@ -176,19 +155,25 @@ public class KaiTaiPanel extends JPanel {
 																						.addGroup(gl_panel_5.createSequentialGroup()
 																							.addComponent(label, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 																							.addPreferredGap(ComponentPlacement.RELATED)
-																							.addComponent(textCustomerId, GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
+																							.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+																								.addComponent(btnNewButton)
+																								.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
 																					.addContainerGap())
 																		);
 																		gl_panel_5.setVerticalGroup(
 																			gl_panel_5.createParallelGroup(Alignment.LEADING)
 																				.addGroup(gl_panel_5.createSequentialGroup()
-																					.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
-																						.addComponent(label, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-																						.addComponent(textCustomerId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-																					.addPreferredGap(ComponentPlacement.RELATED)
-																					.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+																					.addContainerGap()
+																					.addGroup(gl_panel_5.createParallelGroup(Alignment.TRAILING)
+																						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+																						.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+																							.addComponent(label, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+																							.addComponent(btnNewButton)))
+																					.addPreferredGap(ComponentPlacement.UNRELATED)
+																					.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
 																					.addContainerGap())
 																		);
+																		layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
 																		
 																		JLabel lblNewLabel_4 = new JLabel("\u7528\u6237\u540D:");
 																		
@@ -247,6 +232,7 @@ public class KaiTaiPanel extends JPanel {
 //		upDateCustomerList();
 
 	}
+
 
 	void upDateCustomerList() {
 //		String text = textCustomerId.getText();

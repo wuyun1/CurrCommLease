@@ -18,6 +18,9 @@ public class KaiTaiMgr extends JPanel {
 		
 		KaiTaiPanel panel = new KaiTaiPanel();
 		tabbedPane.addTab("×â³µ", null, panel, null);
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_1, null);
 
 	}
 

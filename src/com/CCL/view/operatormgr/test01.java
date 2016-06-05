@@ -1,4 +1,4 @@
-package com.CCL.view.kaitaimgr.test;
+package com.CCL.view.operatormgr;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,9 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.CCL.view.huiyuan.VipManager;
-
-public class TesetF extends JFrame {
+public class test01 extends JFrame {
 
 	private JPanel contentPane;
 
@@ -20,7 +18,7 @@ public class TesetF extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TesetF frame = new TesetF();
+					test01 frame = new test01();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,15 +30,15 @@ public class TesetF extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TesetF() {
+	public test01() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 779, 578);
+		setBounds(100, 100, 690, 443);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		VipManager panel = new VipManager();
+		OperatorMgr panel = new OperatorMgr();
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 

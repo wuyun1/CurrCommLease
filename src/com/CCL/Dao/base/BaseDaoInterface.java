@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 public interface BaseDaoInterface<T> {
+	
+	
+	//查询单个对象
 	T get(int id);
-
+	
+	//查询所以数据库对象
 	List<T> queryAll();
 	
+	//获取数据库记录调试
 	long count();
 
 	int remove(int id);

@@ -26,18 +26,7 @@ public class InitDB {
 	private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
 	private static String configFile = CONFIG_FILE_LOCATION;
 
-	BicycleDao bicycleDao = null;
-	BicycleStateDao bicycleStateDao = null;
-	BicycleTypeDao bicycleTypeDao = null;
-	BillDao billDao = null;
-	CustomerDao customerDao = null;
-	CustomerStateDao customerStateDao = null;
-	CustomerTypeDao customerTypeDao = null;
-	OpeperDao opeperDao = null;
-	OpeUserDao opeUserDao = null;
-	OrderDao orderDao = null;
-	OrderStateDao orderStateDao = null;
-
+	
 	public static void main(String[] args) {
 		
 		configuration.configure(configFile);
