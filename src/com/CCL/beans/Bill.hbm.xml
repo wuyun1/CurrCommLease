@@ -17,9 +17,20 @@
         <property name="payWay" type="java.lang.String">
             <column name="PAYWAY" />
         </property>
+        
+         <property name="customerName" type="java.lang.String">
+            <column name="CUSTOMER_NAME" />
+        </property>
+         <property name="customerId" type="java.lang.Integer">
+            <column name="CUSTOMER_ID" />
+        </property>
         <property name="total" type="float">
             <column name="TOTAL" />
         </property>
+        
+          <many-to-one name="order" class="com.CCL.beans.Order" fetch="join">
+            <column name="ORDER_ID" />
+        </many-to-one>
         
                 
             <property name="isShow" type="java.lang.Boolean">

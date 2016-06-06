@@ -8,6 +8,7 @@ package com.CCL.view.huiyuan.son;
 
 import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
+import com.CCL.util.DateUtil;
 import com.CCL.view.huiyuan.VipManager;
 import com.CCL.view.huiyuan.service.CustomerService;
 
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -193,23 +195,45 @@ jbt_ok.addActionListener(new ActionListener() {
 		DefaultListModel model = new DefaultListModel();
 
 		Customer ct = CustomerService.query(name);
+		if(ct.getCustomerState().getName().equals("注销")){
+			JOptionPane.showMessageDialog(null, "此客户已经被注销过！");
+			txt_name.setText(null);
+			txt_password.setText(null);
+			return ;
+		}else {
 		
+	    CustomerState cst = CustomerService.getStateByName("注销");
+
+		ct.setCustomerState(cst);
+//		
 		if (ct == null) {
 			// JOptionPane.showMessageDialog(null, "");
 			model.addElement("客户不存在！！！");
 		} else {
+			
 			if(password.equals(ct.getPassword())){
 				model.addElement("姓名:" + ct.getName());
 				model.addElement("性别:" + ct.getSex());
 				model.addElement("电话:" + ct.getPhone());
-//				model.addElement("状态："+ct.getCustomerState().getName());
+				model.addElement("类型：" + ct.getCustomerType().getName());
+				model.addElement("余额:" + ct.getMoney());
+				model.addElement("状态:" + ct.getCustomerState().getName());
+				model.addElement("积分:" + ct.getIntegral());
+				model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
+				model.addElement("地址:" + ct.getAddress());
+				model.addElement("EMAIL:" + ct.getEmail());
 			}
 			
 		}
-
-		jList1.setModel(model);
+		int i=JOptionPane.showConfirmDialog(null, "确定注销此客户？", null, JOptionPane.WARNING_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+		System.out.println(i);
+		if(i!=2){
+			jList1.setModel(model);
+			
+			CustomerService.update(ct);
+		}
+		}
 		
-		CustomerService.update(ct);
 	}
 });
 jbt_ok.setBounds(400, 107, 69, 23);
@@ -244,14 +268,30 @@ jbt_save.addActionListener(new ActionListener() {
 		Customer ct = CustomerService.query(name);
 		if(password.equals(ct.getPassword())){
 			ct.setPassword(txt_newpassword.getText());
-//			CustomerState cts = new CustomerState();
-//			cts.setName("激活");
-//			ct.setCustomerState(cts);
+			
+			CustomerState cst = CustomerService.getStateByName("激活");
+
+			ct.setCustomerState(cst);
+			
+			DefaultListModel model = new DefaultListModel();
+			model.addElement("姓名:" + ct.getName());
+			model.addElement("性别:" + ct.getSex());
+			model.addElement("电话:" + ct.getPhone());
+			model.addElement("类型：" + ct.getCustomerType().getName());
+			model.addElement("余额:" + ct.getMoney());
+			model.addElement("状态:" + ct.getCustomerState().getName());
+			model.addElement("积分:" + ct.getIntegral());
+			model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
+			model.addElement("地址:" + ct.getAddress());
+			model.addElement("EMAIL:" + ct.getEmail());
+			
+			jList1.setModel(model);
 			
 			CustomerService.update(ct);
+			
 			JOptionPane.showMessageDialog(null, ct.getName()+"客户已经成功补办！");
+			}
 		
-		}
 	}
 });
 jbt_save.setBounds(215, 388, 69, 23);
@@ -261,7 +301,8 @@ jbt_cancle2.addActionListener(new ActionListener() {
 		txt_newname.setText("");
 		txt_oldpass.setText("");
 		txt_newpassword.setText("");
-		
+		DefaultListModel model = new DefaultListModel();
+		jList1.setModel(model);
 	}
 });
 jbt_cancle2.setBounds(323, 388, 69, 23);
@@ -314,7 +355,7 @@ add(lbl_name);
 lbl_oldpass = new JLabel("\u539F \u5BC6 \u7801\uFF1A");
 lbl_oldpass.setBounds(61, 240, 83, 15);
 add(lbl_oldpass);
-txt_oldpass = new JTextField();
+txt_oldpass = new JPasswordField();
 txt_oldpass.setBounds(137, 237, 134, 21);
 add(txt_oldpass);
 txt_oldpass.setColumns(10);
@@ -343,5 +384,5 @@ txt_oldpass.setColumns(10);
 	private javax.swing.JTextField txt_name;
 	private JLabel lbl_name;
 	private JLabel lbl_oldpass;
-	private JTextField txt_oldpass;
+	private JPasswordField txt_oldpass;
 }

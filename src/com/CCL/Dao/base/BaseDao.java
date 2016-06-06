@@ -103,27 +103,33 @@ public abstract class BaseDao<T> {
 		return session.createQuery("from " + getEntityClass().getName()).list();
 	}
 
-	public int remove(int id) {
+	public boolean remove(int id) {
 		String hql = "delete " + getEntityClass().getName() + " where id=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, id);
 		int result = query.executeUpdate();
 		getSession().beginTransaction().commit();
-		return result;
+		return result>=1;
 	}
 
-	public Serializable add(T obj) {
+	public boolean add(T obj) {
 		Session session = getSession();
 		 Serializable result = session.save(obj);
 		session.beginTransaction().commit();
-		return result;
+		return result!=null;
 		
 	}
 
-	public void update(T obj) {
-		Session session = getSession();
-		session.update(obj);
-		session.beginTransaction().commit();
+	public boolean update(T obj) {
+		try{
+			Session session = getSession();
+			session.update(obj);
+			session.beginTransaction().commit();
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+		
 	}
 	
 	public long count() {

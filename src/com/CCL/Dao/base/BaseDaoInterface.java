@@ -5,22 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface BaseDaoInterface<T> {
-	
-	
-	//查询单个对象
 	T get(int id);
-	
-	//查询所以数据库对象
+
 	List<T> queryAll();
 	
-	//获取数据库记录调试
 	long count();
 
-	int remove(int id);
+	boolean remove(int id);
 
-	Serializable add(T bicycle);
+	boolean add(T bicycle);
 
-	void update(T bicycle);
+	boolean update(T bicycle);
 	
 	//通过对象查询
 	List<T> queryByExample(T instance);

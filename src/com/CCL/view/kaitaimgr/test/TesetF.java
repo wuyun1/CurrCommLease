@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.CCL.view.huiyuan.VipManager;
+import com.CCL.view.kaitaimgr.KaiTaiMgr;
+import com.CCL.view.kaitaimgr.son.KaiTaiPanel;
 
 public class TesetF extends JFrame {
 
@@ -40,7 +42,7 @@ public class TesetF extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		VipManager panel = new VipManager();
+		KaiTaiMgr panel = new KaiTaiMgr();
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 

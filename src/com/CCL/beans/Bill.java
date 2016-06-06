@@ -16,6 +16,10 @@ public class Bill {
 	private Date outTime;
 	// 消费时长 (分钟)
 	private Long delay;
+	// 
+	private Order order;
+	private String customerName;
+	private Integer customerId;
 	// 结账方式
 	private String payWay;
 	// 总金额
@@ -30,13 +34,43 @@ public class Bill {
 		this.id = id;
 	}
 
-	public Bill(Date outTime, Long delay, String payWay, float total) {
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+	public Bill(Date outTime, Long delay, Order order, String customerName, Integer customerId, String payWay,
+			float total) {
 		super();
 		this.outTime = outTime;
 		this.delay = delay;
+		this.order = order;
+		this.customerName = customerName;
+		this.customerId = customerId;
 		this.payWay = payWay;
 		this.total = total;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public Bill() {
 		super();
@@ -82,11 +116,13 @@ public class Bill {
 		this.total = total;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Bill [id=" + id + ", outTime=" + outTime + ", delay=" + delay
-				+ ", payWay=" + payWay + ", total=" + total + "]";
+		return "Bill [id=" + id + ", outTime=" + outTime + ", delay=" + delay + ", order=" + order + ", customerName="
+				+ customerName + ", payWay=" + payWay + ", total=" + total + ", isShow=" + isShow + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -121,5 +157,69 @@ public class Bill {
 		this.isShow = isShow;
 	}
 
-	
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+
+
+
+
+
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+
+
+
+
+
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+
+
+
+
 }

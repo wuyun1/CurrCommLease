@@ -4,288 +4,322 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.AbstractListModel;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import com.CCL.beans.Bicycle;
+import com.CCL.beans.BicycleType;
 import com.CCL.beans.Customer;
-import com.CCL.view.kaitaimgr.service.CustomerService;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.CaretEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
-import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLayeredPane;
-import javax.swing.UIManager;
+import com.CCL.beans.CustomerType;
+import com.CCL.view.huiyuan.service.CustomerTypeService;
+import com.CCL.view.kaitaimgr.service.BicycleService;
+import com.CCL.view.kaitaimgr.service.BicycleTypeService;
+import java.awt.FlowLayout;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.AbstractListModel;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.JTextPane;
 
 public class KaiTaiPanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
+
+	FindCustomerDialog findCustomerDialog;
+
+	Customer currentCustomer = null;
+	Bicycle currentBicycle = null;
+	private JLabel lbl_UserName;
+	private JLabel lbl_score;
+	private JLabel lbl_userType;
+	private JComboBox<BicycleType> cb_bicycleType;
+	private JList<Bicycle> list;
+	private JTextPane msgBox;
+
 	public KaiTaiPanel() {
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent arg0) {
-				upDateCustomerList();
-			}
-		});
 
 		JLabel lblNewLabel_2 = new JLabel("\u795D\u60A8\u65C5\u884C\u6109\u5FEB");
-		
+
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		lblNewLabel_2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		JPanel panel = new JPanel();
 		setLayout(new BorderLayout(0, 0));
 		add(lblNewLabel_2, BorderLayout.NORTH);
 		add(panel);
-														GroupLayout gl_panel = new GroupLayout(panel);
-														gl_panel.setHorizontalGroup(
-															gl_panel.createParallelGroup(Alignment.LEADING)
-																.addGap(0, 530, Short.MAX_VALUE)
-														);
-														gl_panel.setVerticalGroup(
-															gl_panel.createParallelGroup(Alignment.LEADING)
-																.addGap(0, 333, Short.MAX_VALUE)
-														);
-														panel.setLayout(gl_panel);
-		
+		panel.setLayout(new BorderLayout(0, 0));
+
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, BorderLayout.CENTER);
+
+		list = new JList<Bicycle>();
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				currentBicycle = list.getSelectedValue();
+				updateShowMsg();
+			}
+		});
+		list.setCellRenderer(new BicycleListRenderer());
+		scrollPane.setViewportView(list);
+
 		JPanel panel_4 = new JPanel();
 		add(panel_4, BorderLayout.SOUTH);
-		
-				JButton button = new JButton("\u786E\u5B9A");
-				panel_4.add(button);
-				
-				JPanel panel_1 = new JPanel();
-				add(panel_1, BorderLayout.WEST);
-																
-																JPanel panel_5 = new JPanel();
-																
-																JPanel panel_3 = new JPanel();
-																
-																		JLabel lblNewLabel = new JLabel("\u62BC\u91D1\uFF1A");
-																		
-																				JLabel spinner = new JLabel();
-																				spinner.setText("200");
-																				
-																						JPanel lblNewLabel_1 = new JPanel();
-																						lblNewLabel_1
-																								.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-																						
-																						JComboBox comboBox = new JComboBox();
-																						GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-																						gl_panel_3.setHorizontalGroup(
-																							gl_panel_3.createParallelGroup(Alignment.LEADING)
-																								.addGroup(gl_panel_3.createSequentialGroup()
-																									.addContainerGap()
-																									.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-																										.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-																										.addGroup(gl_panel_3.createSequentialGroup()
-																											.addComponent(lblNewLabel)
-																											.addPreferredGap(ComponentPlacement.RELATED)
-																											.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-																											.addPreferredGap(ComponentPlacement.RELATED)
-																											.addComponent(comboBox, 0, 131, Short.MAX_VALUE)))
-																									.addContainerGap())
-																						);
-																						gl_panel_3.setVerticalGroup(
-																							gl_panel_3.createParallelGroup(Alignment.LEADING)
-																								.addGroup(gl_panel_3.createSequentialGroup()
-																									.addContainerGap()
-																									.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-																										.addComponent(lblNewLabel)
-																										.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-																										.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-																									.addPreferredGap(ComponentPlacement.RELATED)
-																									.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-																									.addContainerGap())
-																						);
-																						panel_3.setLayout(gl_panel_3);
-																		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-																		
-																				JLabel label = new JLabel("\u67E5\u8BE2\u7528\u6237:");
-																		
-																		JPanel lblNewLabel_3 = new JPanel();
-																		lblNewLabel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u5F53\u524D\u7528\u6237\u4FE1\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-																		
-																		JLayeredPane layeredPane = new JLayeredPane();
-																		
-																		JButton btnNewButton = new JButton("\u66F4\u6362\u7528\u6237");
-																		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
-																		gl_panel_5.setHorizontalGroup(
-																			gl_panel_5.createParallelGroup(Alignment.LEADING)
-																				.addGroup(gl_panel_5.createSequentialGroup()
-																					.addContainerGap()
-																					.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
-																						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-																						.addGroup(gl_panel_5.createSequentialGroup()
-																							.addComponent(label, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-																							.addPreferredGap(ComponentPlacement.RELATED)
-																							.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
-																								.addComponent(btnNewButton)
-																								.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
-																					.addContainerGap())
-																		);
-																		gl_panel_5.setVerticalGroup(
-																			gl_panel_5.createParallelGroup(Alignment.LEADING)
-																				.addGroup(gl_panel_5.createSequentialGroup()
-																					.addContainerGap()
-																					.addGroup(gl_panel_5.createParallelGroup(Alignment.TRAILING)
-																						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-																						.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
-																							.addComponent(label, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-																							.addComponent(btnNewButton)))
-																					.addPreferredGap(ComponentPlacement.UNRELATED)
-																					.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-																					.addContainerGap())
-																		);
-																		layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
-																		
-																		JLabel lblNewLabel_4 = new JLabel("\u7528\u6237\u540D:");
-																		
-																		JLabel label_1 = new JLabel("\u7528\u6237\u79EF\u5206:");
-																		
-																		JLabel label_2 = new JLabel("\u5C0F\u9EC4");
-																		
-																		JLabel label_3 = new JLabel("30");
-																		
-																		JLabel lblNewLabel_5 = new JLabel("\u7528\u6237\u7C7B\u578B:");
-																		
-																		JLabel label_4 = new JLabel("30");
-																		GroupLayout gl_lblNewLabel_3 = new GroupLayout(lblNewLabel_3);
-																		gl_lblNewLabel_3.setHorizontalGroup(
-																			gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
-																				.addGroup(gl_lblNewLabel_3.createSequentialGroup()
-																					.addContainerGap()
-																					.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
-																						.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.TRAILING, false)
-																							.addComponent(label_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																							.addComponent(lblNewLabel_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-																						.addComponent(lblNewLabel_4))
-																					.addPreferredGap(ComponentPlacement.UNRELATED)
-																					.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
-																						.addComponent(label_2, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-																						.addComponent(label_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-																						.addComponent(label_4, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-																					.addContainerGap())
-																		);
-																		gl_lblNewLabel_3.setVerticalGroup(
-																			gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
-																				.addGroup(gl_lblNewLabel_3.createSequentialGroup()
-																					.addContainerGap()
-																					.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE)
-																						.addComponent(lblNewLabel_4)
-																						.addComponent(label_2))
-																					.addPreferredGap(ComponentPlacement.UNRELATED)
-																					.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE)
-																						.addComponent(label_1)
-																						.addComponent(label_3))
-																					.addPreferredGap(ComponentPlacement.UNRELATED)
-																					.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE)
-																						.addComponent(lblNewLabel_5)
-																						.addComponent(label_4))
-																					.addContainerGap(23, Short.MAX_VALUE))
-																		);
-																		lblNewLabel_3.setLayout(gl_lblNewLabel_3);
-																		panel_5.setLayout(gl_panel_5);
-																panel_1.add(panel_5);
-																panel_1.add(panel_3);
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-					}
-				});
 
-//		upDateCustomerList();
+		JButton button = new JButton("\u786E\u5B9A\u4FE1\u606F");
+		panel_4.add(button);
 
-	}
+		JPanel panel_1 = new JPanel();
+		add(panel_1, BorderLayout.WEST);
 
+		JPanel panel_5 = new JPanel();
 
-	void upDateCustomerList() {
-//		String text = textCustomerId.getText();
-//		if("".equals(text)){
-//			list.setModel(new MyCustomerModel(CustomerService.getAll()));
-//		}else{
-//			list.setModel(new MyCustomerModel(CustomerService.getAllByIdUseLike(text)));
-//		}
-	}
+		JPanel panel_3 = new JPanel();
 
-	class MyCustomerModel extends AbstractListModel<Customer> {
+		JLabel lblNewLabel = new JLabel("\u62BC\u91D1\uFF1A");
 
-		public MyCustomerModel(List<Customer> values) {
-			this.values.addAll(values);
+		JLabel spinner = new JLabel();
+		spinner.setText("200");
 
+		msgBox = new JTextPane();
+		msgBox
+				.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		cb_bicycleType = new JComboBox<BicycleType>();
+		cb_bicycleType.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BicycleType selectedItem = (BicycleType) cb_bicycleType.getSelectedItem();
+				if (selectedItem == null)
+					return;
+				List<Bicycle> bicycles = BicycleService.queryByType(selectedItem);
+				list.setModel(new MyListModel(bicycles));
+			}
+		});
+
+		List<BicycleType> allType = BicycleTypeService.getAllType();
+		if (allType != null && !allType.isEmpty()) {
+			cb_bicycleType.setModel(new DefaultComboBoxModel<BicycleType>(allType.toArray(new BicycleType[] {})));
+			ActionListener[] actionListeners = cb_bicycleType.getActionListeners();
+			if (actionListeners.length > 0) {
+				actionListeners[0].actionPerformed(null);
+			}
 		}
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		List<Customer> values = new ArrayList<Customer>();
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup().addContainerGap()
+						.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+								.addComponent(msgBox, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+								.addGroup(gl_panel_3.createSequentialGroup().addComponent(lblNewLabel)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 62,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(cb_bicycleType, 0, 131, Short.MAX_VALUE)))
+						.addContainerGap()));
+		gl_panel_3.setVerticalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_3
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel)
+						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(cb_bicycleType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(msgBox, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE).addContainerGap()));
+		panel_3.setLayout(gl_panel_3);
+		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 
-		@Override
-		public Customer getElementAt(int index) {
-			return values.get(index);
+		JLabel label = new JLabel("\u67E5\u8BE2\u7528\u6237:");
 
+		JPanel lblNewLabel_3 = new JPanel();
+		lblNewLabel_3.setBorder(
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u5F53\u524D\u7528\u6237\u4FE1\u606F",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+
+		JLayeredPane layeredPane = new JLayeredPane();
+
+		JButton btnNewButton = new JButton("\u5207\u6362\u7528\u6237");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (findCustomerDialog == null) {
+					findCustomerDialog = new FindCustomerDialog(KaiTaiPanel.this);
+					findCustomerDialog.setModal(true);
+				}
+				findCustomerDialog.setLocationRelativeTo(null);
+				findCustomerDialog.setVisible(true);
+			}
+		});
+		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
+		gl_panel_5.setHorizontalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_5
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+						.addGroup(gl_panel_5.createSequentialGroup()
+								.addComponent(label, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING).addComponent(btnNewButton)
+										.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
+				.addContainerGap()));
+		gl_panel_5
+				.setVerticalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_5.createSequentialGroup().addContainerGap()
+								.addGroup(gl_panel_5.createParallelGroup(Alignment.TRAILING)
+										.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+												.addComponent(label, GroupLayout.PREFERRED_SIZE, 28,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnNewButton)))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+								.addContainerGap()));
+		layeredPane.setLayout(new BoxLayout(layeredPane, BoxLayout.X_AXIS));
+
+		JLabel lblNewLabel_4 = new JLabel("\u7528\u6237\u540D:");
+
+		JLabel label_1 = new JLabel("\u7528\u6237\u79EF\u5206:");
+
+		lbl_UserName = new JLabel("\u5C0F\u9EC4");
+
+		lbl_score = new JLabel("30");
+
+		JLabel lblNewLabel_5 = new JLabel("\u7528\u6237\u7C7B\u578B:");
+
+		lbl_userType = new JLabel("\u9EC4\u91D1");
+		GroupLayout gl_lblNewLabel_3 = new GroupLayout(lblNewLabel_3);
+		gl_lblNewLabel_3.setHorizontalGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_lblNewLabel_3.createSequentialGroup().addContainerGap()
+						.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(label_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(lblNewLabel_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE))
+								.addComponent(lblNewLabel_4))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
+								.addComponent(lbl_UserName, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+								.addComponent(lbl_score, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 143,
+										Short.MAX_VALUE)
+								.addComponent(lbl_userType, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+						.addContainerGap()));
+		gl_lblNewLabel_3
+				.setVerticalGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_lblNewLabel_3.createSequentialGroup().addContainerGap()
+								.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblNewLabel_4).addComponent(lbl_UserName))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE).addComponent(label_1)
+										.addComponent(lbl_score))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblNewLabel_5).addComponent(lbl_userType))
+								.addContainerGap(23, Short.MAX_VALUE)));
+		lblNewLabel_3.setLayout(gl_lblNewLabel_3);
+		panel_5.setLayout(gl_panel_5);
+		panel_1.add(panel_5);
+		panel_1.add(panel_3);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int result = JOptionPane.showConfirmDialog(null, msgBox.getText(), "请确认您的信息",JOptionPane.YES_NO_OPTION);
+				
+				if(result==JOptionPane.OK_OPTION){
+					 JOptionPane.showMessageDialog(null, "成功添加订单");
+				}
+				
+			}
+		});
+
+		// upDateCustomerList();
+
+	}
+
+	public void setCurrCustomer(Customer currentUser) {
+
+		if (currentUser == null)
+			return;
+		currentCustomer = currentUser;
+
+		lbl_UserName.setText(currentUser.getName());
+		int integral = currentUser.getIntegral() == null ? 0 : currentUser.getIntegral();
+		lbl_score.setText(integral + "");
+		lbl_userType.setText(currentUser.getCustomerType() + "");
+		updateShowMsg();
+
+	}
+
+	class MyListModel extends AbstractListModel<Bicycle> {
+
+		List<Bicycle> bicycles = null;
+
+		public MyListModel(List<Bicycle> bicycles) {
+			this.bicycles = bicycles;
 		}
 
 		@Override
 		public int getSize() {
-			return values.size();
+			return bicycles.size();
 		}
 
+		@Override
+		public Bicycle getElementAt(int index) {
+			return bicycles.get(index);
+		}
 	}
 
-
-
-	class MyCellRenderer extends JPanel implements ListCellRenderer<Customer> {
-		public MyCellRenderer() {
+	class BicycleListRenderer extends JPanel  implements ListCellRenderer<Bicycle> {
+		ImageIcon BicycleImage = new ImageIcon("images\\MJBtn\\自行车.png");
+		JLabel txt_id = new JLabel();
+		JLabel txt_name = new JLabel();
+		JLabel txt_price = new JLabel();
+		JLabel txt_desc = new JLabel();
+		JPanel msgPanel = new JPanel(new GridLayout(2, 2));
+		public BicycleListRenderer() {
 			this.setLayout(new BorderLayout());
+			add(new JLabel(BicycleImage),BorderLayout.WEST);
+			msgPanel.add(txt_id);
+			msgPanel.add(txt_name);
+			msgPanel.add(txt_price);
+			msgPanel.add(txt_desc);
+			add(msgPanel);
 			setOpaque(true);
 		}
 
-		
-
 		@Override
-		public Component getListCellRendererComponent(JList<? extends Customer> list, Customer value, int index,
-				boolean isSelected, boolean cellHasFocus) {
-			removeAll();
+		public Component getListCellRendererComponent(JList list, Bicycle value, int index, boolean isSelected,
+				boolean cellHasFocus) {
 			
-			add(new JLabel(new ImageIcon("images\\MJBtn\\man.png")),BorderLayout.WEST);
-			add(new JLabel(value.getId()+" : "+value.getName()));
+//			removeAll();
+			txt_id.setText("ID: "+value.getId());
+			txt_name.setText("名称: "+value.getName());
+			txt_price.setText("价格: "+value.getPrice());
+			txt_desc.setText("介绍: "+value.getDescript());
 
 			Color background;
 			Color foreground;
@@ -294,12 +328,15 @@ public class KaiTaiPanel extends JPanel {
 			JList.DropLocation dropLocation = list.getDropLocation();
 			if (dropLocation != null && !dropLocation.isInsert() && dropLocation.getIndex() == index) {
 
-				background = Color.BLUE;
+				
+				background = Color.RED;
 				foreground = Color.WHITE;
+				
 
 				// check if this cell is selected
 			} else if (isSelected) {
-				background = Color.RED;
+				
+				background = Color.BLUE;
 				foreground = Color.WHITE;
 
 				// unselected, and not the DnD drop location
@@ -311,8 +348,50 @@ public class KaiTaiPanel extends JPanel {
 
 			setBackground(background);
 			setForeground(foreground);
+			txt_id.setForeground(foreground);
+			txt_name.setForeground(foreground);
+			txt_price.setForeground(foreground);
+			txt_desc.setForeground(foreground);
+			
+			txt_id.setBackground(background);
+			txt_name.setBackground(background);
+			txt_price.setBackground(background);
+			txt_desc.setBackground(background);
+			
+			msgPanel.setBackground(background);
+			msgPanel.setForeground(foreground);
 
 			return this;
+			
 		}
+
 	}
+	
+	
+	
+
+	void updateShowMsg(){
+		msgBox.setText("");
+		
+		if(currentCustomer != null){
+			msgBox.setText(msgBox.getText()+"欢迎您,"+currentCustomer.getName()+("女".equals(currentCustomer.getSex())?"女士":"先生")+"\n");
+			String customerTypestr = currentCustomer.getCustomerType()==null?"普通":   currentCustomer.getCustomerType().toString() ;
+			msgBox.setText(msgBox.getText()+"欢迎您的身份是:"+customerTypestr+"客户\n");
+		}else{
+			msgBox.setText(msgBox.getText()+"您当前还未选择任何用户"+"\n");
+		}
+		
+		if(currentBicycle != null){
+			msgBox.setText(msgBox.getText()+"您选择的车辆是: "+currentBicycle.getName()+"\n");
+			
+		}else{
+			msgBox.setText(msgBox.getText()+"您当前还未选择任何车"+"\n");
+		}
+		
+		
+	}
+
+
+		
+	
 }

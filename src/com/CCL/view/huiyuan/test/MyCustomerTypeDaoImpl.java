@@ -46,7 +46,7 @@ public class MyCustomerTypeDaoImpl implements CustomerTypeDao {
 	}
 
 	@Override
-	public int remove(int id) {
+	public boolean remove(int id) {
 		
 		for (CustomerType customerType : t) {
 			if(customerType.getId().equals(id)){
@@ -54,19 +54,20 @@ public class MyCustomerTypeDaoImpl implements CustomerTypeDao {
 				break;
 			}
 		}
-		return 0;
+		return true;
 
 	}
 
 	@Override
-	public Serializable add(CustomerType customerType) {
+	public boolean add(CustomerType customerType) {
 		customerType.setId(++count);
 		return t.add(customerType);
 		
 	}
 
 	@Override
-	public void update(CustomerType customerType) {
+	public boolean update(CustomerType customerType) {
+		return false;
 		// TODO Auto-generated method stub
 
 	}

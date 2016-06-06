@@ -83,6 +83,13 @@ public class V_regist extends javax.swing.JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(CustomerService.existUsername(txt_name.getText())){
 					JOptionPane.showMessageDialog(null, "客户名已经存在,修改客户名！", "提示", JOptionPane.ERROR_MESSAGE);
+					
+					txt_address.setText(null);
+					txt_email.setText(null);
+					txt_name.setText(null);
+					txt_password.setText(null);
+					txt_tel.setText(null);	
+					lbl_info.setText(null);
 					return ;
 				}
 				
@@ -93,9 +100,7 @@ public class V_regist extends javax.swing.JPanel {
 				ct.setCustomerType((CustomerType) jComboBox1.getSelectedItem());
 				ct.setEmail(txt_email.getText());
 				ct.setPhone(txt_tel.getText());
-//				CustomerState cts = new CustomerState();
-//				cts.setName("激活");
-//				ct.setCustomerState(cts);
+				ct.setCustomerState(CustomerService.getStateByName("激活"));
 				ct.setIntegral(0);
 				ct.setMoney(0f);
 				if(jc_male.isSelected())
@@ -135,6 +140,7 @@ public class V_regist extends javax.swing.JPanel {
 				txt_password.setText(null);
 				txt_tel.setText(null);	
 				lbl_info.setText(null);
+				
 			}
 			
 		});
@@ -153,7 +159,7 @@ public class V_regist extends javax.swing.JPanel {
 		jc_famale = new JRadioButton();
 		sex_group.add(jc_famale);
 		jc_famale.setBounds(267, 180, 51, 23);
-
+		jc_male.setSelected(true);
 		lbl_name.setText("\u5ba2\u6237\u59d3\u540d\uff1a");
 
 		lbl_type.setText("\u5ba2\u6237\u7c7b\u578b\uff1a");
@@ -223,10 +229,11 @@ public class V_regist extends javax.swing.JPanel {
 		
 		lbl_info = new JLabel("");
 		lbl_info.setBorder(new TitledBorder(null, "\u6CE8\u518C\u4FE1\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		lbl_info.setBounds(413, 266, 283, 114);
+		lbl_info.setBounds(413, 266, 333, 114);
 		add(lbl_info);
 	}// </editor-fold>
 	//GEN-END:initComponents
+	
 
 	void updateTypeList(){
 		jComboBox1.setModel(new DefaultComboBoxModel(CustomerTypeService.getAllType().toArray()));

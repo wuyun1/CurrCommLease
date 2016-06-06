@@ -6,12 +6,12 @@
 
 package com.CCL.view.huiyuan.test;
 
-import com.CCL.view.huiyuan.VipManager;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+import com.CCL.view.huiyuan.VipManager;
 
 /**
  *
@@ -24,7 +24,7 @@ public class Test extends javax.swing.JFrame {
 		setSize(new Dimension(800, 600));
 
 		initComponents();
-		VipManager vipManager = new VipManager();
+		JPanel vipManager = new VipManager();
 		getContentPane().add(vipManager);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(vipManager);

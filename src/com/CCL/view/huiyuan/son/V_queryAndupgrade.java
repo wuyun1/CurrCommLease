@@ -20,6 +20,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.Color;
 
 /**
  *
@@ -111,13 +112,6 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		this.lbl_money = lbl_money;
 	}
 
-	public javax.swing.JLabel getLbl_money_print() {
-		return lbl_money_print;
-	}
-
-	public void setLbl_money_print(javax.swing.JLabel lbl_money_print) {
-		this.lbl_money_print = lbl_money_print;
-	}
 
 	public javax.swing.JLabel getLbl_newgrade() {
 		return lbl_newgrade;
@@ -207,16 +201,15 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		txt_password.setBounds(389, 39, 147, 21);
 		lbl_money = new javax.swing.JLabel();
 		lbl_money.setBounds(46, 105, 80, 15);
-		lbl_money_print = new javax.swing.JLabel();
-		lbl_money_print.setBounds(216, 94, 0, 0);
 		jLabel1 = new javax.swing.JLabel();
+		jLabel1.setForeground(Color.BLUE);
 		jLabel1.setBounds(136, 101, 104, 19);
 		jbt_cancle = new javax.swing.JButton();
 		jbt_cancle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txt_vname.setText("");
-				txt_password.setText("");
-				lbl_money_print.setText("");
+				txt_vname.setText(null);
+				txt_password.setText(null);
+				jLabel1.setText(null);
 			}
 		});
 		jbt_cancle.setBounds(479, 101, 75, 23);
@@ -235,6 +228,7 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		lbl_grade = new javax.swing.JLabel();
 		lbl_grade.setBounds(46, 258, 87, 15);
 		lbl_grade_old = new javax.swing.JLabel();
+		lbl_grade_old.setForeground(Color.BLUE);
 		lbl_grade_old.setBounds(134, 256, 168, 17);
 		lbl_newgrade = new javax.swing.JLabel();
 		lbl_newgrade.setBounds(367, 334, 60, 15);
@@ -260,10 +254,10 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		jbt_out = new javax.swing.JButton();
 		jbt_out.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txt_name_up.setText("");
-				txt_vid_password.setText("");
-				lbl_grade_old.setText("");
-				lbl_print.setText("");
+				txt_name_up.setText(null);
+				txt_vid_password.setText(null);
+				lbl_grade_old.setText(null);
+				lbl_print.setText(null);
 			}
 		});
 		jbt_out.setBounds(479, 384, 81, 23);
@@ -297,7 +291,6 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		add(txt_vname);
 		add(lbl_password);
 		add(txt_password);
-		add(lbl_money_print);
 		add(lbl_query);
 		add(lbl_upgrade);
 		add(jSeparator1);
@@ -350,6 +343,7 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 		add(lbl_integral);
 		
 		lbl_print = new JLabel("");
+		lbl_print.setForeground(Color.BLUE);
 		lbl_print.setBounds(116, 308, 100, 15);
 		add(lbl_print);
 	}// </editor-fold>
@@ -369,7 +363,6 @@ public class V_queryAndupgrade extends javax.swing.JPanel {
 	private javax.swing.JLabel lbl_grade;
 	private javax.swing.JLabel lbl_grade_old;
 	private javax.swing.JLabel lbl_money;
-	private javax.swing.JLabel lbl_money_print;
 	private javax.swing.JLabel lbl_newgrade;
 	private javax.swing.JLabel lbl_password;
 	private javax.swing.JLabel lbl_query;

@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import javax.swing.DefaultListModel;
 
 import com.CCL.beans.Customer;
+import com.CCL.util.DateUtil;
 import com.CCL.view.huiyuan.VipManager;
 import com.CCL.view.huiyuan.service.CustomerService;
 
@@ -157,12 +158,36 @@ public class V_savemoney extends javax.swing.JPanel {
 				
 				ct.setMoney(money);
 				CustomerService.update(ct);
+				DefaultListModel model = new DefaultListModel();
+				model.addElement("姓名:" + ct.getName());
+				model.addElement("性别:" + ct.getSex());
+				model.addElement("电话:" + ct.getPhone());
+				model.addElement("类型：" + ct.getCustomerType().getName());
+				model.addElement("余额:" + ct.getMoney());
+				model.addElement("状态:" + ct.getCustomerState().getName());
+				model.addElement("积分:" + ct.getIntegral());
+				model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
+				model.addElement("地址:" + ct.getAddress());
+				model.addElement("EMAIL:" + ct.getEmail());
 				lbl_succese.setText("你好！"+ct.getName()+"客户成功充值："+ct.getMoney()+"元");
 				
+				jlist_info.setModel(model);
 			}
 		});
 		jbt_sava.setBounds(329, 315, 69, 23);
 		jbt_cancle = new javax.swing.JButton();
+		jbt_cancle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txt_vname.setText(null);
+				txt_password.setText(null);
+				txt_money.setText(null);
+				DefaultListModel model = new DefaultListModel();
+				jlist_info.setModel(model);
+				
+				lbl_info.setText(null);
+			}
+			
+		});
 		jbt_cancle.setBounds(475, 315, 69, 23);
 		lbl_succese = new javax.swing.JLabel();
 		lbl_succese
@@ -208,6 +233,7 @@ public class V_savemoney extends javax.swing.JPanel {
 
 				Customer ct = CustomerService.query(name);
 				
+//				System.out.println(ct.getCustomerType().getName());
 				
 				if (ct == null) {
 					// JOptionPane.showMessageDialog(null, "");
@@ -218,7 +244,11 @@ public class V_savemoney extends javax.swing.JPanel {
 					model.addElement("姓名:" + ct.getName());
 					model.addElement("性别:" + ct.getSex());
 					model.addElement("电话:" + ct.getPhone());
-					model.addElement("出生日期:" + ct.getBirthday());
+					model.addElement("类型：" + ct.getCustomerType().getName());
+					model.addElement("余额:" + ct.getMoney());
+					model.addElement("状态:" + ct.getCustomerState().getName());
+					model.addElement("积分:" + ct.getIntegral());
+					model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
 					model.addElement("地址:" + ct.getAddress());
 					model.addElement("EMAIL:" + ct.getEmail());
 					}

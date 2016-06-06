@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import com.CCL.view.kaitaimgr.son.KaiTaiPanel;
+import com.CCL.view.kaitaimgr.son.CheckOutPanel;
 
 public class KaiTaiMgr extends JPanel {
 
@@ -17,10 +18,13 @@ public class KaiTaiMgr extends JPanel {
 		add(tabbedPane);
 		
 		KaiTaiPanel panel = new KaiTaiPanel();
-		tabbedPane.addTab("×â³µ", null, panel, null);
+		tabbedPane.addTab("\u5F00\u53F0", null, panel, null);
 		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_1, null);
+		CheckOutPanel panel_1 = new CheckOutPanel();
+		tabbedPane.addTab("\u7ED3\u8D26", null, panel_1, null);
+		
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("\u6362\u8F66", null, panel_2, null);
 
 	}
 

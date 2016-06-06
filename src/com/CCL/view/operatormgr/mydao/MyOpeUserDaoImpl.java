@@ -45,18 +45,7 @@ public class MyOpeUserDaoImpl implements OpeUserDao {
 //
 //	}
 
-	@Override
-	public void update(OpeUser opeUser) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public List<OpeUser> queryByExample(OpeUser instance) {
 		// TODO Auto-generated method stub
@@ -88,15 +77,29 @@ public class MyOpeUserDaoImpl implements OpeUserDao {
 	}
 
 	@Override
-	public int remove(int id) {
+	public boolean remove(int id) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	
+
+	@Override
+	public long count() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Serializable add(OpeUser bicycle) {
+	public boolean add(OpeUser bicycle) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	@Override
+	public boolean update(OpeUser bicycle) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

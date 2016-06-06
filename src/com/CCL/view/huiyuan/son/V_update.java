@@ -8,6 +8,7 @@ package com.CCL.view.huiyuan.son;
 
 import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
+import com.CCL.util.DateUtil;
 import com.CCL.view.huiyuan.VipManager;
 import com.CCL.view.huiyuan.service.CustomerService;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -36,7 +38,7 @@ import javax.swing.JRadioButton;
  */
 public class V_update extends javax.swing.JPanel {
 
-	
+	Customer currUser = null;
 	/** Creates new form V_update */
 	public V_update() {
 		
@@ -67,19 +69,43 @@ public class V_update extends javax.swing.JPanel {
 				String password = txt_passwrod.getText();
 				DefaultListModel model = new DefaultListModel();
 				Customer ct = CustomerService.query(name);
-				
+				currUser=ct;
 				if(password.equals(ct.getPassword())){
 					model.addElement("姓名:" + ct.getName());
 					model.addElement("性别:" + ct.getSex());
 					model.addElement("电话:" + ct.getPhone());
-					model.addElement("出生日期:" + ct.getBirthday());
+					model.addElement("类型：" + ct.getCustomerType().getName());
+					model.addElement("余额:" + ct.getMoney());
+					model.addElement("状态:" + ct.getCustomerState().getName());
+					model.addElement("积分:" + ct.getIntegral());
+					model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
 					model.addElement("地址:" + ct.getAddress());
 					model.addElement("EMAIL:" + ct.getEmail());
+					
+					
+					txt_newaddress.setText(ct.getAddress());
+					txt_newemail.setText(ct.getEmail());
+					txt_newpassword.setText(ct.getPassword());
+					txt_newtel.setText(ct.getPhone());	
+					
+				
+				}else {
+					JOptionPane.showMessageDialog(null, "客户密码错误或客户不存在！");
+					txt_name.setText("");
+					txt_passwrod.setText("");
 				}
 				list.setModel(model);
 			}
 		});
 		jbt_cancle = new javax.swing.JButton();
+		jbt_cancle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txt_name.setText("");
+				txt_passwrod.setText("");
+				DefaultListModel model = new DefaultListModel();
+				list.setModel(model);
+			}
+		});
 		jbt_cancle.setBounds(445, 66, 69, 23);
 		lbl_info = new javax.swing.JLabel();
 		lbl_info.setBounds(10, 127, 102, 15);
@@ -105,7 +131,9 @@ public class V_update extends javax.swing.JPanel {
 		jbt_newok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Customer ct = new Customer();
+				Customer ct =currUser ;
+				
+				ct.setName(txt_name.getText());
 				ct.setAddress(txt_newaddress.getText());
 				ct.setPassword(txt_newpassword.getText());
 				ct.setEmail(txt_newemail.getText());
@@ -115,6 +143,7 @@ public class V_update extends javax.swing.JPanel {
 				    ct.setSex(jrdio_male.getText());
 				else if(jrdio_famale.isSelected())
 					ct.setSex(jrdio_famale.getText());
+				
 				String y,m,d;
 				
 				y=(String)c_y.getSelectedItem();
@@ -134,6 +163,23 @@ public class V_update extends javax.swing.JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				DefaultListModel model = new DefaultListModel();
+					model.addElement("姓名:" + ct.getName());
+					model.addElement("性别:" + ct.getSex());
+					model.addElement("电话:" + ct.getPhone());
+					model.addElement("类型：" + ct.getCustomerType().getName());
+					model.addElement("余额:" + ct.getMoney());
+					model.addElement("状态:" + ct.getCustomerState().getName());
+					model.addElement("积分:" + ct.getIntegral());
+					model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
+					model.addElement("地址:" + ct.getAddress());
+					model.addElement("EMAIL:" + ct.getEmail());
+					
+				list.setModel(model);
+				CustomerService.update(ct);
+				
+				JOptionPane.showMessageDialog(null, "修改信息完成！！");
 			}
 		});
 		jbt_newok.setBounds(456, 437, 99, 23);
@@ -145,6 +191,10 @@ public class V_update extends javax.swing.JPanel {
 				txt_newpassword.setText(null);
 				txt_newtel.setText(null);	
 				lbl_info.setText(null);
+				txt_name.setText("");
+				txt_passwrod.setText("");
+				DefaultListModel model = new DefaultListModel();
+				list.setModel(model);
 			}
 		});
 		jButton1.setBounds(565, 437, 81, 23);
@@ -191,6 +241,7 @@ public class V_update extends javax.swing.JPanel {
 		lbl_sex.setBounds(76, 221, 60, 15);
 		
 		jrdio_male = new JRadioButton("\u7537");
+		
 		jrdio_male.setBounds(182, 217, 65, 23);
 		
 		jrdio_famale = new JRadioButton("\u5973");
@@ -199,6 +250,7 @@ public class V_update extends javax.swing.JPanel {
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(jrdio_male);;
 		bg.add(jrdio_famale);
+		jrdio_male.setSelected(true);
 		setLayout(null);
 		add(lbl_name);
 		add(txt_name);

@@ -3,11 +3,13 @@ package com.CCL.view.huiyuan.son;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -20,6 +22,8 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class V_typemanager extends JPanel {
 	private JTextField txt_type;
@@ -30,6 +34,15 @@ public class V_typemanager extends JPanel {
 	 * Create the panel.
 	 */
 	public V_typemanager() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				txt_type.setText(null);
+				lbl_resultinfo.setText(null);
+				
+				
+			}
+		});
 		
 		
 		JLabel lbl_type = new JLabel("\u5BA2\u6237\u7C7B\u522B\uFF1A");
@@ -65,13 +78,17 @@ public class V_typemanager extends JPanel {
 				
 				CustomerType selectedValue = list.getSelectedValue();
 				
-				CustomerTypeService.delete(selectedValue);
+				try {
+					CustomerTypeService.delete(selectedValue);
+					lbl_resultinfo.setText("成功移除客户类型！");
+					
+					updateTypeList();
+					
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "移除失败，此项已在数据中形成关系！", "错误", JOptionPane.ERROR_MESSAGE);
+				}
 				
-				lbl_resultinfo.setText("成功移除客户类型！");
-				
-				updateTypeList();
-				
-				
+
 			}
 		});
 		

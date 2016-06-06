@@ -22,21 +22,22 @@ public class MyCusDao implements CustomerDao {
 	}
 
 	@Override
-	public int  remove(int id) {
+	public boolean  remove(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 
 	}
 
 	@Override
-	public Serializable add(Customer customer) {
+	public boolean add(Customer customer) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 
 	}
 
 	@Override
-	public void update(Customer customer) {
+	public boolean update(Customer customer) {
+		return false;
 		// TODO Auto-generated method stub
 
 	}
