@@ -21,7 +21,7 @@ public class CustomerDaoImpl extends BaseDao<Customer> implements CustomerDao {
 
 	@Override
 	public List<Customer> queryByType(CustomerType customerType) {
-		String hql = "from " + mClassName + " where CUSTOMER_TYPE_ID=?";
+		String hql = "from " + mClassName.getName() + " where CUSTOMER_TYPE_ID=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, customerType.getId());
 		return query.list();
@@ -29,7 +29,7 @@ public class CustomerDaoImpl extends BaseDao<Customer> implements CustomerDao {
 
 	@Override
 	public List<Customer> queryByState(CustomerState customerState) {
-		String hql = "from " + mClassName + " where CUSTOMER_STATE_ID=?";
+		String hql = "from " + mClassName.getName() + " where CUSTOMER_STATE_ID=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, customerState.getId());
 		return query.list();

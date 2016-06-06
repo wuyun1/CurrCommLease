@@ -124,4 +124,13 @@ public class BicycleDaoImplTest {
 		System.out.println("list:");
 		System.out.println(StringUtils.join(queryAll, "\n"));
 	}
+	
+	@Test
+	public void testqueryByLike() {
+		
+		//参数   数据库字段名  模糊匹配的值   分页大小   第几页
+		List<Bicycle> queryAll = dao.queryByUseLikeAndPage("NAME", "值", 100, 0);
+		System.out.println("list:");
+		System.out.println(StringUtils.join(queryAll, "\n"));
+	}
 }

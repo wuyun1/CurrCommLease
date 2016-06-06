@@ -16,9 +16,12 @@ public class Bill {
 	private Date outTime;
 	// 消费时长 (分钟)
 	private Long delay;
-	// 
+	
+	// 关联的订单
 	private Order order;
+	// 客户名称   没有关联约束
 	private String customerName;
+	// 客户ID   没有关联约束
 	private Integer customerId;
 	// 结账方式
 	private String payWay;

@@ -26,7 +26,7 @@ public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 	
 	@Override
 	public List<Bicycle> queryByType(BicycleType bicycleType) {
-		String hql = "from " + mClassName + " where TYPE_ID=?";
+		String hql = "from " + mClassName.getName() + " where TYPE_ID=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, bicycleType.getId());
 		return query.list();
@@ -34,7 +34,7 @@ public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 
 	@Override
 	public List<Bicycle> queryByState(BicycleState bicycleState) {
-		String hql = "from " + mClassName + " where STATE_ID=?";
+		String hql = "from " + mClassName.getName() + " where STATE_ID=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, bicycleState.getId());
 		return query.list();

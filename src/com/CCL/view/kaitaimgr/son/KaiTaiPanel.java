@@ -9,40 +9,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.BicycleType;
 import com.CCL.beans.Customer;
-import com.CCL.beans.CustomerType;
-import com.CCL.view.huiyuan.service.CustomerTypeService;
 import com.CCL.view.kaitaimgr.service.BicycleService;
-import com.CCL.view.kaitaimgr.service.BicycleTypeService;
-import java.awt.FlowLayout;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
-import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.JTextPane;
+import com.CCL.view.kaitaimgr.service.KaiTaiService;
 
 public class KaiTaiPanel extends JPanel {
 
@@ -107,8 +101,7 @@ public class KaiTaiPanel extends JPanel {
 		spinner.setText("200");
 
 		msgBox = new JTextPane();
-		msgBox
-				.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		msgBox.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		cb_bicycleType = new JComboBox<BicycleType>();
 		cb_bicycleType.addActionListener(new ActionListener() {
@@ -121,7 +114,7 @@ public class KaiTaiPanel extends JPanel {
 			}
 		});
 
-		List<BicycleType> allType = BicycleTypeService.getAllType();
+		List<BicycleType> allType = BicycleService.getAllType();
 		if (allType != null && !allType.isEmpty()) {
 			cb_bicycleType.setModel(new DefaultComboBoxModel<BicycleType>(allType.toArray(new BicycleType[] {})));
 			ActionListener[] actionListeners = cb_bicycleType.getActionListeners();
@@ -247,10 +240,22 @@ public class KaiTaiPanel extends JPanel {
 		panel_1.add(panel_3);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = JOptionPane.showConfirmDialog(null, msgBox.getText(), "请确认您的信息",JOptionPane.YES_NO_OPTION);
-				
-				if(result==JOptionPane.OK_OPTION){
-					 JOptionPane.showMessageDialog(null, "成功添加订单");
+				if(updateShowMsg()){
+					int result = JOptionPane.showConfirmDialog(null, msgBox.getText(), "请确认您的信息",
+							JOptionPane.YES_NO_OPTION);
+
+					if (result == JOptionPane.OK_OPTION) {
+						
+						boolean isSuccess = KaiTaiService.rentCar(currentCustomer,currentBicycle);
+						if(isSuccess){
+							JOptionPane.showMessageDialog(null, "成功添加订单");
+						}else{
+							JOptionPane.showMessageDialog(null, "添加订单未成功","错误",JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+				}else{
+					JOptionPane.showMessageDialog(null, msgBox.getText(),"错误",JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -293,16 +298,17 @@ public class KaiTaiPanel extends JPanel {
 		}
 	}
 
-	class BicycleListRenderer extends JPanel  implements ListCellRenderer<Bicycle> {
+	class BicycleListRenderer extends JPanel implements ListCellRenderer<Bicycle> {
 		ImageIcon BicycleImage = new ImageIcon("images\\MJBtn\\自行车.png");
 		JLabel txt_id = new JLabel();
 		JLabel txt_name = new JLabel();
 		JLabel txt_price = new JLabel();
 		JLabel txt_desc = new JLabel();
 		JPanel msgPanel = new JPanel(new GridLayout(2, 2));
+
 		public BicycleListRenderer() {
 			this.setLayout(new BorderLayout());
-			add(new JLabel(BicycleImage),BorderLayout.WEST);
+			add(new JLabel(BicycleImage), BorderLayout.WEST);
 			msgPanel.add(txt_id);
 			msgPanel.add(txt_name);
 			msgPanel.add(txt_price);
@@ -314,12 +320,12 @@ public class KaiTaiPanel extends JPanel {
 		@Override
 		public Component getListCellRendererComponent(JList list, Bicycle value, int index, boolean isSelected,
 				boolean cellHasFocus) {
-			
-//			removeAll();
-			txt_id.setText("ID: "+value.getId());
-			txt_name.setText("名称: "+value.getName());
-			txt_price.setText("价格: "+value.getPrice());
-			txt_desc.setText("介绍: "+value.getDescript());
+
+			// removeAll();
+			txt_id.setText("ID: " + value.getId());
+			txt_name.setText("名称: " + value.getName());
+			txt_price.setText("价格: " + value.getPrice());
+			txt_desc.setText("介绍: " + value.getDescript());
 
 			Color background;
 			Color foreground;
@@ -328,14 +334,12 @@ public class KaiTaiPanel extends JPanel {
 			JList.DropLocation dropLocation = list.getDropLocation();
 			if (dropLocation != null && !dropLocation.isInsert() && dropLocation.getIndex() == index) {
 
-				
 				background = Color.RED;
 				foreground = Color.WHITE;
-				
 
 				// check if this cell is selected
 			} else if (isSelected) {
-				
+
 				background = Color.BLUE;
 				foreground = Color.WHITE;
 
@@ -352,46 +356,47 @@ public class KaiTaiPanel extends JPanel {
 			txt_name.setForeground(foreground);
 			txt_price.setForeground(foreground);
 			txt_desc.setForeground(foreground);
-			
+
 			txt_id.setBackground(background);
 			txt_name.setBackground(background);
 			txt_price.setBackground(background);
 			txt_desc.setBackground(background);
-			
+
 			msgPanel.setBackground(background);
 			msgPanel.setForeground(foreground);
 
 			return this;
-			
+
 		}
 
 	}
-	
-	
-	
 
-	void updateShowMsg(){
+	boolean updateShowMsg() {
+		
+		boolean isOk = true;
 		msgBox.setText("");
-		
-		if(currentCustomer != null){
-			msgBox.setText(msgBox.getText()+"欢迎您,"+currentCustomer.getName()+("女".equals(currentCustomer.getSex())?"女士":"先生")+"\n");
-			String customerTypestr = currentCustomer.getCustomerType()==null?"普通":   currentCustomer.getCustomerType().toString() ;
-			msgBox.setText(msgBox.getText()+"欢迎您的身份是:"+customerTypestr+"客户\n");
-		}else{
-			msgBox.setText(msgBox.getText()+"您当前还未选择任何用户"+"\n");
-		}
-		
-		if(currentBicycle != null){
-			msgBox.setText(msgBox.getText()+"您选择的车辆是: "+currentBicycle.getName()+"\n");
+
+		if (currentCustomer != null) {
+			msgBox.setText(msgBox.getText() + "欢迎您," + currentCustomer.getName()
+					+ ("女".equals(currentCustomer.getSex()) ? "女士" : "先生") + "\n");
+			String customerTypestr = currentCustomer.getCustomerType() == null ? "普通"
+					: currentCustomer.getCustomerType().toString();
+			msgBox.setText(msgBox.getText() + "欢迎您的身份是:" + customerTypestr + "客户\n");
 			
-		}else{
-			msgBox.setText(msgBox.getText()+"您当前还未选择任何车"+"\n");
+		} else {
+			msgBox.setText(msgBox.getText() + "您当前还未选择任何用户" + "\n");
+			isOk=false;
 		}
-		
-		
+
+		if (currentBicycle != null) {
+			msgBox.setText(msgBox.getText() + "您选择的车辆是: " + currentBicycle.getName() + "\n");
+
+		} else {
+			msgBox.setText(msgBox.getText() + "您当前还未选择任何车" + "\n");
+			isOk=false;
+		}
+		return isOk;
+
 	}
 
-
-		
-	
 }

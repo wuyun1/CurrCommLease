@@ -21,7 +21,7 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
 	
 	@Override
 	public List<Order> queryByState(OrderState bicycleState) {
-		String hql = "from " + mClassName + " where ORDER_STATE_ID=?";
+		String hql = "from " + mClassName.getName() + " where ORDER_STATE_ID=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, bicycleState.getId());
 		return query.list();
