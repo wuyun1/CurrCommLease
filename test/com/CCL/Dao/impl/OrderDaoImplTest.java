@@ -86,7 +86,7 @@ public class OrderDaoImplTest {
 	public void testUpdate() {
 		Order order = dao.get(32);
 		if(order == null) return;
-		order.setTime(new Date());
+		order.setPutTime(new Date());
 		dao.update(order);
 	}
 	

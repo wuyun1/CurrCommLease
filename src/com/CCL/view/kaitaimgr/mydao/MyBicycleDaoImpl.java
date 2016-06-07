@@ -15,7 +15,7 @@ import com.CCL.beans.BicycleType;
 
 public class MyBicycleDaoImpl implements BicycleDao {
 
-	List<Bicycle> bicycles= new ArrayList<Bicycle>();
+	static List<Bicycle> bicycles= new ArrayList<Bicycle>();
 	
 	public MyBicycleDaoImpl() {
 		

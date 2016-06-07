@@ -20,8 +20,14 @@
         <many-to-one name="orderState" class="com.CCL.beans.OrderState" fetch="join">
             <column name="ORDER_STATE_ID" />
         </many-to-one>
-        <property name="time" type="java.util.Date">
-            <column name="TIME" />
+        <property name="putTime" type="java.util.Date">
+            <column name="PUT_TIME" />
+        </property>
+          <property name="startTime" type="java.util.Date">
+            <column name="START_TIME" />
+        </property>
+          <property name="stopTime" type="java.util.Date">
+            <column name="STOP_TIME" />
         </property>
         <property name="deposit" type="java.lang.Float">
             <column name="DEPOSIT" />

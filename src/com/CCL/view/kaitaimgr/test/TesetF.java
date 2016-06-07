@@ -7,9 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.CCL.view.huiyuan.VipManager;
-import com.CCL.view.kaitaimgr.KaiTaiMgr;
-import com.CCL.view.kaitaimgr.son.KaiTaiPanel;
+import com.CCL.view.kaitaimgr.son.CheckOutPanel;
 
 public class TesetF extends JFrame {
 
@@ -42,7 +40,7 @@ public class TesetF extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		KaiTaiMgr panel = new KaiTaiMgr();
+		CheckOutPanel panel = new CheckOutPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 

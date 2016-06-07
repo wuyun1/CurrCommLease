@@ -5,22 +5,22 @@ import java.util.List;
 
 import com.CCL.Dao.OrderDao;
 import com.CCL.Dao.OrderStateDao;
-import com.CCL.Dao.impl.OrderDaoImpl;
-import com.CCL.Dao.impl.OrderStateDaoImpl;
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 import com.CCL.util.ApplicationContext;
+import com.CCL.view.kaitaimgr.mydao.MyOrderDaoImpl;
+import com.CCL.view.kaitaimgr.mydao.MyOrderStateDaoImpl;
 
 public class KaiTaiService {
 
-	static OrderDao od = new OrderDaoImpl();
-	static OrderStateDao osd = new OrderStateDaoImpl();
+	static OrderDao od = new MyOrderDaoImpl();
+	static OrderStateDao osd = new MyOrderStateDaoImpl();
 
 	public static boolean rentCar(Customer currentCustomer, Bicycle currentBicycle) {
 
-		Order newOrder = new Order(currentCustomer, ApplicationContext.currOpeUser, currentBicycle, getStateByName("准备开始"), new Date(), 200f);
+		Order newOrder = new Order(currentCustomer, ApplicationContext.currOpeUser, currentBicycle, getStateByName("准备就绪"), new Date(),null,null, 200f);
 		od.add(newOrder);
 		return od.add(newOrder);
 
@@ -37,6 +37,14 @@ public class KaiTaiService {
 			cst = newState;
 		}
 		return cst;
+	}
+	
+	
+	public static List<Order> getAllOrder(){
+		
+		List<Order> allOrder = od.queryAll();
+		
+		return allOrder;
 	}
 
 }

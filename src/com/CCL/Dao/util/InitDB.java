@@ -96,9 +96,9 @@ public class InitDB {
 		session.save(c3);
 		session.save(c4);
 		
-		Order o1 = new Order(c1, null, b2, null, new Date(2014,5,9), 0f);
-		Order o2 = new Order(c1, null, b2, null, new Date(2014,11,7), 560f);
-		Order o3 = new Order(c1, null, b2, null, new Date(2011,1,9), 120f);
+		Order o1 = new Order(c1, null, b2, null, new Date(2014,5,9),new Date(2014,5,9),new Date(2014,5,9), 0f);
+		Order o2 = new Order(c1, null, b2, null, new Date(2014,11,7),new Date(2014,5,9),new Date(2014,5,9), 560f);
+		Order o3 = new Order(c1, null, b2, null, new Date(2011,1,9), new Date(2014,5,9),new Date(2014,5,9),120f);
 		session.save(o3);
 		session.save(o2);
 		session.save(o1);

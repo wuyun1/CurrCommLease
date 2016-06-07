@@ -15,7 +15,11 @@ public class Order {
 	//订单状态
 	private OrderState orderState;
 	//下单时间
-	private Date time;
+	private Date putTime;
+	//开启时间
+	private Date startTime;
+	//结束时间
+	private Date stopTime;
 	//押金
 	private Float deposit;
 	
@@ -30,15 +34,50 @@ public class Order {
 		this.id = id;
 	}
 
-	public Order(Customer customer, OpeUser opeUser, Bicycle bicycle, OrderState orderState, Date time, Float deposit) {
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", customer=" + customer + ", opeUser=" + opeUser + ", bicycle=" + bicycle
+				+ ", orderState=" + orderState + ", putTime=" + putTime + ", startTime=" + startTime + ", stopTime="
+				+ stopTime + ", deposit=" + deposit + ", isShow=" + isShow + "]";
+	}
+
+	public Order(Customer customer, OpeUser opeUser, Bicycle bicycle, OrderState orderState, Date putTime,
+			Date startTime, Date stopTime, Float deposit) {
 		super();
 		this.customer = customer;
 		this.opeUser = opeUser;
 		this.bicycle = bicycle;
 		this.orderState = orderState;
-		this.time = time;
+		this.putTime = putTime;
+		this.startTime = startTime;
+		this.stopTime = stopTime;
 		this.deposit = deposit;
 	}
+
+	public Date getPutTime() {
+		return putTime;
+	}
+
+	public void setPutTime(Date putTime) {
+		this.putTime = putTime;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getStopTime() {
+		return stopTime;
+	}
+
+	public void setStopTime(Date stopTime) {
+		this.stopTime = stopTime;
+	}
+
 	private Boolean isShow = true;
 	public Boolean getIsShow() {
 		return isShow;
@@ -79,12 +118,7 @@ public class Order {
 	public void setOrderState(OrderState orderState) {
 		this.orderState = orderState;
 	}
-	public Date getTime() {
-		return time;
-	}
-	public void setTime(Date time) {
-		this.time = time;
-	}
+	
 	public Float getDeposit() {
 		return deposit;
 	}
@@ -114,12 +148,5 @@ public class Order {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", customer=" + customer + ", opeUser="
-				+ opeUser + ", bicycle=" + bicycle + ", orderState="
-				+ orderState + ", time=" + time + ", deposit=" + deposit + "]";
-	}
-	
 	
 }
