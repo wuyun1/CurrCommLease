@@ -45,8 +45,12 @@ public class MyOrderDaoImpl implements OrderDao {
 		
 		Bicycle currentBicycle = b1; 
 		OrderState ostate = new OrderState("×¼±¸¾ÍÐ÷", null);
-		Order newOrder = new Order(c1, ApplicationContext.currOpeUser, currentBicycle, ostate, new Date(),new Date(),new Date(), 200f);
+		Order newOrder = new Order(c1, ApplicationContext.currOpeUser, currentBicycle.getId()+"1", ostate, new Date(),null,null, 200f);
 		newOrder.setId(32);
+		orders.add(newOrder);
+		
+		newOrder = new Order(c1, ApplicationContext.currOpeUser, currentBicycle.getId()+"1", ostate, new Date(),null,null, 200f);
+		newOrder.setId(31);
 		orders.add(newOrder);
 		
 	}

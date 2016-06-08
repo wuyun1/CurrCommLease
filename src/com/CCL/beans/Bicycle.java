@@ -131,14 +131,7 @@ public class Bicycle {
 		this.state = bicycleState;
 	}
 
-	public BicycleType getBicycleType() {
-		return type;
-	}
-
-	public void setBicycleType(BicycleType bicycleType) {
-		this.type = bicycleType;
-	}
-
+	
 	public String getName() {
 		return name;
 	}

@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.CCL.view.kaitaimgr.son.CheckOutPanel;
+import com.CCL.view.kaitaimgr.KaiTaiMgr;
 
 public class TesetF extends JFrame {
 
@@ -40,7 +40,7 @@ public class TesetF extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		CheckOutPanel panel = new CheckOutPanel();
+		KaiTaiMgr panel = new KaiTaiMgr();
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 

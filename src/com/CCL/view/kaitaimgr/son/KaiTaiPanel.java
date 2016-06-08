@@ -7,9 +7,15 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -23,20 +29,26 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.BicycleType;
 import com.CCL.beans.Customer;
+import com.CCL.view.kaitaimgr.render.BicyclesMapRenderer;
 import com.CCL.view.kaitaimgr.service.BicycleService;
 import com.CCL.view.kaitaimgr.service.KaiTaiService;
+import javax.swing.JSplitPane;
 
 public class KaiTaiPanel extends JPanel {
 
@@ -63,16 +75,28 @@ public class KaiTaiPanel extends JPanel {
 		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 26));
 		lblNewLabel_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JPanel panel = new JPanel();
+		JSplitPane panel = new JSplitPane();
+		panel.setResizeWeight(0.5);
+		panel.setDividerSize(1);
 		setLayout(new BorderLayout(0, 0));
 		add(lblNewLabel_2, BorderLayout.NORTH);
 		add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
+
+		scrollPane_1 = new JScrollPane();
+		panel.setRightComponent(scrollPane_1);
+
+		list_1 = new JList<Map<Bicycle, Integer>>();
+		list_1.setValueIsAdjusting(true);
+
+		list_1.setModel(new BicyclesListModel());
+		list_1.setCellRenderer(new BicyclesMapRenderer());
+		scrollPane_1.setViewportView(list_1);
 
 		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.setLeftComponent(scrollPane);
 
 		list = new JList<Bicycle>();
+		list.setLayoutOrientation(JList.VERTICAL_WRAP);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				currentBicycle = list.getSelectedValue();
@@ -84,6 +108,53 @@ public class KaiTaiPanel extends JPanel {
 
 		JPanel panel_4 = new JPanel();
 		add(panel_4, BorderLayout.SOUTH);
+
+		spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Integer(1), null, null, new Integer(1)));
+		panel_4.add(spinner_1);
+
+		JButton button_1 = new JButton("\u6DFB\u52A0\u8F66\u8F86");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Bicycle selectedValue = list.getSelectedValue();
+				if (selectedValue != null) {
+					addBicycle(selectedValue, Integer.parseInt(spinner_1.getValue().toString()));
+					updateShowMsg();
+					list_1.updateUI();
+				} else {
+					JOptionPane.showMessageDialog(null, "请您选择车辆!");
+				}
+			}
+		});
+		panel_4.add(button_1);
+
+		JButton button_3 = new JButton("\u51CF\u5C11\u8F66\u8F86");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Bicycle selectedValue = list.getSelectedValue();
+				if (selectedValue != null) {
+					reduceBicycle(selectedValue, Integer.parseInt(spinner_1.getValue().toString()));
+					updateShowMsg();
+					list_1.updateUI();
+				} else {
+					JOptionPane.showMessageDialog(null, "请您选择车辆!");
+				}
+
+			}
+
+		});
+		panel_4.add(button_3);
+		
+		JButton button_2 = new JButton("\u6E05\u7A7A\u8F66\u8F86");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bicyclesList.clear();
+				bicyclesMap.clear();
+				updateShowMsg();
+				list_1.updateUI();
+			}
+		});
+		panel_4.add(button_2);
 
 		JButton button = new JButton("\u786E\u5B9A\u4FE1\u606F");
 		panel_4.add(button);
@@ -239,25 +310,26 @@ public class KaiTaiPanel extends JPanel {
 		panel_1.add(panel_5);
 		panel_1.add(panel_3);
 		button.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent arg0) {
-				if(updateShowMsg()){
+				if (updateShowMsg()) {
 					int result = JOptionPane.showConfirmDialog(null, msgBox.getText(), "请确认您的信息",
 							JOptionPane.YES_NO_OPTION);
 
 					if (result == JOptionPane.OK_OPTION) {
-						
-						boolean isSuccess = KaiTaiService.rentCar(currentCustomer,currentBicycle);
-						if(isSuccess){
+
+						boolean isSuccess = KaiTaiService.rentCar(currentCustomer, bicyclesMap) != null;
+						if (isSuccess) {
 							JOptionPane.showMessageDialog(null, "成功添加订单");
-						}else{
-							JOptionPane.showMessageDialog(null, "添加订单未成功","错误",JOptionPane.ERROR_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null, "添加订单未成功", "错误", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
-				}else{
-					JOptionPane.showMessageDialog(null, msgBox.getText(),"错误",JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, msgBox.getText(), "错误", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}
 		});
 
@@ -297,19 +369,22 @@ public class KaiTaiPanel extends JPanel {
 			return bicycles.get(index);
 		}
 	}
-
+	
+	
+	
+	
 	class BicycleListRenderer extends JPanel implements ListCellRenderer<Bicycle> {
 		ImageIcon BicycleImage = new ImageIcon("images\\MJBtn\\自行车.png");
-		JLabel txt_id = new JLabel();
-		JLabel txt_name = new JLabel();
-		JLabel txt_price = new JLabel();
-		JLabel txt_desc = new JLabel();
+		JLabel txt_kc = new JLabel("",JLabel.CENTER);
+		JLabel txt_name = new JLabel("",JLabel.CENTER);
+		JLabel txt_price = new JLabel("",JLabel.CENTER);
+		JLabel txt_desc = new JLabel("",JLabel.CENTER);
 		JPanel msgPanel = new JPanel(new GridLayout(2, 2));
 
 		public BicycleListRenderer() {
 			this.setLayout(new BorderLayout());
 			add(new JLabel(BicycleImage), BorderLayout.WEST);
-			msgPanel.add(txt_id);
+			msgPanel.add(txt_kc);
 			msgPanel.add(txt_name);
 			msgPanel.add(txt_price);
 			msgPanel.add(txt_desc);
@@ -322,9 +397,10 @@ public class KaiTaiPanel extends JPanel {
 				boolean cellHasFocus) {
 
 			// removeAll();
-			txt_id.setText("ID: " + value.getId());
+			txt_kc.setText("库存: " + value.getInventory());
 			txt_name.setText("名称: " + value.getName());
-			txt_price.setText("价格: " + value.getPrice());
+			txt_price.setText("原价: " + value.getPrice() + "\t" + "   折扣价:"
+					+ (value.getPrice() * value.getType().getDiscount()));
 			txt_desc.setText("介绍: " + value.getDescript());
 
 			Color background;
@@ -352,12 +428,12 @@ public class KaiTaiPanel extends JPanel {
 
 			setBackground(background);
 			setForeground(foreground);
-			txt_id.setForeground(foreground);
+			txt_kc.setForeground(foreground);
 			txt_name.setForeground(foreground);
 			txt_price.setForeground(foreground);
 			txt_desc.setForeground(foreground);
 
-			txt_id.setBackground(background);
+			txt_kc.setBackground(background);
 			txt_name.setBackground(background);
 			txt_price.setBackground(background);
 			txt_desc.setBackground(background);
@@ -372,7 +448,7 @@ public class KaiTaiPanel extends JPanel {
 	}
 
 	boolean updateShowMsg() {
-		
+
 		boolean isOk = true;
 		msgBox.setText("");
 
@@ -382,21 +458,133 @@ public class KaiTaiPanel extends JPanel {
 			String customerTypestr = currentCustomer.getCustomerType() == null ? "普通"
 					: currentCustomer.getCustomerType().toString();
 			msgBox.setText(msgBox.getText() + "欢迎您的身份是:" + customerTypestr + "客户\n");
-			
+
 		} else {
 			msgBox.setText(msgBox.getText() + "您当前还未选择任何用户" + "\n");
-			isOk=false;
+			isOk = false;
 		}
 
-		if (currentBicycle != null) {
-			msgBox.setText(msgBox.getText() + "您选择的车辆是: " + currentBicycle.getName() + "\n");
+		if (bicyclesMap != null && !bicyclesMap.isEmpty()) {
+			StringBuilder sb = new StringBuilder("您选择的车辆有: \n");
+			for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
+				sb.append("\t" + entry.getValue() + "辆" + entry.getKey().getName() + "\n");
+			}
+			msgBox.setText(msgBox.getText() + sb.toString());
 
 		} else {
 			msgBox.setText(msgBox.getText() + "您当前还未选择任何车" + "\n");
-			isOk=false;
+			isOk = false;
 		}
 		return isOk;
 
 	}
 
+	protected Map<Bicycle, Integer> bicyclesMap = new HashMap<Bicycle, Integer>();
+	List<Map<Bicycle, Integer>> bicyclesList = new ArrayList<Map<Bicycle, Integer>>();
+	private JSpinner spinner_1;
+	private JList<Map<Bicycle, Integer>> list_1;
+	private JScrollPane scrollPane_1;
+
+	class BicyclesListModel implements ListModel<Map<Bicycle, Integer>> {
+
+		@Override
+		public int getSize() {
+			int size = bicyclesList.size();
+
+			return size;
+		}
+
+		@Override
+		public Map<Bicycle, Integer> getElementAt(int index) {
+
+			return bicyclesList.get(index);
+		}
+
+		@Override
+		public void addListDataListener(ListDataListener l) {
+
+		}
+
+		@Override
+		public void removeListDataListener(ListDataListener l) {
+
+		}
+	}
+
+	boolean addBicycle(Bicycle b, int num) {
+
+		Integer number = bicyclesMap.get(b);
+
+		if (number == null) {
+			number = num;
+		} else {
+			number += num;
+		}
+
+		if (number > b.getInventory()) {
+			return false;
+		}
+
+		bicyclesMap.put(b, number);
+
+		boolean isNotExist = true;
+		for (Map<Bicycle, Integer> entry : bicyclesList) {
+			if (entry.containsKey(b)) {
+				entry.put(b, number);
+				isNotExist = false;
+				break;
+			}
+		}
+		if (isNotExist) {
+			Map<Bicycle, Integer> newEntry = new HashMap<Bicycle, Integer>();
+			newEntry.put(b, number);
+			bicyclesList.add(newEntry);
+		}
+
+		return true;
+	}
+
+	boolean reduceBicycle(Bicycle b, int num) {
+		Integer number = bicyclesMap.get(b);
+
+		if (number == null) {
+			number = 0;
+		} else {
+			number -= num;
+		}
+
+		if (number <= 0) {
+
+			bicyclesMap.remove(b);
+			Iterator<Map<Bicycle, Integer>> iterator = bicyclesList.iterator();
+
+			while (iterator.hasNext()) {
+				Map<Bicycle, Integer> next = iterator.next();
+				if (next.containsKey(b)) {
+					iterator.remove();
+					break;
+				}
+			}
+
+			return true;
+		}
+
+		bicyclesMap.put(b, number);
+
+		boolean isNotExist = true;
+		for (Map<Bicycle, Integer> entry : bicyclesList) {
+			if (entry.containsKey(b)) {
+				entry.put(b, number);
+				isNotExist = false;
+				break;
+			}
+		}
+		if (isNotExist) {
+			Map<Bicycle, Integer> newEntry = new HashMap<Bicycle, Integer>();
+			newEntry.put(b, number);
+			bicyclesList.add(newEntry);
+		}
+
+		return true;
+	}
 }

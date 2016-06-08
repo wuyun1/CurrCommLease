@@ -118,7 +118,7 @@ public class BicycleDaoImplTest {
 		
 		bicycleType.setId(3);
 		bicycleType.setName("ABC");
-		instance.setBicycleType(bicycleType);
+		instance.setType(bicycleType);
 		instance.setName("abce");
 		List<Bicycle> queryAll = dao.queryByExample(instance );
 		System.out.println("list:");

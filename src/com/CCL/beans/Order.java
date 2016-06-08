@@ -1,6 +1,7 @@
 package com.CCL.beans;
 
 import java.util.Date;
+import java.util.Map;
 
 public class Order {
 	
@@ -11,7 +12,7 @@ public class Order {
 	// 操作员
 	private OpeUser opeUser;
 	// 自行车
-	private Bicycle bicycle;
+	private String bicycles;
 	//订单状态
 	private OrderState orderState;
 	//下单时间
@@ -22,6 +23,8 @@ public class Order {
 	private Date stopTime;
 	//押金
 	private Float deposit;
+	
+	private Map<Bicycle,Integer> bicyclesMap;
 	
 	
 	
@@ -34,19 +37,15 @@ public class Order {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", customer=" + customer + ", opeUser=" + opeUser + ", bicycle=" + bicycle
-				+ ", orderState=" + orderState + ", putTime=" + putTime + ", startTime=" + startTime + ", stopTime="
-				+ stopTime + ", deposit=" + deposit + ", isShow=" + isShow + "]";
-	}
+	
 
-	public Order(Customer customer, OpeUser opeUser, Bicycle bicycle, OrderState orderState, Date putTime,
+
+	public Order(Customer customer, OpeUser opeUser, String bicycles, OrderState orderState, Date putTime,
 			Date startTime, Date stopTime, Float deposit) {
 		super();
 		this.customer = customer;
 		this.opeUser = opeUser;
-		this.bicycle = bicycle;
+		this.bicycles = bicycles;
 		this.orderState = orderState;
 		this.putTime = putTime;
 		this.startTime = startTime;
@@ -106,11 +105,11 @@ public class Order {
 	public void setOpeUser(OpeUser opeUser) {
 		this.opeUser = opeUser;
 	}
-	public Bicycle getBicycle() {
-		return bicycle;
+	public String getBicycles() {
+		return bicycles;
 	}
-	public void setBicycle(Bicycle bicycle) {
-		this.bicycle = bicycle;
+	public void setBicycles(String bicycles) {
+		this.bicycles = bicycles;
 	}
 	public OrderState getOrderState() {
 		return orderState;
@@ -147,6 +146,14 @@ public class Order {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Map<Bicycle,Integer> getBicyclesMap() {
+		return bicyclesMap;
+	}
+
+	public void setBicyclesMap(Map<Bicycle,Integer> bicyclesMap) {
+		this.bicyclesMap = bicyclesMap;
 	}
 	
 }

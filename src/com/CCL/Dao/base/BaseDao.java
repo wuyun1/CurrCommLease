@@ -107,9 +107,13 @@ public abstract class BaseDao<T> {
 		String hql = "delete " + getEntityClass().getName() + " where id=?";
 		Query query = getSession().createQuery(hql);
 		query.setInteger(0, id);
-		int result = query.executeUpdate();
-		getSession().beginTransaction().commit();
-		return result>=1;
+		try{
+			query.executeUpdate();
+			getSession().beginTransaction().commit();
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	public boolean add(T obj) {

@@ -24,6 +24,7 @@ import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
 import com.CCL.beans.CustomerType;
 import com.CCL.beans.Order;
+import com.CCL.beans.OrderState;
 
 public class InitDB {
 
@@ -96,9 +97,16 @@ public class InitDB {
 		session.save(c3);
 		session.save(c4);
 		
-		Order o1 = new Order(c1, null, b2, null, new Date(2014,5,9),new Date(2014,5,9),new Date(2014,5,9), 0f);
-		Order o2 = new Order(c1, null, b2, null, new Date(2014,11,7),new Date(2014,5,9),new Date(2014,5,9), 560f);
-		Order o3 = new Order(c1, null, b2, null, new Date(2011,1,9), new Date(2014,5,9),new Date(2014,5,9),120f);
+		OrderState os1 = new OrderState("准备就绪", null);
+		OrderState os2 = new OrderState("正在进行", null);
+		OrderState os3 = new OrderState("订单完成", null);
+		session.save(os1);
+		session.save(os2);
+		session.save(os3);
+		
+		Order o1 = new Order(c1, null, b2.getId()+":3", os1, new Date(2014,5,9),new Date(2014,5,9),new Date(2014,5,9), 0f);
+		Order o2 = new Order(c1, null, b2.getId()+":3;"+b3.getId()+":4", os1, new Date(2014,11,7),new Date(2014,5,9),new Date(2014,5,9), 560f);
+		Order o3 = new Order(c1, null, b2.getId()+":3", os1, new Date(2011,1,9), new Date(2014,5,9),new Date(2014,5,9),120f);
 		session.save(o3);
 		session.save(o2);
 		session.save(o1);

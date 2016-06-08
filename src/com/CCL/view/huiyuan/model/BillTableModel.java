@@ -12,8 +12,6 @@ public class BillTableModel implements TableModel {
 	
 	List<Bill> billList = new ArrayList<Bill>();
 	
-//	insert into BILL (ID, OUTTIME, DELAY, PAYWAY, CUSTOMER_NAME, TOTAL, ORDER_ID, IS_SHOW, ROWID)
-
 	String[] billColumn = new String[]{"编号","客户名","自行车","租赁时长","总金额","押金","操作呐"};
 
 	public BillTableModel(List<Bill> billList) {
@@ -62,7 +60,7 @@ public class BillTableModel implements TableModel {
 			ret=bill.getCustomerName();
 			break;
 		case 2:
-			ret=bill.getOrder().getBicycle().getName();
+			ret=bill.getOrder().getBicycles();
 			break;
 		case 3:
 			ret=bill.getDelay();
