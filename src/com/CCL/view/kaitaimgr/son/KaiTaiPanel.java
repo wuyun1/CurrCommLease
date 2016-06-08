@@ -103,7 +103,7 @@ public class KaiTaiPanel extends JPanel {
 				updateShowMsg();
 			}
 		});
-//		list.setCellRenderer(new BicycleListRenderer());
+		list.setCellRenderer(new BicycleListRenderer());
 		scrollPane.setViewportView(list);
 
 		JPanel panel_4 = new JPanel();
