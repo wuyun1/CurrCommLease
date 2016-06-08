@@ -103,7 +103,7 @@ public class KaiTaiPanel extends JPanel {
 				updateShowMsg();
 			}
 		});
-		list.setCellRenderer(new BicycleListRenderer());
+//		list.setCellRenderer(new BicycleListRenderer());
 		scrollPane.setViewportView(list);
 
 		JPanel panel_4 = new JPanel();
@@ -269,13 +269,13 @@ public class KaiTaiPanel extends JPanel {
 
 		JLabel label_1 = new JLabel("\u7528\u6237\u79EF\u5206:");
 
-		lbl_UserName = new JLabel("\u5C0F\u9EC4");
+		lbl_UserName = new JLabel("\u8BF7\u9009\u62E9\u7528\u6237");
 
-		lbl_score = new JLabel("30");
+		lbl_score = new JLabel("0");
 
 		JLabel lblNewLabel_5 = new JLabel("\u7528\u6237\u7C7B\u578B:");
 
-		lbl_userType = new JLabel("\u9EC4\u91D1");
+		lbl_userType = new JLabel("\u666E\u901A");
 		GroupLayout gl_lblNewLabel_3 = new GroupLayout(lblNewLabel_3);
 		gl_lblNewLabel_3.setHorizontalGroup(gl_lblNewLabel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_lblNewLabel_3.createSequentialGroup().addContainerGap()

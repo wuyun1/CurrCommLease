@@ -8,10 +8,12 @@ import java.util.Map.Entry;
 
 import com.CCL.Dao.BicycleDao;
 import com.CCL.Dao.BillDao;
+import com.CCL.Dao.CustomerDao;
 import com.CCL.Dao.OrderDao;
 import com.CCL.Dao.OrderStateDao;
 import com.CCL.Dao.impl.BicycleDaoImpl;
 import com.CCL.Dao.impl.BillDaoImpl;
+import com.CCL.Dao.impl.CustomerDaoImpl;
 import com.CCL.Dao.impl.OrderDaoImpl;
 import com.CCL.Dao.impl.OrderStateDaoImpl;
 import com.CCL.beans.Bicycle;
@@ -27,7 +29,8 @@ public class KaiTaiService {
 	static OrderStateDao osd = new OrderStateDaoImpl();
 	static BillDao bd = new BillDaoImpl();
 	static BicycleDao bicycleDao = new BicycleDaoImpl();
-
+	static CustomerDao cd = new CustomerDaoImpl();
+	
 	public static Order rentCar(Customer currentCustomer, Map<Bicycle,Integer> bicycles) {
 		
 		if(bicycles == null){
@@ -118,7 +121,7 @@ public class KaiTaiService {
 
 	public static Bill accountsOrder(Order corder){
 		corder.setStopTime(new Date());
-		float spendTime = (float) ((corder.getStopTime().getTime()-corder.getStartTime().getTime())/1000/60);
+		float spendTime = (float) ((corder.getStopTime().getTime()-corder.getStartTime().getTime())/1000.0/60);
 		
 		
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
@@ -151,6 +154,14 @@ public class KaiTaiService {
 		
 		od.update(corder);
 		bd.add(newBill);
+		
+		
+		Customer customer = corder.getCustomer();
+		customer.setIntegral((int) (customer.getIntegral()+(huafei/10)));
+		cd.update(customer);
+		
+		
+		
 		return newBill;
 	}
 
