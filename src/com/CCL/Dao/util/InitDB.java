@@ -113,19 +113,18 @@ public class InitDB {
 		
 		
 		
-		
-		Bill bill1 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 100);
-		Bill bill2 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 200);
-		Bill bill3 = new Bill(new Date(), 20l,o3,c1.getName(),c1.getId(),"ZFB", 600);
-		Bill bill4 = new Bill(new Date(), 20l,o2,c2.getName(),c2.getId(),"ZFB", 200);
-		Bill bill5 = new Bill(new Date(), 20l,o1,c2.getName(),c2.getId(),"ZFB", 300);
-
-		session.save(bill1);
-		session.save(bill2);
-		session.save(bill3);
-		session.save(bill4);
-		session.save(bill5);
-		
+//		Bill bill1 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 100);
+//		Bill bill2 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 200);
+//		Bill bill3 = new Bill(new Date(), 20l,o3,c1.getName(),c1.getId(),"ZFB", 600);
+//		Bill bill4 = new Bill(new Date(), 20l,o2,c2.getName(),c2.getId(),"ZFB", 200);
+//		Bill bill5 = new Bill(new Date(), 20l,o1,c2.getName(),c2.getId(),"ZFB", 300);
+//
+//		session.save(bill1);
+//		session.save(bill2);
+//		session.save(bill3);
+//		session.save(bill4);
+//		session.save(bill5);
+//		
 		
 
 		session.beginTransaction().commit();

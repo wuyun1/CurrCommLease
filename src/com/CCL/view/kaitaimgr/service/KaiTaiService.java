@@ -1,5 +1,6 @@
 package com.CCL.view.kaitaimgr.service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -147,7 +148,7 @@ public class KaiTaiService {
 			bicycleDao.update(bicyc);
 		}
 		
-		float huafei = originalCost*corder.getCustomer().getCustomerType().getDiscount();
+		float huafei = originalCost*corder.getCustomer().getCustomerType().getDiscount()*spendTime;
 		
 		corder.setOrderState(getStateByName("订单完成"));
 		Bill newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(), corder.getCustomer().getId(), "zfb", huafei);
@@ -183,6 +184,42 @@ public class KaiTaiService {
 			str.deleteCharAt(str.length()-1);
 		}
 		return str.toString();
+	}
+
+	public static float calcPrice(Order corder) {
+		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
+		
+		if(bicyclesMap==null){
+			writebicycleMap(corder);
+			bicyclesMap = corder.getBicyclesMap();
+		}
+		
+//		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+//			if(entry.getKey().getInventory()<entry.getValue()){
+//				return null;
+//			}
+//		}
+		
+		float originalCost = 0;
+		
+		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+			Bicycle bicyc = entry.getKey();
+			int num = entry.getValue();
+			originalCost+= bicyc.getType().getDiscount()*bicyc.getPrice()*num;
+		}
+		return originalCost*corder.getCustomer().getCustomerType().getDiscount();
+		
+	}
+
+	public static Collection<? extends Order> getAllPreOrder() {
+		
+		
+		OrderState bicycleState= getStateByName("准备就绪");
+		return od.queryByState(bicycleState);
+	}
+
+	public static void updateOrder(Order currentOrder) {
+		od.update(currentOrder);
 	}
 	
 	

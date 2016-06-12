@@ -37,19 +37,6 @@ public class Bill {
 		this.id = id;
 	}
 
-	
-
-	
-
-
-
-
-
-
-
-
-
-
 	public Bill(Date outTime, Long delay, Order order, String customerName, Integer customerId, String payWay,
 			float total) {
 		super();
@@ -61,19 +48,6 @@ public class Bill {
 		this.payWay = payWay;
 		this.total = total;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public Bill() {
 		super();
@@ -169,18 +143,9 @@ public class Bill {
 	}
 
 
-
-
-
-
-
 	public String getCustomerName() {
 		return customerName;
 	}
-
-
-
-
 
 
 
@@ -189,40 +154,14 @@ public class Bill {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	public Integer getCustomerId() {
 		return customerId;
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
-
-
 
 
 }
