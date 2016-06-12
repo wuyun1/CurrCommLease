@@ -21,5 +21,32 @@ public class OpeUserDaoImpl extends BaseDao<OpeUser> implements OpeUserDao {
 		// TODO Auto-generated method stub
 		return mClassName;
 	}
+	
+	@Override
+	public boolean remove(int id) {
+		
+		
+		
+//		String hql = "delete " + getEntityClass().getName() + " where id=?";
+//		Query query = getSession().createQuery(hql);
+//		query.setInteger(0, id);
+//		try{
+//			query.executeUpdate();
+//			getSession().beginTransaction().commit();
+//			return true;
+//		}catch(Exception e){
+//			return false;
+//		}
+		
+		try{
+			OpeUser opeUser = get(id);
+			getSession().delete(opeUser);
+			getSession().beginTransaction().commit();
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
 
 }

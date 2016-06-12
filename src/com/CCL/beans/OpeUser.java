@@ -37,7 +37,7 @@ public class OpeUser {
 	public OpeUser() {
 		super();
 	}
-
+	
 	public OpeUser(String userName, String password, Float salary, String name, String sex, Date birthday,
 			String address, String phone, String photo, Opeper opePer) {
 		super();

@@ -35,11 +35,10 @@
         <property name="photo" type="java.lang.String">
             <column name="PHOTO" />
         </property>
-        <many-to-one name="opePer" class="com.CCL.beans.Opeper" fetch="join">
-            <column name="OPEPER_ID" />
-        </many-to-one>
         
-             <property name="isShow" type="java.lang.Boolean">
+        <one-to-one name="opePer" class="com.CCL.beans.Opeper" cascade="all"></one-to-one>
+        
+        <property name="isShow" type="java.lang.Boolean">
             <column name="IS_SHOW" default="1"/>
         </property>
     </class>

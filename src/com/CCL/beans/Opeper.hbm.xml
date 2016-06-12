@@ -8,9 +8,8 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <property name="oid" type="java.lang.Integer">
-            <column name="OID" />
-        </property>
+        <one-to-one name="opeUser" class="com.CCL.beans.OpeUser" constrained="true">
+        </one-to-one>
         <property name="toChange" type="int">
             <column name="TO_CHANGE" />
         </property>
@@ -54,9 +53,9 @@
             <column name="MESSAGE_TEL" />
         </property>
         
-                
+             <!-- 
          <property name="isShow" type="java.lang.Boolean">
             <column name="IS_SHOW" default="1"/>
-        </property>
+        </property> -->   
     </class>
 </hibernate-mapping>

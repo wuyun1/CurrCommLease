@@ -23,6 +23,8 @@ import com.CCL.beans.Bill;
 import com.CCL.beans.Customer;
 import com.CCL.beans.CustomerState;
 import com.CCL.beans.CustomerType;
+import com.CCL.beans.OpeUser;
+import com.CCL.beans.Opeper;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 
@@ -33,17 +35,7 @@ public class InitDB {
 	private static String CONFIG_FILE_LOCATION = "/hibernate.cfg.xml";
 	private static String configFile = CONFIG_FILE_LOCATION;
 
-	BicycleDao bicycleDao = null;
-	BicycleStateDao bicycleStateDao = null;
-	BicycleTypeDao bicycleTypeDao = null;
-	BillDao billDao = null;
-	CustomerDao customerDao = null;
-	CustomerStateDao customerStateDao = null;
-	CustomerTypeDao customerTypeDao = null;
-	OpeperDao opeperDao = null;
-	OpeUserDao opeUserDao = null;
-	OrderDao orderDao = null;
-	OrderStateDao orderStateDao = null;
+	
 
 	public static void main(String[] args) {
 
@@ -126,6 +118,12 @@ public class InitDB {
 //		session.save(bill5);
 //		
 		
+		//String userName, String password, Float salary, String name, String sex, Date birthday,String address, String phone, String photo, Opeper opePer
+		
+		OpeUser ou1=new OpeUser("abc", "123", 20f, "abc", "ÄÐ", new Date(), "ºþÄÏ", "18711180761", null, null);
+		Opeper op1 = new Opeper(ou1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		ou1.setOpePer(op1);
+		session.save(ou1);
 
 		session.beginTransaction().commit();
 		session.close();
