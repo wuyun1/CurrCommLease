@@ -2,10 +2,12 @@ package com.CCL.view.kaitaimgr;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import com.CCL.view.kaitaimgr.subpanel.ChangeCarPanel;
+import com.CCL.view.kaitaimgr.subpanel.CheckOutPanel;
+import com.CCL.view.kaitaimgr.subpanel.KaiTaiPanel;
+
 import java.awt.BorderLayout;
-import com.CCL.view.kaitaimgr.son.KaiTaiPanel;
-import com.CCL.view.kaitaimgr.son.CheckOutPanel;
-import com.CCL.view.kaitaimgr.son.ChangeCarPanel;
 
 public class KaiTaiMgr extends JPanel {
 

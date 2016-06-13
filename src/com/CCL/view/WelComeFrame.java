@@ -76,7 +76,7 @@ public class WelComeFrame extends JFrame {
 
 									isOver = true;
 									frame.dispose();
-									 TesetF.main(args);
+									MainFrame.main(args);
 								};
 							}.start();
 
@@ -133,7 +133,7 @@ public class WelComeFrame extends JFrame {
 		lblNewLabel.setBackground(Color.BLUE);
 		
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Administrator\\git\\CurrCommLease2\\images\\jpanel\\\u4E3B\u80CC\u666F.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("images/jpanel/Ö÷±³¾°.jpg"));
 		lblNewLabel.add(lblNewLabel_1);
 
 		progressBar = new JProgressBar();

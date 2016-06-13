@@ -28,6 +28,11 @@ import com.CCL.beans.Opeper;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 
+/**
+ * 初始化数据库
+ * @author Jonney
+ *
+ */
 public class InitDB {
 
 	private static org.hibernate.SessionFactory sessionFactory;
@@ -53,16 +58,16 @@ public class InitDB {
 		session.save(bs2);
 		session.save(bs3);
 
-		BicycleType bt1 = new BicycleType("A", "A 类型", 0.7f);
-		BicycleType bt2 = new BicycleType("B", "B 类型", 0.98f);
+		BicycleType bt1 = new BicycleType("单人车", "A 类型", 0.7f);
+		BicycleType bt2 = new BicycleType("双人车", "B 类型", 0.98f);
 		BicycleType bt3 = new BicycleType("C", "C 类型", 0.9f);
 		session.save(bt1);
 		session.save(bt2);
 		session.save(bt3);
 
-		Bicycle b1 = new Bicycle(bs3, bt2, "蓝星赛车", "蓝星赛车的描述", 8, 20, "凤凰", 1, 1, 9, 5, 10);
-		Bicycle b2 = new Bicycle(bs1, bt1, "奥迪A8", "奥迪A8的描述", 7, 15, "永久", 1, 1, 9, 5, 10);
-		Bicycle b3 = new Bicycle(bs2, bt3, "小刀电车", "小刀电车的描述", 9, 2, "凤凰", 1, 1, 5, 4, 13);
+		Bicycle b1 = new Bicycle(bs3, bt2, "蓝星赛车", "蓝星赛车的描述", 8, 20, "凤凰", true,true, 9, 5, 10);
+		Bicycle b2 = new Bicycle(bs1, bt1, "奥迪A8", "奥迪A8的描述", 7, 15, "永久", true,true, 9, 5, 10);
+		Bicycle b3 = new Bicycle(bs2, bt3, "小刀电车", "小刀电车的描述", 9, 14, "凤凰", true,true, 5, 4, 13);
 		session.save(b1);
 		session.save(b2);
 		session.save(b3);

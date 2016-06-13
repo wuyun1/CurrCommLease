@@ -23,205 +23,193 @@ import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 import com.CCL.util.ApplicationContext;
+import com.CCL.util.mlf.PublicDate;
 
 public class KaiTaiService {
-
-	static OrderDao od = new OrderDaoImpl();
-	static OrderStateDao osd = new OrderStateDaoImpl();
-	static BillDao bd = new BillDaoImpl();
-	static BicycleDao bicycleDao = new BicycleDaoImpl();
-	static CustomerDao cd = new CustomerDaoImpl();
 	
-	public static Order rentCar(Customer currentCustomer, Map<Bicycle,Integer> bicycles) {
-		
-		if(bicycles == null){
+	//加载数据库访问层的对象
+	static OrderDao orderDao = new OrderDaoImpl();
+	static OrderStateDao orderStateDao = new OrderStateDaoImpl();
+	static BillDao billDao = new BillDaoImpl();
+	static BicycleDao bicycleDao = new BicycleDaoImpl();
+	static CustomerDao customerDao = new CustomerDaoImpl();
+
+	public static Order rentCar(Customer currentCustomer, Map<Bicycle, Integer> bicycles) {
+
+		if (bicycles == null) {
 			return null;
 		}
-		
-		boolean isCanRent= true;
-		for(Entry<Bicycle,Integer> bicycleEntry : bicycles.entrySet()){
-			if(bicycleEntry.getKey().getInventory()<bicycleEntry.getValue()){
+
+		boolean isCanRent = true;
+		for (Entry<Bicycle, Integer> bicycleEntry : bicycles.entrySet()) {
+			if (bicycleEntry.getKey().getInventory() < bicycleEntry.getValue()) {
 				isCanRent = false;
 			}
 		}
-		if(isCanRent==false){
+		if (isCanRent == false) {
 			return null;
 		}
-		Order newOrder = new Order(currentCustomer, ApplicationContext.currOpeUser, converyBicycles2String(bicycles), getStateByName("准备就绪"), new Date(),null,null, 200f);
-		if( od.add(newOrder)){
+		Order newOrder = new Order(currentCustomer, PublicDate.getOuser(), converyBicycles2String(bicycles),
+				getStateByName("准备就绪"), new Date(), null, null, 200f);
+		if (orderDao.add(newOrder)) {
 			return newOrder;
-		}else{
+		} else {
 			return null;
 		}
 
 	}
 
 	public static OrderState getStateByName(String state) {
-		List<OrderState> queryByUseLikeAndPage = osd.queryByUseLikeAndPage("name", state, 10, 0);
-		OrderState cst=null;
-		if (queryByUseLikeAndPage!=null&&queryByUseLikeAndPage.size()>0) {
+		List<OrderState> queryByUseLikeAndPage = orderStateDao.queryByUseLikeAndPage("name", state, 10, 0);
+		OrderState cst = null;
+		if (queryByUseLikeAndPage != null && queryByUseLikeAndPage.size() > 0) {
 			cst = queryByUseLikeAndPage.get(0);
-		}else{
+		} else {
 			OrderState newState = new OrderState(state, null);
-			osd.add(newState);
+			orderStateDao.add(newState);
 			cst = newState;
 		}
 		return cst;
 	}
-	
-	
-	public static List<Order> getAllOrder(){
-		
-		List<Order> allOrder = od.queryAll();
-		
+
+	public static List<Order> getAllOrder() {
+
+		List<Order> allOrder = orderDao.queryAll();
+
 		return allOrder;
 	}
 
-
-
 	public static boolean startOrder(Order corder) {
-		
+
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
-		
-		if(bicyclesMap==null){
+
+		if (bicyclesMap == null) {
 			writebicycleMap(corder);
 			bicyclesMap = corder.getBicyclesMap();
 		}
-		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
-			if(entry.getKey().getInventory()<entry.getValue()){
+		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
+			if (entry.getKey().getInventory() < entry.getValue()) {
 				return false;
 			}
 		}
-		
-		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+
+		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
-			bicyc.setInventory(bicyc.getInventory()-num);
+			bicyc.setInventory(bicyc.getInventory() - num);
 			bicycleDao.update(bicyc);
 		}
-		
+
 		corder.setStartTime(new Date());
 		corder.setOrderState(getStateByName("正在进行"));
-		return od.update(corder);
+		return orderDao.update(corder);
 	}
+
 	public static void writebicycleMap(Order corder) {
-		
+
 		Map<Bicycle, Integer> bicyclesMap = new HashMap<Bicycle, Integer>();
 		String[] entryStrs = corder.getBicycles().split(";");
-		
+
 		for (String string : entryStrs) {
 			String[] entry = string.split(":");
-			int bicycleId = Integer.parseInt( entry[0]);
+			int bicycleId = Integer.parseInt(entry[0]);
 			Bicycle bicycle = bicycleDao.get(bicycleId);
-			int num = entry.length==2?Integer.parseInt(entry[1]):1;
+			int num = entry.length == 2 ? Integer.parseInt(entry[1]) : 1;
 			bicyclesMap.put(bicycle, num);
 		}
 		corder.setBicyclesMap(bicyclesMap);
-		
+
 	}
 
-	public static Bill accountsOrder(Order corder){
+	public static Bill accountsOrder(Order corder) {
 		corder.setStopTime(new Date());
-		float spendTime = (float) ((corder.getStopTime().getTime()-corder.getStartTime().getTime())/1000.0/60);
-		
-		
+		float spendTime = (int) ((corder.getStopTime().getTime() - corder.getStartTime().getTime()) / 1000.0 / 60);
+
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
-		
-		if(bicyclesMap==null){
+
+		if (bicyclesMap == null) {
 			writebicycleMap(corder);
 			bicyclesMap = corder.getBicyclesMap();
 		}
-		
-//		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
-//			if(entry.getKey().getInventory()<entry.getValue()){
-//				return null;
-//			}
-//		}
-		
+
 		float originalCost = 0;
-		
-		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+
+		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
-			bicyc.setInventory(bicyc.getInventory()+num);
-			originalCost+= bicyc.getType().getDiscount()*bicyc.getPrice()*num;
+			bicyc.setInventory(bicyc.getInventory() + num);
+			originalCost += bicyc.getType().getDiscount() * bicyc.getPrice() * num;
 			bicycleDao.update(bicyc);
 		}
-		
-		float huafei = originalCost*corder.getCustomer().getCustomerType().getDiscount()*spendTime;
-		
+
+		float huafei = originalCost * corder.getCustomer().getCustomerType().getDiscount() * spendTime;
+
 		corder.setOrderState(getStateByName("订单完成"));
-		Bill newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(), corder.getCustomer().getId(), "zfb", huafei);
-		
-		od.update(corder);
-		bd.add(newBill);
-		
-		
+		Bill newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
+				corder.getCustomer().getId(), "zfb", huafei);
+
+		orderDao.update(corder);
+		billDao.add(newBill);
+
 		Customer customer = corder.getCustomer();
-		customer.setIntegral((int) (customer.getIntegral()+(huafei/10)));
-		cd.update(customer);
-		
-		
-		
+		customer.setIntegral((int) (customer.getIntegral() + (huafei / 10)));
+		customerDao.update(customer);
+
 		return newBill;
 	}
 
 	public static boolean delOrder(Order corder) {
-		boolean remove = od.remove(corder.getId());
+		boolean remove = orderDao.remove(corder.getId());
 		return remove;
 	}
-	
-	
-	public static String converyBicycles2String(Map<Bicycle,Integer> bicycles){
-		
+
+	public static String converyBicycles2String(Map<Bicycle, Integer> bicycles) {
+
 		StringBuilder str = new StringBuilder();
-		
+
 		for (Entry<Bicycle, Integer> bicycleEntry : bicycles.entrySet()) {
-			str.append(bicycleEntry.getKey().getId()+":"+bicycleEntry.getValue()+";");
+			str.append(bicycleEntry.getKey().getId() + ":" + bicycleEntry.getValue() + ";");
 		}
-		
-		if(str.charAt(str.length()-1)==';'){
-			str.deleteCharAt(str.length()-1);
+
+		if (str.charAt(str.length() - 1) == ';') {
+			str.deleteCharAt(str.length() - 1);
 		}
 		return str.toString();
 	}
 
 	public static float calcPrice(Order corder) {
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
-		
-		if(bicyclesMap==null){
+
+		if (bicyclesMap == null) {
 			writebicycleMap(corder);
 			bicyclesMap = corder.getBicyclesMap();
 		}
-		
-//		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
-//			if(entry.getKey().getInventory()<entry.getValue()){
-//				return null;
-//			}
-//		}
-		
+
+		// for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+		// if(entry.getKey().getInventory()<entry.getValue()){
+		// return null;
+		// }
+		// }
+
 		float originalCost = 0;
-		
-		for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
+
+		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
-			originalCost+= bicyc.getType().getDiscount()*bicyc.getPrice()*num;
+			originalCost += bicyc.getType().getDiscount() * bicyc.getPrice() * num;
 		}
-		return originalCost*corder.getCustomer().getCustomerType().getDiscount();
-		
+		return originalCost * corder.getCustomer().getCustomerType().getDiscount();
+
 	}
 
 	public static Collection<? extends Order> getAllPreOrder() {
-		
-		
-		OrderState bicycleState= getStateByName("准备就绪");
-		return od.queryByState(bicycleState);
+
+		OrderState bicycleState = getStateByName("准备就绪");
+		return orderDao.queryByState(bicycleState);
 	}
 
 	public static void updateOrder(Order currentOrder) {
-		od.update(currentOrder);
+		orderDao.update(currentOrder);
 	}
-	
-	
-	
+
 }

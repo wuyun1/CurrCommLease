@@ -13,7 +13,7 @@ import com.CCL.beans.BicycleState;
 import com.CCL.beans.BicycleType;
 
 public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
-	
+
 	private final static Class mClassName = Bicycle.class;
 
 	@Override
@@ -22,8 +22,6 @@ public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 		return mClassName;
 	}
 
-
-	
 	@Override
 	public List<Bicycle> queryByType(BicycleType bicycleType) {
 		String hql = "from " + mClassName.getName() + " where TYPE_ID=?";
@@ -40,6 +38,4 @@ public class BicycleDaoImpl extends BaseDao<Bicycle> implements BicycleDao {
 		return query.list();
 	}
 
-
-	
 }

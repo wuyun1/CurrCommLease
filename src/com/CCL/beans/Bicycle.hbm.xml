@@ -20,11 +20,11 @@
         <property name="descript" type="java.lang.String">
             <column name="DESCRIPT" />
         </property>
-        <property name="isDaZhe" type="java.lang.Integer">
-            <column name="IS_DA_ZHE" />
+        <property name="isDaZhe" type="java.lang.Boolean">
+            <column name="IS_DA_ZHE" default="1" />
         </property>
-                <property name="isJiFen" type="java.lang.Integer">
-            <column name="IS_JI_FEN" />
+                <property name="isJiFen" type="java.lang.Boolean">
+            <column name="IS_JI_FEN" default="1" />
         </property>
                 <property name="price" type="java.lang.Integer">
             <column name="PRICE" />

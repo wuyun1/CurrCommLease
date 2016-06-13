@@ -11,33 +11,33 @@ public class Opeper {
 	//操作员id
 	private OpeUser opeUser;
 	//换车
-	private int toChange;
+	private int toChange =1;
 	//账单打印
-	private int billPrint;
+	private int billPrint=1;
 	//积分兑换
-	private int pointsFor;
+	private int pointsFor=1;
 	//会员卡升级	
-	private int upgrade;
+	private int upgrade=1;
 	//会员卡补办
-	private int reCard;
+	private int reCard=1;
 	//会员卡充值
-	private int cardTopup;
+	private int cardTopup=1;
 	//余额查询
-	private int moneyQuery;
+	private int moneyQuery=1;
 	//信息修改
-	private int reInfo;
+	private int reInfo=1;
 	//消费记录查询
-	private int reCordQuery;
+	private int reCordQuery=1;
 	//收费设置
-	private int chargingSet;
+	private int chargingSet=1;
 	//折扣设置
-	private int discountSet;
+	private int discountSet=1;
 	//车辆管理
-	private int carManager;
+	private int carManager=1;
 	//数据备份
-	private int dataBackup;
+	private int dataBackup=1;
 	//短息提醒
-	private int messageTel;
+	private int messageTel=1;
 	
 	
 	

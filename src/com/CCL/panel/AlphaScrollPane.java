@@ -1,15 +1,11 @@
 package com.CCL.panel;
 
 
-import java.awt.Color;
-import java.awt.Component;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.*;
+import java.beans.*;
 import java.io.Serializable;
 
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import com.CCL.model.MTree_zixingche;

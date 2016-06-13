@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -16,7 +17,7 @@ import javax.swing.ListCellRenderer;
 import com.CCL.beans.Bicycle;
 
 public class BicyclesMapRenderer extends JPanel implements ListCellRenderer<Map<Bicycle, Integer>> {
-	ImageIcon BicycleImage = new ImageIcon("images\\MJBtn\\自行车.png");
+	ImageIcon BicycleImage =  new ImageIcon(new ImageIcon("images\\MJBtn\\自行车.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
 	JLabel txt_kc = new JLabel("",JLabel.CENTER);
 	JLabel txt_name = new JLabel("",JLabel.CENTER);
 	JLabel txt_price = new JLabel("",JLabel.CENTER);
