@@ -28,11 +28,6 @@ import com.CCL.beans.Opeper;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 
-/**
- * 初始化数据库
- * @author Jonney
- *
- */
 public class InitDB {
 
 	private static org.hibernate.SessionFactory sessionFactory;
@@ -51,23 +46,24 @@ public class InitDB {
 		Session session = sessionFactory.openSession();
 
 		// init bicycle type
-		BicycleState bs1 = new BicycleState("A", "A 状态");
-		BicycleState bs2 = new BicycleState("B", "B 状态");
-		BicycleState bs3 = new BicycleState("C", "C 状态");
+		BicycleState bs1 = new BicycleState("维修中", "维修状态");
+		BicycleState bs2 = new BicycleState("正常", "正常状态");
+		BicycleState bs3 = new BicycleState("已出租", "已出租状态");
 		session.save(bs1);
 		session.save(bs2);
 		session.save(bs3);
 
-		BicycleType bt1 = new BicycleType("单人车", "A 类型", 0.7f);
-		BicycleType bt2 = new BicycleType("双人车", "B 类型", 0.98f);
-		BicycleType bt3 = new BicycleType("C", "C 类型", 0.9f);
+		BicycleType bt1 = new BicycleType("单人车", "A 类型", 8.5f);
+		BicycleType bt2 = new BicycleType("双人车", "B 类型", 8f);
+		BicycleType bt3 = new BicycleType("四人车", "C 类型", 7.5f);
 		session.save(bt1);
 		session.save(bt2);
 		session.save(bt3);
-
-		Bicycle b1 = new Bicycle(bs3, bt2, "蓝星赛车", "蓝星赛车的描述", 8, 20, "凤凰", true,true, 9, 5, 10);
-		Bicycle b2 = new Bicycle(bs1, bt1, "奥迪A8", "奥迪A8的描述", 7, 15, "永久", true,true, 9, 5, 10);
-		Bicycle b3 = new Bicycle(bs2, bt3, "小刀电车", "小刀电车的描述", 9, 14, "凤凰", true,true, 5, 4, 13);
+//		BicycleState state,BicycleType type,String name,String descript,Integer price,Integer inventory,
+//		String factory,Integer isDaZhe,Integer isJiFen,Integer baseTime,Integer chargeTime,Integer overTimePrice
+		Bicycle b1 = new Bicycle(bs3, bt2, "A110", "蓝星赛车的描述", 5, 20, "凤凰", true, true, 60, 30, 3);
+		Bicycle b2 = new Bicycle(bs1, bt1, "B111", "奥迪A8的描述", 7, 15, "永久",true, true, 60,30, 4);
+		Bicycle b3 = new Bicycle(bs2, bt3, "C111", "小刀电车的描述", 10, 14, "凤凰", true, true, 60, 30, 6);
 		session.save(b1);
 		session.save(b2);
 		session.save(b3);
@@ -78,17 +74,21 @@ public class InitDB {
 		session.save(cs1);
 		session.save(cs2);
 
-		CustomerType ct1 = new CustomerType("白金", "", 3.2f);
-		CustomerType ct2 = new CustomerType("黄金", "", 2.5f);
-		// CustomerState cs3= new CustomerState("", "已激活",4.2f);
+		CustomerType ct1 = new CustomerType("白金", "", 7.5f);
+		CustomerType ct2 = new CustomerType("黄金", "", 7f);
+		CustomerType ct3= new CustomerType("金", "", 8f);
+		CustomerType ct4= new CustomerType("普通", "", 9f);
+		session.save(ct4);
 		session.save(ct1);
 		session.save(ct2);
+		session.save(ct3);
+//		CustomerState customerState,CustomerType customerType,String name,String sex,Date birthday,String password,
+//		String phone,String email,String address,Integer integral,Float money
 		
-		
-		Customer c1= new Customer(null, ct1, "张三", null, new Date(), "520", null, null, null,30,12f );
-		Customer c2= new Customer(null, ct1, "李四", null, new Date(), "555", null, null, null,56,56f );
-		Customer c3= new Customer(null, ct1, "王二", null, new Date(), "520", null, null, null,36,63f );
-		Customer c4= new Customer(null, ct1, "赵五", null, new Date(), "555", null, null, null,86,56f );
+		Customer c1= new Customer(cs1, ct1, "张三", "男", new Date(), "000", "13077337409"," 38141436@qq.com"," 地球",30,12f );
+		Customer c2= new Customer(cs1, ct4, "李四", "女", new Date(), "000", "13077337409", " 38145336@qq.com", " 地球",56,56f );
+		Customer c3= new Customer(cs1, ct3, "王二",  "男", new Date(), "000", "13077337409", " 38161336@qq.com", " 地球",36,63f );
+		Customer c4= new Customer(cs1, ct2, "赵五",  "男", new Date(), "000", "13077337409", " 38141336@qq.com", " 地球",86,56f );
 		session.save(c1);
 		session.save(c2);
 		session.save(c3);
@@ -101,32 +101,28 @@ public class InitDB {
 		session.save(os2);
 		session.save(os3);
 		
-		Order o1 = new Order(c1, null, b2.getId()+":3", os1, new Date(2014,5,9),new Date(2014,5,9),new Date(2014,5,9), 0f);
-		Order o2 = new Order(c1, null, b2.getId()+":3;"+b3.getId()+":4", os1, new Date(2014,11,7),new Date(2014,5,9),new Date(2014,5,9), 560f);
-		Order o3 = new Order(c1, null, b2.getId()+":3", os1, new Date(2011,1,9), new Date(2014,5,9),new Date(2014,5,9),120f);
+		Order o1 = new Order(c1, null, b2.getId()+":3", os3, new Date(2014,5,9),new Date(2016,5,9),new Date(2016,5,11), 0f);
+		Order o2 = new Order(c3, null, b2.getId()+":3;"+b3.getId()+":4", os3, new Date(2016,11,7),new Date(2016,5,11),new Date(2014,5,9), 560f);
+		Order o3 = new Order(c2, null, b2.getId()+":3", os3, new Date(2011,1,9), new Date(2016,5,9),new Date(2016,5,12),120f);
 		session.save(o3);
 		session.save(o2);
 		session.save(o1);
 		
 		
 		
-//		Bill bill1 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 100);
-//		Bill bill2 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 200);
-//		Bill bill3 = new Bill(new Date(), 20l,o3,c1.getName(),c1.getId(),"ZFB", 600);
-//		Bill bill4 = new Bill(new Date(), 20l,o2,c2.getName(),c2.getId(),"ZFB", 200);
-//		Bill bill5 = new Bill(new Date(), 20l,o1,c2.getName(),c2.getId(),"ZFB", 300);
+		Bill bill1 = new Bill(new Date(), 20l,o1,c1.getName(),c1.getId(),"ZFB", 30);
+		Bill bill2 = new Bill(new Date(), 20l,o2,c1.getName(),c1.getId(),"ZFB", 100);
+		Bill bill3 = new Bill(new Date(), 20l,o3,c1.getName(),c1.getId(),"ZFB", 60);
 //
 //		session.save(bill1);
 //		session.save(bill2);
 //		session.save(bill3);
-//		session.save(bill4);
-//		session.save(bill5);
-//		
+		
 		
 		//String userName, String password, Float salary, String name, String sex, Date birthday,String address, String phone, String photo, Opeper opePer
 		
 		OpeUser ou1=new OpeUser("abc", "123", 20f, "abc", "男", new Date(), "湖南", "18711180761", null, null);
-		Opeper op1 = new Opeper(ou1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		Opeper op1 = new Opeper(ou1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 		ou1.setOpePer(op1);
 		session.save(ou1);
 

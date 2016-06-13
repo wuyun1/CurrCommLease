@@ -1,6 +1,5 @@
 package com.CCL.view.kaitaimgr.service;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,18 +21,32 @@ import com.CCL.beans.Bill;
 import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
-import com.CCL.util.ApplicationContext;
 import com.CCL.util.mlf.PublicDate;
 
+/**
+ * 前台服务的核心逻辑 ,提供主要的前台的业务方法 连接数据层和视图层
+ * 
+ * @author Jonney
+ *
+ */
 public class KaiTaiService {
-	
-	//加载数据库访问层的对象
+
+	// 加载数据库访问层的对象
 	static OrderDao orderDao = new OrderDaoImpl();
 	static OrderStateDao orderStateDao = new OrderStateDaoImpl();
 	static BillDao billDao = new BillDaoImpl();
 	static BicycleDao bicycleDao = new BicycleDaoImpl();
 	static CustomerDao customerDao = new CustomerDaoImpl();
 
+	/**
+	 * 租车的业务方法 生成订单 并保存到数据库
+	 * 
+	 * @param currentCustomer
+	 *            当前的需要租车的客户
+	 * @param bicycles
+	 *            要租的车辆和数量 的Map集合
+	 * @return 订单对象
+	 */
 	public static Order rentCar(Customer currentCustomer, Map<Bicycle, Integer> bicycles) {
 
 		if (bicycles == null) {
@@ -59,6 +72,13 @@ public class KaiTaiService {
 
 	}
 
+	/**
+	 * 通过订单状态的名称获取对应状态对象
+	 * 
+	 * @param state
+	 *            状态名称
+	 * @return 状态对象
+	 */
 	public static OrderState getStateByName(String state) {
 		List<OrderState> queryByUseLikeAndPage = orderStateDao.queryByUseLikeAndPage("name", state, 10, 0);
 		OrderState cst = null;
@@ -72,6 +92,11 @@ public class KaiTaiService {
 		return cst;
 	}
 
+	/**
+	 * 获取所以订单(默认是按订单生成时间排序)
+	 * 
+	 * @return 所以订单
+	 */
 	public static List<Order> getAllOrder() {
 
 		List<Order> allOrder = orderDao.queryAll();
@@ -79,6 +104,13 @@ public class KaiTaiService {
 		return allOrder;
 	}
 
+	/**
+	 * 开启订单,使订单从准备状态转换为运行状态 并对直行车做减库存的操作
+	 * 
+	 * @param corder
+	 *            要操作的订单
+	 * @return 返回操作成功还是失败
+	 */
 	public static boolean startOrder(Order corder) {
 
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
@@ -105,6 +137,12 @@ public class KaiTaiService {
 		return orderDao.update(corder);
 	}
 
+	/**
+	 * 把订单的的 字符串编码的直行车集合数据 转换成 Map
+	 * 
+	 * @param corder
+	 *            要操作的订单
+	 */
 	public static void writebicycleMap(Order corder) {
 
 		Map<Bicycle, Integer> bicyclesMap = new HashMap<Bicycle, Integer>();
@@ -121,9 +159,16 @@ public class KaiTaiService {
 
 	}
 
+	/**
+	 * 结账订单,生成账单 将订单的状态有进行转换成完成 ,并归还车辆
+	 * 
+	 * @param corder
+	 *            要操作的订单
+	 * @return 订单生成的账单
+	 */
 	public static Bill accountsOrder(Order corder) {
 		corder.setStopTime(new Date());
-		float spendTime = (int) ((corder.getStopTime().getTime() - corder.getStartTime().getTime()) / 1000.0 / 60);
+		float spendTime = (float) ((corder.getStopTime().getTime() - corder.getStartTime().getTime()) / 1000.0 / 60);
 
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
 
@@ -132,37 +177,79 @@ public class KaiTaiService {
 			bicyclesMap = corder.getBicyclesMap();
 		}
 
-		float originalCost = 0;
-
 		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
 			bicyc.setInventory(bicyc.getInventory() + num);
-			originalCost += bicyc.getType().getDiscount() * bicyc.getPrice() * num;
+			// originalCost += (bicyc.getIsDaZhe()?
+			// bicyc.getType().getDiscount()/10:1) * bicyc.getPrice() * num;
 			bicycleDao.update(bicyc);
 		}
 
-		float huafei = originalCost * corder.getCustomer().getCustomerType().getDiscount() * spendTime;
+		// 计算花费
+		float huafei = calcPrice(corder, spendTime);
+
+		Customer customer = corder.getCustomer();
+		Bill newBill = null;
+
+		// 支付订单
+		if (customer.getMoney() >= huafei) {
+			newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
+					corder.getCustomer().getId(), "余额支付", huafei);
+			customer.setMoney(customer.getMoney() - huafei);
+		} else {
+			newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
+					corder.getCustomer().getId(), "现金支付", huafei);
+		}
 
 		corder.setOrderState(getStateByName("订单完成"));
-		Bill newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
-				corder.getCustomer().getId(), "zfb", huafei);
-
 		orderDao.update(corder);
 		billDao.add(newBill);
 
-		Customer customer = corder.getCustomer();
-		customer.setIntegral((int) (customer.getIntegral() + (huafei / 10)));
+		// 计算积分
+		customer.setIntegral((int) (customer.getIntegral() + calcJiFen(bicyclesMap)));
 		customerDao.update(customer);
 
 		return newBill;
 	}
 
+	/**
+	 * 计算积分
+	 * 
+	 * @param bicyclesMap
+	 * @return
+	 */
+	private static Float calcJiFen(Map<Bicycle, Integer> bicyclesMap) {
+		Float jiFen = 0f;
+
+		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
+			Bicycle bicyc = entry.getKey();
+			if (bicyc.getIsJiFen()) {
+				int num = entry.getValue();
+				jiFen += bicyc.getPrice() * num;
+			}
+		}
+		jiFen /= 100;
+		return jiFen;
+	}
+
+	/**
+	 * 删除未开始的订单 ,已经开始的订单无法删除
+	 * 
+	 * @param corder
+	 * @return 是否删除成功
+	 */
 	public static boolean delOrder(Order corder) {
 		boolean remove = orderDao.remove(corder.getId());
 		return remove;
 	}
 
+	/**
+	 * 将自信车 和 数量的Map集合 编码成 对应的字符串
+	 * 
+	 * @param bicycles
+	 * @return 编码后的字符串
+	 */
 	public static String converyBicycles2String(Map<Bicycle, Integer> bicycles) {
 
 		StringBuilder str = new StringBuilder();
@@ -177,7 +264,18 @@ public class KaiTaiService {
 		return str.toString();
 	}
 
-	public static float calcPrice(Order corder) {
+	/**
+	 * 计算订单的价格
+	 * 
+	 * @param corder
+	 *            订单
+	 * @param spendTime
+	 *            实际花费的时间(分钟)
+	 * @return 价格
+	 */
+	public static float calcPrice(Order corder, float spendTime) {
+		spendTime = (int) (spendTime + 0.5);
+
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
 
 		if (bicyclesMap == null) {
@@ -185,29 +283,44 @@ public class KaiTaiService {
 			bicyclesMap = corder.getBicyclesMap();
 		}
 
-		// for(Entry<Bicycle,Integer> entry : bicyclesMap.entrySet()){
-		// if(entry.getKey().getInventory()<entry.getValue()){
-		// return null;
-		// }
-		// }
-
 		float originalCost = 0;
 
 		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
-			originalCost += bicyc.getType().getDiscount() * bicyc.getPrice() * num;
+			float unit = (bicyc.getIsDaZhe() ? bicyc.getType().getDiscount() / 10 : 1) * bicyc.getPrice();
+			float unithuafei = (((int) spendTime) / bicyc.getBaseTime()) * unit;
+			if ((spendTime % bicyc.getBaseTime()) > bicyc.getChargeTime()) {
+				unithuafei += bicyc.getOverTimePrice();
+			}else{
+				unithuafei += 3;
+				
+			}
+
+			originalCost += unithuafei * num;
 		}
-		return originalCost * corder.getCustomer().getCustomerType().getDiscount();
+		float f = originalCost * (corder.getCustomer().getCustomerType().getDiscount() / 10);
+		return f;
 
 	}
 
-	public static Collection<? extends Order> getAllPreOrder() {
+	/**
+	 * 获取所以可以准备就绪的订单
+	 * 
+	 * @return 订单集合
+	 */
+	public static List<Order> getAllPreOrder() {
 
 		OrderState bicycleState = getStateByName("准备就绪");
 		return orderDao.queryByState(bicycleState);
 	}
 
+	/**
+	 * 更新订单
+	 * 
+	 * @param currentOrder
+	 *            待更新的订单
+	 */
 	public static void updateOrder(Order currentOrder) {
 		orderDao.update(currentOrder);
 	}

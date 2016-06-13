@@ -189,7 +189,7 @@ public class ChangeCarPanel extends JPanel {
 			txt_kc.setText("编号: " + value.getId());
 			txt_name.setText("客户: " + value.getCustomer().getName());
 			txt_price.setText("押金: " + value.getDeposit());
-			txt_desc.setText("总价: " + KaiTaiService.calcPrice(value));
+			txt_desc.setText("1小时总价: " + KaiTaiService.calcPrice(value,60f));
 
 			Color background;
 			Color foreground;

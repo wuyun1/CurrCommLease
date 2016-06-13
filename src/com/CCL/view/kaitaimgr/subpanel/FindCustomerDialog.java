@@ -41,16 +41,8 @@ public class FindCustomerDialog extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try
-	    {
-	        org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-			
-//			String lookAndFell = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-//			UIManager.setLookAndFeel(lookAndFell);
-	    }
-	    catch(Exception e)
-	    {
-	    }
+		
+	   
 		try {
 			FindCustomerDialog dialog = new FindCustomerDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

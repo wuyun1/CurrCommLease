@@ -3,7 +3,6 @@ package com.CCL.view;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -24,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 
 import com.CCL.Dao.OpeUserDao;
 import com.CCL.Dao.base.HibernateSessionFactory;
@@ -359,16 +359,15 @@ public class LoginView extends JFrame{
 	
 	public  static void main(String [] args)
 	{
-		try
-	    {
-	        org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-			
-//			String lookAndFell = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-//			UIManager.setLookAndFeel(lookAndFell);
-	    }
-	    catch(Exception e)
-	    {
-	    }
+
+		 try {
+			 
+//			 com.jgoodies.looks.windows.WindowsLookAndFeel
+//			 com.jgoodies.looks.plastic.PlasticLookAndFeel
+//			 com.jgoodies.looks.plastic.Plastic3DLookAndFeel
+//			 com.jgoodies.looks.plastic.PlasticXPLookAndFeel
+		      UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
+		   } catch (Exception e) {}
 		new LoginView().setVisible(true);
 	}
 }

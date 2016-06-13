@@ -205,6 +205,15 @@ public class CheckOutPanel extends JPanel {
 							if (bill != null) {
 								bills.put(corder, bill);
 								refreshTableData(i);
+								if (bill.getPayWay().equals("现金支付")) {
+									JOptionPane.showMessageDialog(null,
+											"本次订单花费: " + bill.getTotal() + " 元\n,账户余额剩:"
+													+ corder.getCustomer().getMoney() + " 元\n账户余额不足,请支付现金!",
+											"错误", JOptionPane.ERROR_MESSAGE);
+								} else {
+									JOptionPane.showMessageDialog(null, "本次订单花费: " + bill.getTotal() + " 元\n,账户余额剩:"
+											+ corder.getCustomer().getMoney() + " 元");
+								}
 							} else {
 								JOptionPane.showMessageDialog(null, "订单结算失败!", "错误", JOptionPane.ERROR_MESSAGE);
 							}
@@ -353,9 +362,8 @@ public class CheckOutPanel extends JPanel {
 		splitPane.setRightComponent(scrollPane_1);
 
 		list = new JList<Map<Bicycle, Integer>>();
-		
 
-		 list.setCellRenderer(new BicyclesMapRenderer());
+		list.setCellRenderer(new BicyclesMapRenderer());
 		scrollPane_1.setViewportView(list);
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

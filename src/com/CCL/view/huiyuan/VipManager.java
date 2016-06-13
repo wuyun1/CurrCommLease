@@ -7,6 +7,7 @@
 package com.CCL.view.huiyuan;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Panel;
 
 import com.CCL.Dao.CustomerDao;
@@ -20,8 +21,12 @@ import com.CCL.view.huiyuan.son.V_regist;
 import com.CCL.view.huiyuan.son.V_savemoney;
 import com.CCL.view.huiyuan.son.V_update;
 import com.CCL.view.huiyuan.test.MyCusDao;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.CCL.view.huiyuan.son.V_typemanager;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -45,6 +50,24 @@ public class VipManager extends javax.swing.JPanel {
 	private void initComponents() {
 
 		jTabbedPane1 = new javax.swing.JTabbedPane();
+//		jTabbedPane1.addChangeListener(new ChangeListener() {
+//			public void stateChanged(ChangeEvent e) {
+//				
+//				int selectedIndex = jTabbedPane1.getSelectedIndex();
+//				JPanel selectedComponent = (JPanel) jTabbedPane1.getSelectedComponent();
+//				String titleAt = jTabbedPane1.getTitleAt(selectedIndex);
+//				
+//				if(PregadeService.fun(titleAt)==false){
+//					Component[] components = selectedComponent.getComponents();
+//					
+//					for (Component component : components) {
+//						component.setEnabled(false);
+//					}
+//					JOptionPane.showMessageDialog(null, "");
+//				}
+//				
+//			}
+//		});
 		savemoney = new V_savemoney();
 		cancleanddo = new V_cancleanddo();
 		queryAndupgrade = new V_queryAndupgrade();
