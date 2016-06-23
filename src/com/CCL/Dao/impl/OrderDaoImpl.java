@@ -31,6 +31,6 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
 	@Override
 	public List<Order> queryAll() {
 		Session session = getSession();
-		return session.createQuery("from " + getEntityClass().getName() + " order by putTime").list();
+		return session.createQuery("from " + getEntityClass().getName() + " order by put_Time desc").list();
 	}
 }

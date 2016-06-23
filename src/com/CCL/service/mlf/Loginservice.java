@@ -36,7 +36,7 @@ public class Loginservice {
 	{
 		this.name=name;		
 		this.pwd=pwd;
-		oper=null;
+		
 		List<OpeUser> user=Opdao.queryAll();
 		for(OpeUser u:user)
 		{

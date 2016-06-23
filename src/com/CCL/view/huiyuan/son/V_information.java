@@ -26,6 +26,7 @@ import javax.swing.event.CaretListener;
 
 import com.CCL.beans.Customer;
 import com.CCL.beans.OpeUser;
+import com.CCL.util.DateUtil;
 import com.CCL.view.huiyuan.model.CustomerListModel;
 import com.CCL.view.huiyuan.rend.CustomerListRenderer;
 import com.CCL.view.huiyuan.service.CustomerService;
@@ -35,6 +36,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  *
@@ -44,6 +47,12 @@ public class V_information extends javax.swing.JPanel {
 
 	/** Creates new form V_information */
 	public V_information() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				 updateUserlist() ;
+			}
+		});
 		initComponents();
 	}
 
@@ -155,7 +164,7 @@ public class V_information extends javax.swing.JPanel {
 				
 				Customer ct = userlist.getSelectedValue();
 				lbl_address1.setText(ct.getAddress());
-				lbl_date1.setText(ct.getBirthday()+"");
+				lbl_date1.setText(DateUtil.getDate(ct.getBirthday()));
 				lbl_email1.setText(ct.getEmail());
 				lbl_intal1.setText(ct.getIntegral()+"");
 				lbl_type1.setText(ct.getCustomerType().getName());

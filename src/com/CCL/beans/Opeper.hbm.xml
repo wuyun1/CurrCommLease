@@ -53,6 +53,12 @@
             <column name="MESSAGE_TEL" default="1" />
         </property>
         
+        <property name="tradingQuery" type="int">
+            <column name="TRADING_QUERY" default="1" />
+        </property>
+        <property name="billDetails" type="int">
+            <column name="BILL_DETAILS" default="1" />
+        </property>
              <!-- 
          <property name="isShow" type="java.lang.Boolean">
             <column name="IS_SHOW" default="1"/>

@@ -22,12 +22,14 @@ import com.CCL.beans.Customer;
 import com.CCL.beans.Order;
 import com.CCL.beans.OrderState;
 import com.CCL.util.mlf.PublicDate;
+import com.CCL.view.other.son.Send;
+import com.CCL.view.other.son.Util_pro;
 
 /**
  * 前台服务的核心逻辑 ,提供主要的前台的业务方法 连接数据层和视图层
  * 
  * @author Jonney
- *
+ * 
  */
 public class KaiTaiService {
 
@@ -47,7 +49,8 @@ public class KaiTaiService {
 	 *            要租的车辆和数量 的Map集合
 	 * @return 订单对象
 	 */
-	public static Order rentCar(Customer currentCustomer, Map<Bicycle, Integer> bicycles) {
+	public static Order rentCar(Customer currentCustomer,
+			Map<Bicycle, Integer> bicycles) {
 
 		if (bicycles == null) {
 			return null;
@@ -62,8 +65,9 @@ public class KaiTaiService {
 		if (isCanRent == false) {
 			return null;
 		}
-		Order newOrder = new Order(currentCustomer, PublicDate.getOuser(), converyBicycles2String(bicycles),
-				getStateByName("准备就绪"), new Date(), null, null, 200f);
+		Order newOrder = new Order(currentCustomer, PublicDate.getOuser(),
+				converyBicycles2String(bicycles), getStateByName("准备就绪"),
+				new Date(), null, null, 200f);
 		if (orderDao.add(newOrder)) {
 			return newOrder;
 		} else {
@@ -80,7 +84,8 @@ public class KaiTaiService {
 	 * @return 状态对象
 	 */
 	public static OrderState getStateByName(String state) {
-		List<OrderState> queryByUseLikeAndPage = orderStateDao.queryByUseLikeAndPage("name", state, 10, 0);
+		List<OrderState> queryByUseLikeAndPage = orderStateDao
+				.queryByUseLikeAndPage("name", state, 10, 0);
 		OrderState cst = null;
 		if (queryByUseLikeAndPage != null && queryByUseLikeAndPage.size() > 0) {
 			cst = queryByUseLikeAndPage.get(0);
@@ -168,7 +173,8 @@ public class KaiTaiService {
 	 */
 	public static Bill accountsOrder(Order corder) {
 		corder.setStopTime(new Date());
-		float spendTime = (float) ((corder.getStopTime().getTime() - corder.getStartTime().getTime()) / 1000.0 / 60);
+		float spendTime = (float) ((corder.getStopTime().getTime() - corder
+				.getStartTime().getTime()) / 1000.0 / 60);
 
 		Map<Bicycle, Integer> bicyclesMap = corder.getBicyclesMap();
 
@@ -194,12 +200,14 @@ public class KaiTaiService {
 
 		// 支付订单
 		if (customer.getMoney() >= huafei) {
-			newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
-					corder.getCustomer().getId(), "余额支付", huafei);
+			newBill = new Bill(new Date(), (long) spendTime, corder, corder
+					.getCustomer().getName(), corder.getCustomer().getId(),
+					"余额支付", huafei);
 			customer.setMoney(customer.getMoney() - huafei);
 		} else {
-			newBill = new Bill(new Date(), (long) spendTime, corder, corder.getCustomer().getName(),
-					corder.getCustomer().getId(), "现金支付", huafei);
+			newBill = new Bill(new Date(), (long) spendTime, corder, corder
+					.getCustomer().getName(), corder.getCustomer().getId(),
+					"现金支付", huafei);
 		}
 
 		corder.setOrderState(getStateByName("订单完成"));
@@ -224,7 +232,7 @@ public class KaiTaiService {
 
 		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
-			if (bicyc.getIsJiFen()) {
+			if (bicyc.getIsJiFen() == 1) {
 				int num = entry.getValue();
 				jiFen += bicyc.getPrice() * num;
 			}
@@ -255,7 +263,8 @@ public class KaiTaiService {
 		StringBuilder str = new StringBuilder();
 
 		for (Entry<Bicycle, Integer> bicycleEntry : bicycles.entrySet()) {
-			str.append(bicycleEntry.getKey().getId() + ":" + bicycleEntry.getValue() + ";");
+			str.append(bicycleEntry.getKey().getId() + ":"
+					+ bicycleEntry.getValue() + ";");
 		}
 
 		if (str.charAt(str.length() - 1) == ';') {
@@ -288,18 +297,20 @@ public class KaiTaiService {
 		for (Entry<Bicycle, Integer> entry : bicyclesMap.entrySet()) {
 			Bicycle bicyc = entry.getKey();
 			int num = entry.getValue();
-			float unit = (bicyc.getIsDaZhe() ? bicyc.getType().getDiscount() / 10 : 1) * bicyc.getPrice();
+			float unit = (bicyc.getIsDaZhe() == 1 ? bicyc.getType()
+					.getDiscount() / 10 : 1) * bicyc.getPrice();
 			float unithuafei = (((int) spendTime) / bicyc.getBaseTime()) * unit;
 			if ((spendTime % bicyc.getBaseTime()) > bicyc.getChargeTime()) {
+				unithuafei += unit;
+			} else {
 				unithuafei += bicyc.getOverTimePrice();
-			}else{
-				unithuafei += 3;
-				
+
 			}
 
 			originalCost += unithuafei * num;
 		}
-		float f = originalCost * (corder.getCustomer().getCustomerType().getDiscount() / 10);
+		float f = originalCost
+				* (corder.getCustomer().getCustomerType().getDiscount() / 10);
 		return f;
 
 	}
@@ -325,4 +336,48 @@ public class KaiTaiService {
 		orderDao.update(currentOrder);
 	}
 
+	public static Bill getBillByOrder(Order order) {
+		
+		List<Bill> queryByUsePage = billDao.queryByUsePage("ORDER_ID", order.getId(), 1, 0);
+		if(queryByUsePage.isEmpty()){
+			return null;
+		}
+		else{
+			return queryByUsePage.get(0);
+		}
+	}
+	
+	static boolean isEnableSmsNotice = "true".equals( Util_pro.readData("sms.enable"));
+	static int noticeOverTime = Integer.parseInt( Util_pro.readData("time"));
+	static Map<String,Boolean> isSended = new HashMap<String,Boolean>();
+	public static int smsNotice(Order order) {
+		if(isEnableSmsNotice){
+			Date date = order.getStartTime();
+			Date d1 = new Date();
+			
+			Date d2 = date;
+			long diff = d1.getTime() - d2.getTime();// 这样得到的差值是微秒级别
+			
+			
+			int hours = (int) (diff / (1000 * 60 * 60));
+			Boolean issended = isSended.get(order.getId()+":"+hours);
+			if(issended==null) issended=false;
+			if(hours>0&&hours%noticeOverTime==0&&!issended){
+				String tel = order.getCustomer().getPhone();
+				if(tel!=null){
+					String text = "您的租的商品快到归还时间了  ,请您尽快归还!";
+					int sendMessage = Send.sendMessage(tel, text);
+					System.out.println("发送短信返回码:"+sendMessage);
+					isSended.put(order.getId()+":"+hours, true);
+					return sendMessage;
+					
+				}
+				
+			}
+			
+			
+		}
+		return 0;
+	}
+	
 }

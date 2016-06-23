@@ -6,8 +6,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JDialog;
 
-import com.CCL.panel.glj.AddPanel;
-import com.CCL.panel.glj.ShouFeiSet;
+import com.CCL.panel.glj.xitongguanli.son.AddPanel;
+import com.CCL.panel.glj.xitongguanli.son.ShouFeiSet;
 
 public  final class AddDialog extends JDialog{
 	

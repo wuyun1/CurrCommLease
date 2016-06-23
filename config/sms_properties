@@ -1,0 +1,10 @@
+#Update 'login.rember' value
+#Thu Jun 16 12:39:22 CST 2016
+login.password=123
+enable=false
+key=dsf
+login.userName=abc
+login.rember=true
+time=2
+sms.enable=true
+id=dsfas

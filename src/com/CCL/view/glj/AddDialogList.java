@@ -7,8 +7,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import com.CCL.panel.glj.AddPanel;
-import com.CCL.panel.glj.AddPanelListPanel;
+import com.CCL.panel.glj.xitongguanli.son.AddPanel;
+import com.CCL.panel.glj.xitongguanli.son.AddPanelListPanel;
 
 public   class AddDialogList extends JDialog {
 	private AddPanelListPanel addPanelListPanel;

@@ -67,10 +67,10 @@ public class ShouFeiSetService {
 						String isjifen = "否";
 						System.out.println("fgdg" + blist.get(i).getIsDaZhe()
 								+ id);
-						if (blist.get(i).getIsDaZhe()) {
+						if (blist.get(i).getIsDaZhe() == 1) {
 							isdazhe = "参加";
 						}
-						if (blist.get(i).getIsJiFen()) {
+						if (blist.get(i).getIsJiFen() == 1) {
 							isjifen = "参加";
 						}
 						Float zhekou = type.getDiscount();

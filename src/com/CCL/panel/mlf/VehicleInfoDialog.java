@@ -289,6 +289,7 @@ public class VehicleInfoDialog extends JDialog {
 	protected void btndel_mouseClick(MouseEvent e) {
 	        bdao.remove(biy.getId());
 	        this.psc.setTableDate(bdao.queryAll());
+	        VehicleInfoDialog.this.dispose();
 	}
 
 	protected void btnsave_mouseaction(MouseEvent e) {
@@ -309,6 +310,7 @@ public class VehicleInfoDialog extends JDialog {
 		b.setFactory(factory);
 		bdao.update(b);
 		this.psc.setTableDate(bdao.queryAll());
+		VehicleInfoDialog.this.dispose();
 	}
 
 

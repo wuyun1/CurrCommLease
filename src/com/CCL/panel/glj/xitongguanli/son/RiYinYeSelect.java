@@ -1,4 +1,4 @@
-package com.CCL.panel.glj;
+package com.CCL.panel.glj.xitongguanli.son;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -22,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
+
 import com.CCL.mwing.MJLable;
 import com.CCL.mwing.glj.ButtonRenderer;
 import com.CCL.mwing.glj.DefaultTableCellHeaderRenderer;
@@ -29,6 +31,7 @@ import com.CCL.mwing.glj.MButton;
 import com.CCL.mwing.glj.TableRender;
 import com.CCL.panel.MPanel;
 import com.CCL.service.glj.RiYingYeSelectService;
+import com.CCL.util.glj.DateUtil;
 import com.CCL.util.glj.Today;
 
 
@@ -42,9 +45,13 @@ public class RiYinYeSelect extends MPanel {
 	private JTextField txt_stime_temp = new JTextField() ,txt_etime_temp= new JTextField();
 	private JDialog calenderDialog;
 	private JButton sbtn,ebtn;
-	public RiYinYeSelect(String imageUrl)
+	
+	private JPanel sellPanel;
+
+	public RiYinYeSelect(String imageUrl,JPanel sellPanel)
 	{
 		super(imageUrl);
+		this.sellPanel = sellPanel;
 		this.setSize(920, 520);
 		this.setLayout(null);
 		this.setVisible(true);
@@ -93,7 +100,9 @@ public class RiYinYeSelect extends MPanel {
 		btn_exit.setActionCommand("退出");
 		
 		
+		btn_select.addActionListener(new ActionListener_btn(this));
 		btn_export.addActionListener(new ActionListener_btn(this));
+		btn_exit.addActionListener(new ActionListener_btn(this));
 		
 		
 		tableColumnV = new Vector<String>();
@@ -119,7 +128,7 @@ public class RiYinYeSelect extends MPanel {
 		
 //		tableValueV.add(row1);
 		int[] floatwidth ={40,130,130,80};
-		int[] fixwidth ={130,130,130};
+		int[] fixwidth ={140,140,140};
 		riYinYeTablePanel = new FixedColumnTablePanel(tableColumnV,tableValueV,4,"images/glj/shoufei/72.jpg",floatwidth,fixwidth);
 		//设置表格列高度
 		riYinYeTablePanel.getFixedColumnTable().setRowHeight(22);
@@ -170,10 +179,23 @@ public class RiYinYeSelect extends MPanel {
 			String command = e.getActionCommand();
 			if(command.equals("查询"))
 			{
-				String start_time = riYinYeSelect.getTxt_stime().getText().trim();
-				String end_time = riYinYeSelect.getTxt_etime().getText().trim();
+				Date starttime =null;
+				Date endtime =null;
+					System.out.println(riYinYeSelect.getTxt_stime().getText().trim()+"jinlai"+endtime);
+					
+					String start = riYinYeSelect.getTxt_stime().getText().trim();
+					String end =riYinYeSelect.getTxt_etime().getText().trim();
+					System.out.println(start+"jinlai"+end);
+					starttime = DateUtil.paseDate(start);
+					endtime =  DateUtil.paseDate(end);
 				
-				
+				tableValueV = RiYingYeSelectService.getRiYinYeBill(starttime, endtime);
+				riYinYeTablePanel.setTableValueV(tableValueV);
+				RiYinYeSelect.this.add(riYinYeTablePanel);
+
+				riYinYeTablePanel.revalidate(); // 重要、、、、、、、、、、、、、、
+				riYinYeTablePanel.repaint();
+
 				
 				
 			}else if (command.equals("导出"))
@@ -181,7 +203,8 @@ public class RiYinYeSelect extends MPanel {
 				
 			}else if (command.equals("退出"))
 			{
-				
+				sellPanel.removeAll();
+				sellPanel.repaint();
 			}
 		}
 		
@@ -215,7 +238,7 @@ public class RiYinYeSelect extends MPanel {
 					calenderDialog.setLayout(null);
 					
 					calenderDialog.setUndecorated(true);
-					calenderDialog.setBounds(612, 215, 230, 235);
+					calenderDialog.setBounds(612, 282, 230, 235);
 					//设置dialog处在最顶层
 					calenderDialog.setModal(true);
 					MyCalenderPanel mc = new MyCalenderPanel(ryd,"起始时间");
@@ -254,7 +277,7 @@ public class RiYinYeSelect extends MPanel {
 					calenderDialog.setLayout(null);
 					
 					calenderDialog.setUndecorated(true);
-					calenderDialog.setBounds(741, 215, 230, 235);
+					calenderDialog.setBounds(741, 282, 230, 235);
 					calenderDialog.setModal(true);
 					MyCalenderPanel mc = new MyCalenderPanel(ryd,"结束时间");
 					mc.setBounds(0, 0, 230, 200);
@@ -357,6 +380,14 @@ public class RiYinYeSelect extends MPanel {
 
 	public void setTxt_etime(JTextField txt_etime) {
 		this.txt_etime = txt_etime;
+	}
+
+	public FixedColumnTablePanel getRiYinYeTablePanel() {
+		return riYinYeTablePanel;
+	}
+
+	public void setRiYinYeTablePanel(FixedColumnTablePanel riYinYeTablePanel) {
+		this.riYinYeTablePanel = riYinYeTablePanel;
 	}
 
 }

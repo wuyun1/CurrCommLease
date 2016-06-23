@@ -20,7 +20,7 @@ public class OtherManager extends JPanel {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 860, 576);
-		tabbedPane.addTab("短信提醒", sms_Alerts);
+		tabbedPane.addTab("短信提醒配置", sms_Alerts);
 		add(tabbedPane);
 
 	}

@@ -78,15 +78,13 @@ public class V_typemanager extends JPanel {
 				
 				CustomerType selectedValue = list.getSelectedValue();
 				
-				try {
-					CustomerTypeService.delete(selectedValue);
+				if(CustomerTypeService.delete(selectedValue)){
 					lbl_resultinfo.setText("成功移除客户类型！");
-					
 					updateTypeList();
-					
-				} catch (Exception e2) {
+				}else{
 					JOptionPane.showMessageDialog(null, "移除失败，此项已在数据中形成关系！", "错误", JOptionPane.ERROR_MESSAGE);
 				}
+				
 				
 
 			}

@@ -13,13 +13,21 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.CCL.Dao.OpeUserDao;
+import com.CCL.Dao.OpeperDao;
 import com.CCL.Dao.impl.OpeUserDaoImpl;
+import com.CCL.Dao.impl.OpeperDaoImpl;
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.OpeUser;
+import com.CCL.beans.Opeper;
+import com.CCL.service.mlf.opeper_service;
+import com.CCL.util.mlf.PublicDate;
 
 /**
  *
@@ -29,6 +37,9 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
     
 	/** Creates new form Opanel_opeuser_set */
 	private OpeUserDao opdao;
+	private OpeperDao opedao;
+	private Opeper  opeper;
+	private opeper_service opservice;
 	private javax.swing.JButton btn_add;
 	private javax.swing.JButton btn_del;
 	private javax.swing.JButton btn_return;
@@ -44,9 +55,38 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 	private javax.swing.JTextField txt_opename;
 	private javax.swing.JTextField txt_pwd;
 	private  static OpeUser  opuser;
+	private JPanel pnl;
+	private JTextField txt_tip;
 	public Opanel_opeuser_set() {
+		
 		initComponents();
+//		if(PublicDate.getOuser().getName().equals("admin"))
+//		{
+//		initComponents();
+//		}
+//		else{
+//            opeper_tip();
+//		}
 	}
+
+
+
+//	private void opeper_tip() {
+//		// TODO Auto-generated method stub
+//		pnl=new JPanel(null);
+//		txt_tip=new JTextField("该用户无此功能权限！！");
+//		init();
+//	}
+//	private void init() {
+//		txt_tip.setBounds(250, 250, 100, 100);
+//		
+//		pnl.add(txt_tip);
+//		this.add(pnl);
+//		this.setSize(800, 600);
+//		this.setVisible(true);
+//	}
+
+
 
 	/** This method is called from within the constructor to
 	 * initialize the form.
@@ -56,7 +96,10 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 	//GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
+		opedao=new OpeperDaoImpl();
+		opeper=new Opeper();
 		opdao=new OpeUserDaoImpl();
+		opservice=new opeper_service();
 		lbl_tip = new javax.swing.JLabel();
 		lbl_id = new javax.swing.JLabel();
 		lbl_opename = new javax.swing.JLabel();
@@ -93,7 +136,7 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
            
 		});
 		
-		
+       
 		
 		setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -187,6 +230,7 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 
 		add(jscp_operinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,
 				210, 760, 380));
+
 	}// </editor-fold>
 	
 
@@ -208,6 +252,11 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 	}
 
 	protected void btn_update_mouseAction(MouseEvent e) {
+		if(txt_id.getText().trim().length()<=0)
+		{
+			JOptionPane.showMessageDialog(null, "请先双击所需修改的管理员信息");
+		}
+		else{
             int id=Integer.parseInt(txt_id.getText().trim());             
       		String opename=(String)txt_opename.getText().trim();
       		String pwd=(String)txt_pwd.getText().trim();
@@ -219,13 +268,14 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
       		txt_id.setText("");
       		txt_opename.setText("");
 			txt_pwd.setText("");
+		}
 	}
 
 	private void getTabledate(MouseEvent e) {
 		int row=tab_operinfo.getSelectedRow();
 		if(row!=-1)
 		{
-		int column=1;
+		int column=0;
 		opuser=(OpeUser) tab_operinfo.getValueAt(row, column);
 		txt_id.setText(opuser.getId()+"");
 		txt_opename.setText(opuser.getUserName());
@@ -237,8 +287,7 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 	
 	protected void btn_add_mouseAction(MouseEvent e) {
 		  
-		String opename=(String)txt_opename.getText().trim();
-		String pwd=(String)txt_pwd.getText().trim();
+		
 //		   if(txt_id.getText().trim().length()==0)
 //		   {
 //			   JOptionPane.showMessageDialog(null, "id不能为空");
@@ -255,13 +304,28 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
 			txt_opename.setText("");
 			txt_pwd.setText("");
 			
-		}
-			   OpeUser ouser=new OpeUser();
+		}else
+		{ 
+			if(txt_opename.getText().trim().length()==0||txt_pwd.getText().trim().length()==0)
+			{
+				JOptionPane.showMessageDialog(null, "用户名或密码不能为空！");
+			}
+			else{
+			String opename=(String)txt_opename.getText().trim();
+		      String pwd=(String)txt_pwd.getText().trim();
+			  OpeUser ouser=new OpeUser();
 			   //ouser.setId(id);
 			   ouser.setUser(opename);
 			   ouser.setPassword(pwd);
 			   opdao.add(ouser);
 			   setTableDate(opdao.queryAll());
+			   OpeUser op=opservice.selectByNameAndPwd(opename, pwd);//设置新管理员的默认权限表；
+			   Opeper opp=new Opeper();
+			   opp.setOpeUser(op);
+			   opedao.add(opp);
+			}
+		}
+			 
 //		   }
 		
 	}
@@ -280,8 +344,8 @@ public class Opanel_opeuser_set extends javax.swing.JPanel {
          
 		for (OpeUser b : queryAll) {
 			row = new Vector();
-			row.add(b.getId());
 			row.add(b);
+			row.add(b.getUserName());
 			row.add(b.getPassword());
 			date.add(row);
 		}

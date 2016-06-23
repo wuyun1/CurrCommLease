@@ -15,12 +15,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -30,9 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -49,7 +47,6 @@ import com.CCL.view.kaitaimgr.render.BicycleListRenderer;
 import com.CCL.view.kaitaimgr.render.BicyclesMapRenderer;
 import com.CCL.view.kaitaimgr.service.BicycleService;
 import com.CCL.view.kaitaimgr.service.KaiTaiService;
-import javax.swing.JSplitPane;
 
 public class KaiTaiPanel extends JPanel {
 
@@ -57,7 +54,7 @@ public class KaiTaiPanel extends JPanel {
 	 * Create the panel.
 	 */
 
-	FindCustomerDialog findCustomerDialog;
+	FindCustomerDialog findCustomerDialog ;
 
 	Customer currentCustomer = null;
 	Bicycle currentBicycle = null;
@@ -232,7 +229,13 @@ public class KaiTaiPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (findCustomerDialog == null) {
-					findCustomerDialog = new FindCustomerDialog(KaiTaiPanel.this);
+					findCustomerDialog = new FindCustomerDialog(){
+						@Override
+						public void selectUser(Customer currentUser) {
+							setCurrCustomer(currentUser);
+						}
+						
+					};
 					findCustomerDialog.setModal(true);
 				}
 				findCustomerDialog.setLocationRelativeTo(null);

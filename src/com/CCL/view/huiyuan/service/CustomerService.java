@@ -26,17 +26,18 @@ public class CustomerService {
 		
 	}
 
-	public static Customer query(String name) {
+	public static Customer query(String id) {
 		
-		// TODO Auto-generated method stub
-		 Customer ct = cd.queryByUsePage("name", name, 20, 0).get(0);
+		Customer ct = cd.get(Integer.parseInt(id));
 		 return ct;
 		
 	}
 
-	public static void update(Customer ct) {
-		// TODO Auto-generated method stub
-		cd.update(ct);
+	public static boolean logoutCustomer(Customer ct) {
+		CustomerState cst = getStateByName("×¢Ïú");
+		ct.setCustomerState(cst);
+		boolean update = cd.update(ct);
+		return update;
 	}
 
 	public static boolean existUsername(String text) {
@@ -60,18 +61,40 @@ public class CustomerService {
 	public static List<Customer> queryUserByKeyWord(String text) {
 		
 		
-		return cd.queryByUseLikeAndPage("name", text, 100, 0);
+		List<Customer> list1 = cd.queryByUseLikeAndPage("name", text, 100, 0);
+		List<Customer> list2 = cd.queryByUseLikeAndPage("id", text, 100, 0);
+		
+		list1.removeAll(list2);
+		list1.addAll(list2);
+		
+		
+		return list1;
 	}
 
 	public static List<Bill> queryUserByName(String text) {
-		// TODO Auto-generated method stub
 		return bi.queryByUsePage("CUSTOMER_NAME", text, 100, 0);
 	}
 	
 	
 	public static List<Bill> queryUserByCustomer(Customer c) {
-		// TODO Auto-generated method stub
-		return bi.queryByUsePage("CUSTOMER_ID", c, 100, 0);
+		if(c==null) return null;
+		return bi.queryByUsePage("CUSTOMER_ID", c.getId(), 100, 0);
+	}
+
+	public static boolean bubanCustomer(Customer ct, String newPassWord) {
+		
+		ct.setPassword(newPassWord);
+
+		CustomerState cst = CustomerService.getStateByName("¼¤»î");
+
+		ct.setCustomerState(cst);
+		
+		return cd.update(ct);
+		
+	}
+
+	public static void update(Customer ct) {
+		cd.update(ct);
 	}
 	
 

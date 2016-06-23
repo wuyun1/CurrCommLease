@@ -16,8 +16,7 @@ public class OrderDaoImplTest {
 	public static void main(String[] args) {
 		OrderDaoImplTest orderDaoTest = new OrderDaoImplTest();
 		orderDaoTest.testAdd();
-		
-		
+
 	}
 
 	OrderDao dao = new OrderDaoImpl();
@@ -29,15 +28,10 @@ public class OrderDaoImplTest {
 		order.setDeposit(545.6f);
 
 		dao.add(order);
-		
-		
+
 		order = new Order();
 		order.setDeposit(5.6f);
 		dao.add(order);
-		
-		
-		
-
 
 	}
 
@@ -51,31 +45,35 @@ public class OrderDaoImplTest {
 	@Test
 	public void testQueryAll() {
 		List<Order> queryAll = dao.queryAll();
+		for (Order order : queryAll) {
 
-		System.out.println(StringUtils.join(queryAll, "\n"));
+			System.out.println(order.getId() + ":" + order.getPutTime());
+		}
 
 	}
-	
+
 	@Test
 	public void testQueryByUseLikeAndPage() {
-		List<Order> queryAll = dao.queryByUseLikeAndPage("ID", 3+"", 0, 30);
+		List<Order> queryAll = dao.queryByUseLikeAndPage("ID", 3 + "", 0, 30);
 
 		System.out.println(StringUtils.join(queryAll, "\n"));
 
 	}
-	
+
 	@Test
 	public void testQueryByUseLikeAndPage2() {
-		
-		Map<String,String> entry2 = new HashMap<String,String>();
+
+		Map<String, String> entry2 = new HashMap<String, String>();
 		entry2.put("id", "f");
 		List<Order> queryAll = dao.queryByUseLikeAndPage(entry2, 1, 3);
 
-		System.out.println(StringUtils.join(queryAll, "\n"));
+		for (Order order : queryAll) {
+
+			System.out.println(order.getId() + ":" + order.getPutTime());
+		}
 
 	}
 
-	
 	@Test
 	public void testRemove() {
 		dao.remove(2);
@@ -85,10 +83,10 @@ public class OrderDaoImplTest {
 	@Test
 	public void testUpdate() {
 		Order order = dao.get(32);
-		if(order == null) return;
+		if (order == null)
+			return;
 		order.setPutTime(new Date());
 		dao.update(order);
 	}
-	
-	
+
 }

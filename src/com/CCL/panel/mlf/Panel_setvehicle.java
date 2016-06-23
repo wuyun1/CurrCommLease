@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -72,6 +73,8 @@ public class Panel_setvehicle extends javax.swing.JPanel {
 				
 			}
 		});
+		tab_vehicleinfo.getTableHeader().setReorderingAllowed(false); //不可整列移动
+		tab_vehicleinfo.getTableHeader().setResizingAllowed(false); //不可拉动表格 
 		lbl_management.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 18));
 		lbl_management.setText("\u8f66\u8f86\u4fe1\u606f\u7ba1\u7406");
 
@@ -196,18 +199,33 @@ public class Panel_setvehicle extends javax.swing.JPanel {
 
 	protected void doubleClick_mouseClicked(MouseEvent e) {
 		int row=tab_vehicleinfo.getSelectedRow();
-		int col=3;
+		int col=0;
 		Bicycle biy=(Bicycle)tab_vehicleinfo.getValueAt(row, col);
 		VehicleInfoDialog cif=new VehicleInfoDialog(null,"自行车信息",true,this,biy);
-		
+	
 	}
 
 	//GEN-END:initComponents
 
 	protected void btnsearch_ActionPerformed(MouseEvent e) {
+		if(this.txt_id.getText().length()==0)
+		{
+			setTableDate(bdao.queryAll());
+		}
+		else
+		{
 		int id=Integer.valueOf(this.txt_id.getText().trim());
 		Bicycle search_bicycle= new Bicycle();
+		search_bicycle=null;
 		search_bicycle=bdao.get(id);
+		
+		if(search_bicycle==null)
+		{
+			JOptionPane.showMessageDialog(null, "无这ID车辆信息");
+			tab_vehicleinfo.removeAll();
+//			JOptionPane.showMessageDialog(null, "");
+		}
+		else {
 		 List<Bicycle> list=new ArrayList<Bicycle>();
 		 Bicycle b=new Bicycle();
 		 b.setId(search_bicycle.getId());
@@ -220,6 +238,8 @@ public class Panel_setvehicle extends javax.swing.JPanel {
 		 list.add(b);
 		 tab_vehicleinfo.removeAll();
 		 setTableDate(list);
+		}
+		}
 	}
 
 	public void setTableDate(List<Bicycle> list) {
@@ -234,13 +254,13 @@ public class Panel_setvehicle extends javax.swing.JPanel {
 
 		Vector<Vector> date = new Vector<Vector>();
 		Vector row = null;
-         
+
 		for (Bicycle b : list) {
 			row = new Vector();
-			row.add(b.getId());
+			row.add(b);
 			row.add(b.getBicycleState());
 			row.add(b.getType());
-			row.add(b);
+			row.add(b.getName());
 			row.add(b.getDescript());
 			row.add(b.getPrice());
 			row.add(b.getFactory());
@@ -261,5 +281,85 @@ public class Panel_setvehicle extends javax.swing.JPanel {
 	private javax.swing.JTable tab_vehicleinfo;
 	private javax.swing.JTextField txt_id;
 	// End of variables declaration//GEN-END:variables
+
+	public BicycleDao getBdao() {
+		return bdao;
+	}
+
+	public void setBdao(BicycleDao bdao) {
+		this.bdao = bdao;
+	}
+
+	public javax.swing.JButton getBtn_Vehicle_search() {
+		return btn_Vehicle_search;
+	}
+
+	public void setBtn_Vehicle_search(javax.swing.JButton btn_Vehicle_search) {
+		this.btn_Vehicle_search = btn_Vehicle_search;
+	}
+
+	public javax.swing.JButton getBtn_vehicle_print() {
+		return btn_vehicle_print;
+	}
+
+	public void setBtn_vehicle_print(javax.swing.JButton btn_vehicle_print) {
+		this.btn_vehicle_print = btn_vehicle_print;
+	}
+
+	public javax.swing.JButton getBtn_vrhicle_add() {
+		return btn_vrhicle_add;
+	}
+
+	public void setBtn_vrhicle_add(javax.swing.JButton btn_vrhicle_add) {
+		this.btn_vrhicle_add = btn_vrhicle_add;
+	}
+
+	public javax.swing.JScrollPane getjScrollPane1() {
+		return jScrollPane1;
+	}
+
+	public void setjScrollPane1(javax.swing.JScrollPane jScrollPane1) {
+		this.jScrollPane1 = jScrollPane1;
+	}
+
+	public javax.swing.JLabel getLbl_behiclecode() {
+		return lbl_behiclecode;
+	}
+
+	public void setLbl_behiclecode(javax.swing.JLabel lbl_behiclecode) {
+		this.lbl_behiclecode = lbl_behiclecode;
+	}
+
+	public javax.swing.JLabel getLbl_management() {
+		return lbl_management;
+	}
+
+	public void setLbl_management(javax.swing.JLabel lbl_management) {
+		this.lbl_management = lbl_management;
+	}
+
+	public javax.swing.JLabel getLbl_tip() {
+		return lbl_tip;
+	}
+
+	public void setLbl_tip(javax.swing.JLabel lbl_tip) {
+		this.lbl_tip = lbl_tip;
+	}
+
+	public javax.swing.JTable getTab_vehicleinfo() {
+		return tab_vehicleinfo;
+	}
+
+	public void setTab_vehicleinfo(javax.swing.JTable tab_vehicleinfo) {
+		this.tab_vehicleinfo = tab_vehicleinfo;
+	}
+
+	public javax.swing.JTextField getTxt_id() {
+		return txt_id;
+	}
+
+	public void setTxt_id(javax.swing.JTextField txt_id) {
+		this.txt_id = txt_id;
+	}
 
 }

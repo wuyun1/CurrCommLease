@@ -6,25 +6,20 @@
 
 package com.CCL.view.huiyuan.son;
 
-import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import com.CCL.beans.Customer;
 import com.CCL.util.DateUtil;
-import com.CCL.view.huiyuan.VipManager;
 import com.CCL.view.huiyuan.service.CustomerService;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
+import com.CCL.view.kaitaimgr.subpanel.FindCustomerDialog;
 
 /**
  *
@@ -32,6 +27,7 @@ import javax.swing.JLabel;
  */
 public class V_savemoney extends javax.swing.JPanel {
 
+	protected FindCustomerDialog findCustomerDialog =null;
 	/** Creates new form V_savemoney */
 	public V_savemoney() {
 		setLayout(null);
@@ -86,13 +82,7 @@ public class V_savemoney extends javax.swing.JPanel {
 		this.lbl_money = lbl_money;
 	}
 
-	public javax.swing.JLabel getLbl_password() {
-		return lbl_password;
-	}
 
-	public void setLbl_password(javax.swing.JLabel lbl_password) {
-		this.lbl_password = lbl_password;
-	}
 
 	public javax.swing.JLabel getLbl_succese() {
 		return lbl_succese;
@@ -118,27 +108,10 @@ public class V_savemoney extends javax.swing.JPanel {
 		this.txt_money = txt_money;
 	}
 
-	public javax.swing.JPasswordField getTxt_password() {
-		return txt_password;
-	}
-
-	public void setTxt_password(javax.swing.JPasswordField txt_password) {
-		this.txt_password = txt_password;
-	}
-
-	public javax.swing.JTextField getTxt_vid() {
-		return txt_vname;
-	}
-
-	public void setTxt_vid(javax.swing.JTextField txt_vid) {
-		this.txt_vname = txt_vid;
-	}
 
 	// GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
-		txt_vname = new javax.swing.JTextField();
-		txt_vname.setBounds(152, 43, 107, 21);
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jScrollPane1.setBounds(82, 148, 187, 203);
 		lbl_info = new javax.swing.JLabel();
@@ -150,12 +123,25 @@ public class V_savemoney extends javax.swing.JPanel {
 		lbl_yuan = new javax.swing.JLabel();
 		lbl_yuan.setBounds(510, 111, 18, 15);
 		jbt_sava = new javax.swing.JButton();
+		
 		jbt_sava.addActionListener(new ActionListener() {
+			
+			
 			public void actionPerformed(ActionEvent e) {
-				float money = Integer.parseInt(txt_money.getText());
-				String name = txt_vname.getText();
-				Customer ct = CustomerService.query(name);
 				
+				
+				
+				
+				
+				float money = Integer.parseInt(txt_money.getText());
+				String name = txt_userId.getText();
+				if("".equals(name)){
+					JOptionPane.showMessageDialog(null, "请选择用户!");
+					txt_name.setText("");
+					txt_userId.setText("");
+					return;
+				}
+				Customer ct = CustomerService.query(name);
 				ct.setMoney(money);
 				CustomerService.update(ct);
 				DefaultListModel model = new DefaultListModel();
@@ -178,13 +164,12 @@ public class V_savemoney extends javax.swing.JPanel {
 		jbt_cancle = new javax.swing.JButton();
 		jbt_cancle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txt_vname.setText(null);
-				txt_password.setText(null);
+				txt_name.setText(null);
+				txt_userId.setText(null);
 				txt_money.setText(null);
 				DefaultListModel model = new DefaultListModel();
 				jlist_info.setModel(model);
 				
-				lbl_info.setText(null);
 			}
 			
 		});
@@ -193,10 +178,6 @@ public class V_savemoney extends javax.swing.JPanel {
 		lbl_succese
 				.setBorder(new TitledBorder(null, "\u6D88\u606F", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lbl_succese.setBounds(329, 176, 236, 92);
-		lbl_password = new javax.swing.JLabel();
-		lbl_password.setBounds(329, 46, 69, 15);
-		txt_password = new javax.swing.JPasswordField();
-		txt_password.setBounds(407, 43, 137, 21);
 
 		lbl_info.setText("\u4f1a\u5458\u4fe1\u606f\uff1a");
 
@@ -207,63 +188,83 @@ public class V_savemoney extends javax.swing.JPanel {
 		jbt_sava.setText("\u5145  \u503c");
 
 		jbt_cancle.setText("\u53d6  \u6d88");
-
-		lbl_password.setText("\u4f1a\u5458\u5bc6\u7801\uff1a");
 		setLayout(null);
 		setLayout(null);
 		add(jScrollPane1);
 		jlist_info = new javax.swing.JList();
 		jScrollPane1.setViewportView(jlist_info);
 		add(lbl_info);
-		add(txt_vname);
 		add(lbl_money);
 		add(txt_money);
 		add(lbl_yuan);
 		add(jbt_sava);
 		add(jbt_cancle);
-		add(lbl_password);
-		add(txt_password);
 		add(lbl_succese);
-		JButton jbt_found = new JButton("\u67E5  \u627E");
-		jbt_found.addActionListener(new ActionListener() {
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new TitledBorder(null, "\u5F53\u524D\u9009\u62E9\u7684\u7528\u6237", TitledBorder.LEADING,
+						TitledBorder.TOP, null, null));
+		panel.setBounds(31, 20, 552, 84);
+		add(panel);
+		
+		label = new JLabel("\u5BA2\u6237\u59D3\u540D\uFF1A");
+		label.setBounds(10, 28, 80, 15);
+		panel.add(label);
+		
+		txt_name = new JLabel();
+		txt_name.setBounds(87, 25, 143, 18);
+		panel.add(txt_name);
+		
+		label_2 = new JLabel();
+		label_2.setText("\u4F1A\u5458ID\uFF1A");
+		label_2.setBounds(270, 28, 60, 15);
+		panel.add(label_2);
+		
+		txt_userId = new JLabel();
+		txt_userId.setBounds(340, 25, 167, 21);
+		panel.add(txt_userId);
+		
+		button = new JButton("\u9009\u62E9\u7528\u6237");
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = txt_vname.getText();
-				String passwrod=txt_password.getText();
-				DefaultListModel model = new DefaultListModel();
+				if (findCustomerDialog == null) {
+					findCustomerDialog = new FindCustomerDialog() {
+						@Override
+						public void selectUser(Customer currentUser) {
+							txt_name.setText(currentUser.getName());
+							txt_userId.setText(currentUser.getId() + "");
+							
+							
+							Customer ct = currentUser;
+							DefaultListModel model = new DefaultListModel();
+							if (ct == null) {
+								model.addElement("客户不存在！！！");
+							} else {
+								{
+								model.addElement("姓名:" + ct.getName());
+								model.addElement("性别:" + ct.getSex());
+								model.addElement("电话:" + ct.getPhone());
+								model.addElement("类型：" + ct.getCustomerType().getName());
+								model.addElement("余额:" + ct.getMoney());
+								model.addElement("状态:" + ct.getCustomerState().getName());
+								model.addElement("积分:" + ct.getIntegral());
+								model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
+								model.addElement("地址:" + ct.getAddress());
+								model.addElement("EMAIL:" + ct.getEmail());
+								}
+							}
+							jlist_info.setModel(model);
+						}
 
-				Customer ct = CustomerService.query(name);
-				
-//				System.out.println(ct.getCustomerType().getName());
-				
-				if (ct == null) {
-					// JOptionPane.showMessageDialog(null, "");
-					model.addElement("客户不存在！！！");
-				} else {
-					if(passwrod.equals(ct.getPassword()))
-					{
-					model.addElement("姓名:" + ct.getName());
-					model.addElement("性别:" + ct.getSex());
-					model.addElement("电话:" + ct.getPhone());
-					model.addElement("类型：" + ct.getCustomerType().getName());
-					model.addElement("余额:" + ct.getMoney());
-					model.addElement("状态:" + ct.getCustomerState().getName());
-					model.addElement("积分:" + ct.getIntegral());
-					model.addElement("出生日期:" + DateUtil.getDate(ct.getBirthday()));
-					model.addElement("地址:" + ct.getAddress());
-					model.addElement("EMAIL:" + ct.getEmail());
-					}
+					};
+					findCustomerDialog.setModal(true);
 				}
-
-				jlist_info.setModel(model);
-
+				findCustomerDialog.setVisible(true);
 			}
 		});
-		jbt_found.setBounds(162, 74, 93, 23);
-		add(jbt_found);
-		
-		JLabel lbl_vname = new JLabel("\u4F1A\u5458\u59D3\u540D\uFF1A");
-		lbl_vname.setBounds(82, 46, 93, 15);
-		add(lbl_vname);
+		button.setBounds(449, 51, 93, 23);
+		panel.add(button);
 	}// </editor-fold>
 
 	// GEN-END:initComponents
@@ -276,10 +277,13 @@ public class V_savemoney extends javax.swing.JPanel {
 	private javax.swing.JList jlist_info;
 	private javax.swing.JLabel lbl_info;
 	private javax.swing.JLabel lbl_money;
-	private javax.swing.JLabel lbl_password;
 	private javax.swing.JLabel lbl_succese;
 	private javax.swing.JLabel lbl_yuan;
 	private javax.swing.JTextField txt_money;
-	private javax.swing.JPasswordField txt_password;
-	private javax.swing.JTextField txt_vname;
+	private JPanel panel;
+	private JLabel label;
+	private JLabel txt_name;
+	private JLabel label_2;
+	private JLabel txt_userId;
+	private JButton button;
 }

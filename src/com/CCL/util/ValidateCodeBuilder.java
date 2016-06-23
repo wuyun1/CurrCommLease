@@ -37,14 +37,16 @@ public class ValidateCodeBuilder {
 	{
 		int count = random.nextInt(width * height);
 		
-		if(count <= 50)
+		if(count <=5)
 		{
 			count = (count + 1) * 10;
 		}
-		
-		for(int i = 0;i < count;i++){
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, width, height);
+		for(int i = 0;i <17;i++){
 			g.setColor(randomColor());
-			g.drawLine(random.nextInt(width), random.nextInt(height), random.nextInt(width), random.nextInt(height));
+			g.setFont(new Font("ºÚÌå", 3, 32));
+			g.drawLine(random.nextInt(width), random.nextInt(height), random.nextInt(width)+random.nextInt(12), random.nextInt(height)+random.nextInt(12));
 		}
 	}
 	
@@ -58,7 +60,7 @@ public class ValidateCodeBuilder {
 		drawBackground(width,height,g);
 		
 		g.setColor(randomColor());
-		g.setFont(new Font("",Font.BOLD | Font.ITALIC,18));
+		g.setFont(new Font("",Font.BOLD | Font.ITALIC,24));
 		g.drawString(validateCodeString, (width - (count * 12)) / 2, (height + 12) / 2);
 		
 		ValidateCode validateCode = new ValidateCode(validateCodeString,bufferedImage);

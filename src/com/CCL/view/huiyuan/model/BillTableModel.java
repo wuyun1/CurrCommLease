@@ -12,7 +12,7 @@ public class BillTableModel implements TableModel {
 	
 	List<Bill> billList = new ArrayList<Bill>();
 	
-	String[] billColumn = new String[]{"编号","客户名","自行车","租赁时长","总金额","押金","操作呐"};
+	String[] billColumn = new String[]{"编号","客户名","自行车","租赁时长","总金额","押金","操作员"};
 
 	public BillTableModel(List<Bill> billList) {
 		this.billList.addAll(billList);

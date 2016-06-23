@@ -8,7 +8,13 @@ public class DateUtil {
 	
 	public static String formatDate(Date time)
 	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	    return dateFormat.format(time);
+	}
+	
+	public static String formatDate(Object time)
+	{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	    return dateFormat.format(time);
 	}
 	

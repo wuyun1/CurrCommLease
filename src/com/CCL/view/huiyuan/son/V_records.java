@@ -63,7 +63,9 @@ public class V_records extends JPanel {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
-				List<Customer> users = CustomerService.queryUserByKeyWord(txt_name.getText());
+				String text = txt_name.getText();
+				
+				List<Customer> users = CustomerService.queryUserByKeyWord(text);
 				
 				userList.setModel(new CustomerListModel(users) );
 			}
@@ -85,9 +87,12 @@ public class V_records extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				
 				Customer ct = userList.getSelectedValue();
-				billList =CustomerService.queryUserByCustomer(ct);
-				
-				tableBill.setModel(new BillTableModel(billList));			
+				if(ct!=null){
+					billList =CustomerService.queryUserByCustomer(ct);
+					
+					tableBill.setModel(new BillTableModel(billList));		
+				}
+					
 			}
 		});
 		

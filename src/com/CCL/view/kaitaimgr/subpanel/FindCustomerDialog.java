@@ -106,10 +106,10 @@ public class FindCustomerDialog extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				
 				 if(e.getClickCount() == 2){
-					 if(kaiTaiPanel!=null){
+					 
 							Customer currentUser = list.getSelectedValue();
-							kaiTaiPanel.setCurrCustomer(currentUser);
-						}
+							selectUser(currentUser);
+					
 						
 						setVisible(false);
 				 }
@@ -130,11 +130,11 @@ public class FindCustomerDialog extends JDialog {
 						
 						
 						System.out.println("OK");
-						if(kaiTaiPanel!=null){
-							Customer currentUser = list.getSelectedValue();
-							kaiTaiPanel.setCurrCustomer(currentUser);
-						}
 						
+							Customer currentUser = list.getSelectedValue();
+							
+							selectUser(currentUser);
+												
 						setVisible(false);
 						
 						
@@ -157,6 +157,10 @@ public class FindCustomerDialog extends JDialog {
 		}
 	}
 
+	public void selectUser(Customer currentUser) {
+		
+	}
+
 	protected void updateCustomerList() {
 		
 		
@@ -174,14 +178,9 @@ public class FindCustomerDialog extends JDialog {
 		
 	}
 
-	KaiTaiPanel kaiTaiPanel = null;
 	private JList<Customer> list;
 	private JTextField textField;
 
-	public FindCustomerDialog(KaiTaiPanel kaiTaiPanel) {
-		this();
-		this.kaiTaiPanel = kaiTaiPanel;
-	}
 	
 	
 	class MyCustomerModel extends AbstractListModel<Customer> {

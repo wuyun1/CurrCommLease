@@ -61,9 +61,9 @@ public class InitDB {
 		session.save(bt3);
 //		BicycleState state,BicycleType type,String name,String descript,Integer price,Integer inventory,
 //		String factory,Integer isDaZhe,Integer isJiFen,Integer baseTime,Integer chargeTime,Integer overTimePrice
-		Bicycle b1 = new Bicycle(bs3, bt2, "A110", "蓝星赛车的描述", 5, 20, "凤凰", true, true, 60, 30, 3);
-		Bicycle b2 = new Bicycle(bs1, bt1, "B111", "奥迪A8的描述", 7, 15, "永久",true, true, 60,30, 4);
-		Bicycle b3 = new Bicycle(bs2, bt3, "C111", "小刀电车的描述", 10, 14, "凤凰", true, true, 60, 30, 6);
+		Bicycle b1 = new Bicycle(bs3, bt2, "A110", "蓝星赛车的描述", 5, 20, "凤凰", 1, 1, 60, 30, 3);
+		Bicycle b2 = new Bicycle(bs1, bt1, "B111", "奥迪A8的描述", 7, 15, "永久",1, 1, 60,30, 4);
+		Bicycle b3 = new Bicycle(bs2, bt3, "C111", "小刀电车的描述", 10, 14, "凤凰", 1, 1, 60, 30, 6);
 		session.save(b1);
 		session.save(b2);
 		session.save(b3);
@@ -122,7 +122,7 @@ public class InitDB {
 		//String userName, String password, Float salary, String name, String sex, Date birthday,String address, String phone, String photo, Opeper opePer
 		
 		OpeUser ou1=new OpeUser("abc", "123", 20f, "abc", "男", new Date(), "湖南", "18711180761", null, null);
-		Opeper op1 = new Opeper(ou1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+		Opeper op1 = new Opeper(ou1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1, 1, 1);
 		ou1.setOpePer(op1);
 		session.save(ou1);
 

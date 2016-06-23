@@ -24,9 +24,9 @@ public class CustomerTypeService {
 	}
 
 
-	public static void delete(CustomerType selectedValue) {
+	public static boolean delete(CustomerType selectedValue) {
 		
-		customerTypeDao.remove(selectedValue.getId());
+		return customerTypeDao.remove(selectedValue.getId());
 		
 	}
 

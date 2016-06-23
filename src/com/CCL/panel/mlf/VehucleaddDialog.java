@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.CCL.Dao.BicycleDao;
@@ -211,9 +212,12 @@ public class VehucleaddDialog extends Dialog {
 		super(owner, title, modal);
 		this.psc=psc;
 		bdao=new BicycleDaoImpl();
+
 		pnlMain=new MPanel("images/jpanel/Ö÷±³¾°.jpg");
 		pnlMain.setLayout(null);
+		
 		  txt_1=new JTextField(15);
+		  txt_1.setEditable(false);
 		  txt_2=new JComboBox();
 		  txt_3=new JComboBox();
 		  
@@ -254,7 +258,8 @@ public class VehucleaddDialog extends Dialog {
           
 		
 			public void mouseClicked(MouseEvent e) {			
-				btnsave_mouseaction(e);			
+				btnsave_mouseaction(e);
+				
 			}
 		    });
 		  btnExit=new JButton("ÍË³ö");
@@ -273,23 +278,29 @@ public class VehucleaddDialog extends Dialog {
 
 
 	protected void btnsave_mouseaction(MouseEvent e) {
-		int id=Integer.parseInt(this.txt_1.getText().trim());		
-		BicycleState state = (BicycleState) this.txt_2.getSelectedItem();
-		BicycleType type = (BicycleType) this.txt_3.getSelectedItem();
-		String name=this.txt_4.getText().trim();
-		String descript=this.txt_5.getText().trim();
-		int price=Integer.parseInt(this.txt_6.getText().trim());
-		String factory=this.txt_7.getText().trim();
-		Bicycle b=new Bicycle();
-        b.setId(id);
-	    b.setBicycleState(state);
-		b.setType(type);
-		b.setName(name);
-		b.setDescript(descript);
-		b.setPrice(price);
-		b.setFactory(factory);
-		bdao.add(b);
-		this.psc.setTableDate(bdao.queryAll());
+				BicycleState state = (BicycleState) this.txt_2.getSelectedItem();
+				BicycleType type = (BicycleType) this.txt_3.getSelectedItem();
+				String name=this.txt_4.getText().trim();
+				String descript=this.txt_5.getText().trim();
+				if(this.txt_6.getText().trim().length()<=0)
+						{
+					       int price=0;
+						}
+				else
+				{
+				int price=Integer.parseInt(this.txt_6.getText().trim());
+				String factory=this.txt_7.getText().trim();
+				Bicycle b=new Bicycle();
+			    b.setBicycleState(state);
+				b.setType(type);
+				b.setName(name);
+				b.setDescript(descript);
+				b.setPrice(price);
+				b.setFactory(factory);
+				bdao.add(b);
+				VehucleaddDialog.this.dispose();
+				this.psc.setTableDate(bdao.queryAll());
+				}					
 	}
 
 

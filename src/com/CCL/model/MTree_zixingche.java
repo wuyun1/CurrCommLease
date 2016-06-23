@@ -33,7 +33,7 @@ public MTree_zixingche()
 		      DefaultMutableTreeNode childNode3 = new DefaultMutableTreeNode(
 		        "系统管理");
 		      DefaultMutableTreeNode childNode4 = new DefaultMutableTreeNode(
-		  	        "系统维护");
+		  	        "其它");
 		      DefaultMutableTreeNode childNode5 = new DefaultMutableTreeNode(
 		        "帮助");
 		      
@@ -57,11 +57,11 @@ public MTree_zixingche()
 						      childNode34.add(childNode341);
 						      childNode34.add(childNode342);
 						      childNode34.add(childNode343); 
-				      childNode3.add(childNode31);
-				      childNode3.add(childNode32);
-				      childNode3.add(childNode33);
-				      childNode3.add(childNode34);
-				      childNode3.add(childNode35);      
+//				      childNode3.add(childNode31);
+//				      childNode3.add(childNode32);
+//				      childNode3.add(childNode33);
+//				      childNode3.add(childNode34);
+//				      childNode3.add(childNode35);      
 		      
 		      rootNode.add(childNode1);
 		      rootNode.add(childNode2);

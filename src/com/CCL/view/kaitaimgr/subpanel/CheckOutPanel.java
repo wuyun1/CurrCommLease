@@ -1,5 +1,6 @@
 package com.CCL.view.kaitaimgr.subpanel;
 
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,10 +22,13 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.ListModel;
 import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListDataListener;
@@ -35,16 +41,6 @@ import com.CCL.beans.Bill;
 import com.CCL.beans.Order;
 import com.CCL.view.kaitaimgr.render.BicyclesMapRenderer;
 import com.CCL.view.kaitaimgr.service.KaiTaiService;
-import javax.swing.JList;
-import javax.swing.JTextArea;
-import javax.swing.ListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.AbstractListModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JSplitPane;
 
 public class CheckOutPanel extends JPanel {
 	/**
@@ -79,15 +75,19 @@ public class CheckOutPanel extends JPanel {
 
 		public void addRow(List<Order> orders2) {
 			for (Order order : orders2) {
+				Bill bill = KaiTaiService.getBillByOrder(order);
+				if(bill!=null) bills.put(order, bill);
 				addRow(order);
+				
 			}
 		}
 
 		public void addRow(Order order) {
 			if (!this.orders.contains(order)) {
 				this.orders.add(order);
+				Bill bill = bills.get(order);
 				this.addRow(new Object[] { false, order.getId(), order.getCustomer().getName(), order.getBicycles(),
-						order.getDeposit(), 0, order.getPutTime(), order.getStartTime(), order.getOrderState() });
+						order.getDeposit(),bill==null?0:bill.getTotal(), order.getPutTime(), order.getStartTime(), order.getOrderState() });
 			}
 		}
 
@@ -125,6 +125,10 @@ public class CheckOutPanel extends JPanel {
 				try {
 					if ("正在进行".equals(getStateByRowNum(i))) {
 						fireTableCellUpdated(i, 7);
+						Order order = orders.get(i);
+						if(KaiTaiService.smsNotice(order)>=1){
+							JOptionPane.showMessageDialog(null, order.getCustomer().getName()+"的订单已到通知时间,已发出通知短信");
+						}
 					}
 				} catch (Exception e) {
 
@@ -457,6 +461,11 @@ public class CheckOutPanel extends JPanel {
 	// }
 
 	class SpendDateTableCellRenderer extends JLabel implements TableCellRenderer {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3349502807916010915L;
+
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
 			if (value == null || "准备就绪".equals(dataModel.getStateByRowNum(row))) {
@@ -472,6 +481,7 @@ public class CheckOutPanel extends JPanel {
 			}
 			Date d2 = date;
 			long diff = d1.getTime() - d2.getTime();// 这样得到的差值是微秒级别
+			
 			long days = diff / (1000 * 60 * 60 * 24);
 
 			int hours = (int) ((diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

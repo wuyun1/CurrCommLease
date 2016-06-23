@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -48,20 +47,23 @@ import com.CCL.panel.MPanel;
 import com.CCL.panel.MemberManagePanel;
 import com.CCL.panel.ProgressPanel;
 import com.CCL.panel.SmallScrollPanel;
-import com.CCL.panel.glj.AddPanel;
-import com.CCL.panel.glj.MenuPanel;
-import com.CCL.panel.glj.RiYinYeSelect;
-import com.CCL.panel.glj.ShouFeiSet;
-import com.CCL.panel.glj.ZheKouSet;
+import com.CCL.panel.glj.qita.Other;
+import com.CCL.panel.glj.xitongguanli.XiTongMgr;
+import com.CCL.panel.glj.xitongguanli.son.AddPanel;
+import com.CCL.panel.glj.xitongguanli.son.MenuPanel;
+import com.CCL.panel.glj.xitongguanli.son.RiYinYeSelect;
+import com.CCL.panel.glj.xitongguanli.son.ShouFeiSet;
+import com.CCL.panel.glj.xitongguanli.son.ZheKouSet;
 import com.CCL.panel.mlf.Panel_setvehicle;
+import com.CCL.util.mlf.PublicDate;
 import com.CCL.view.huiyuan.VipManager;
 import com.CCL.view.kaitaimgr.KaiTaiMgr;
 import com.CCL.view.other.OtherManager;
 
 
 public class MainFrame extends JFrame {
-	private final static int WIDTH=1366;//(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()-20;
-	private final static int HEIGTH=748;//(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-80;
+	private final static int WIDTH=1346;//(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()-20;
+	private final static int HEIGTH=688;//(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-80;
 	
 	private JSplitPane SpaneA,SpaneA2;
 	private JPanel paneA1,paneA2,paneA2a,paneA2b;
@@ -82,7 +84,7 @@ public class MainFrame extends JFrame {
 	private SmallScrollPanel smallPanel;//移动面板
 	/////////////////////////////////////////////////
 	private BGPanel backPanel;
-	private JLabel fristLabel = new JLabel("");
+	private JLabel fristLabel;
 	private SmallScrollPanel moduleButtonGroup = null;
 	private BGPanel jPanel = null;
 	private ButtonGroup buttonGroup = null;
@@ -97,7 +99,7 @@ public class MainFrame extends JFrame {
 	private  JPanel panel;
 	private final JPanel sellPanel = new JPanel();
 	private MButton btn_exit,btn_zuida,btn_help;
-	
+	private MJLable mainR;
 	private MenuPanel menuPanel;
 	private JFrame frame ;
 	 private JTree zixingchetree,fuzhuangtree;
@@ -118,7 +120,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void initCom() throws MalformedURLException {
-		
+		fristLabel = new JLabel("");
 		whoShown = "主窗体";
 		
 		 panel_1 = new JPanel();
@@ -145,7 +147,7 @@ public class MainFrame extends JFrame {
 		
 		paneA2a = new JPanel();
 		paneA2b = new MPanel("images/背景down.jpg");/////////////////////////////////////////////////////////
-		MJLable mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
+	    mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
 		mainR.setBounds(780, 340, 300, 300);
 		paneA2b.add(mainR);
 		
@@ -178,7 +180,7 @@ public class MainFrame extends JFrame {
 		//以下是向SpaneA2a添加日历
 		JLabel label = new JLabel();
         //label.setBounds(70, 10, 80,90);
-        CalenderPanel CalPanel = new CalenderPanel(label);
+        CalenderPanel CalPanel = new CalenderPanel(label,this);
         String info = "<html><body><font color=#FFFFFF>你 好：</font><font color=yellow><b>" + 
         	      "admin" + "</b></font>" + 
         	      "<font color=#FFFFFF>                欢 迎 登 录</font>" + "</body></html>";
@@ -195,7 +197,7 @@ public class MainFrame extends JFrame {
 		SpaneA2a.setRightComponent(CalPanel);
 		SpaneA2a.setOrientation(JSplitPane.VERTICAL_SPLIT);//设置为水平分隔
 		SpaneA2a.setDividerSize(3);//设置分割条大小
-		SpaneA2a.setDividerLocation(340);
+		SpaneA2a.setDividerLocation(360);
 		SpaneA2a.setEnabled(false);//设置分割线不可移动
 		
 		SpaneA2.setOneTouchExpandable(true);//是分隔面板的分隔条显示出箭头
@@ -247,7 +249,7 @@ public class MainFrame extends JFrame {
 	    return this.moduleButtonGroup;
 	  }/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//paneA2b右下角面板
-	private BGPanel getZixingCheContentPanel(String title,JFrame frame)
+	public BGPanel getZixingCheContentPanel(String title,JFrame frame)
 	  {
 	    
 	      this.backPanel = new BGPanel();
@@ -335,7 +337,9 @@ public class MainFrame extends JFrame {
 			String command = e.getActionCommand();
 			if(command.equals("关闭"))
 			{
-				
+				paneA2b.removeAll();
+				paneA2b.add(mainR);
+				paneA2b.repaint();
 			}
 			else if (command.equals("帮助"))
 			{
@@ -354,7 +358,6 @@ public class MainFrame extends JFrame {
 		            public void windowClosing(WindowEvent e)  
 		            { 
 		            	mainFrame.setWhoShown("主窗体");
-//		            	MainFrame.this.getBtn_help().setBounds(1046, 15, 24, 24);
 		            	MainFrame.this.getBtn_help().setBounds(980, 15, 24, 24);
 						MainFrame.this.getMenuPanel().setBounds(779, 7, 240, 40);
 						MainFrame.this.getMenuPanel().getBtn_fanhui().setBounds(181, 5, 65, 30);
@@ -415,10 +418,8 @@ public class MainFrame extends JFrame {
 
 	      MTree_zixingche zixingche= new MTree_zixingche();
 		this.zixingchetree = zixingche.getTree();//添加自行车tree
-//	      scrollPane_1.setColumnHeaderView(this.zixingchetree);
 		
 		 JScrollPane scrollPane_1 = new JScrollPane(this.zixingchetree);
-//		  scrollPane_1.setLayout(null);
 		  scrollPane_1.setBounds(0,0, 168, 520);
 		  scrollPane_1.setOpaque(false);
 	      this.panel.add(scrollPane_1);
@@ -441,10 +442,9 @@ public class MainFrame extends JFrame {
 		            {
 		            	MainFrame.this.fristLabel.setText(userObject);
 		              sellPanel.removeAll();
-		              if(frame_name.equals("小窗体"))
+		              if(whoShown.equals("小窗体"))
 		            	{
-		            	  
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            }
 		            else if (userObject.equals("前台收银管理"))
@@ -456,9 +456,9 @@ public class MainFrame extends JFrame {
 		              kaiTaiPanel.setBounds(0, 0,910, 520);
 		              sellPanel.add(kaiTaiPanel);//                                       这里加功能窗口（替换new ProgressPanel()）
 		          
-		              if(frame_name.equals("小窗体"))
+		              if(whoShown.equals("小窗体"))
 		            	{
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            }
 		            else if (userObject.equals("会员卡管理"))
@@ -470,113 +470,37 @@ public class MainFrame extends JFrame {
 		              vipManager.setBounds(0, 0, 910, 520);
 		               sellPanel.add(vipManager);
 		          
-		               if(frame_name.equals("小窗体"))
+		               if(whoShown.equals("小窗体"))
 		            	{
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            }//系统管理、、、、、、、、、、、、、、、、、、、、、、
-		            else if (userObject.equals("收费设置"))
+		            else if (userObject.equals("系统管理"))
 		            {
 		            	MainFrame.this.fristLabel.setText(userObject);
 		            	sellPanel.setLayout(null);
 		              sellPanel.removeAll();
-		              System.out.println("小窗体r");
-		              ShouFeiSet shouFeiSet = new ShouFeiSet("",sellPanel);
+		              XiTongMgr shouFeiSet = new XiTongMgr(sellPanel);
 		              shouFeiSet.setBounds(0, 0,910, 520);
 		             sellPanel.add(shouFeiSet);//                                       这里加功能窗口（替换new ProgressPanel()）
-		            
-		             System.out.println(frame_name);
-		             if(frame_name.equals("小窗体"))
+		             if(whoShown.equals("小窗体"))
 		            	{
-		            	 System.out.println("小窗体repaaint");
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            }
-		            else if (userObject.equals("折扣设置"))
-		            {
-		            	
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		             sellPanel.add(new ZheKouSet("images/glj/shoufei/72.jpg"));//                                       这里加功能窗口（替换new ProgressPanel()）
-		             
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }else if (userObject.equals("换班"))
+		            else if (userObject.equals("其它"))
 		            {
 		            	MainFrame.this.fristLabel.setText(userObject);
 		            	sellPanel.setLayout(null);
 		              sellPanel.removeAll();
-		             sellPanel.add(new ProgressPanel());//                                       这里加功能窗口（替换new ProgressPanel()）
-		           
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }//系统管理---账单管理
-		            else if (userObject.equals("日营业查询"))
-		            {
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		             sellPanel.add(new RiYinYeSelect(""));//                                       这里加功能窗口（替换new ProgressPanel()）
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }else if (userObject.equals("账单明细"))
-		            {
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		             sellPanel.add(new ProgressPanel());//                                       这里加功能窗口（替换new ProgressPanel()）
-		            
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }else if (userObject.equals("销售分析"))
-		            {
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		             sellPanel.add(new ProgressPanel());//                                       这里加功能窗口（替换new ProgressPanel()）
-		           
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }//系统管理---车辆管理
-		            else if (userObject.equals("车辆管理"))
-		            { 
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		              Panel_setvehicle panel_setvehicle = new Panel_setvehicle();
-		              panel_setvehicle.setBounds(0, 0, 800, 500);
-		             sellPanel.add(panel_setvehicle);//                                       这里加功能窗口（替换new ProgressPanel()）
-//		             sellPanel.repaint();
-		           
-		             if(frame_name.equals("小窗体"))
-		            	{
-		            	 frame.repaint();
-		            	}
-		            }
-		            else if (userObject.equals("系统维护"))
-		            {
-		            	MainFrame.this.fristLabel.setText(userObject);
-		            	sellPanel.setLayout(null);
-		              sellPanel.removeAll();
-		              OtherManager otherManager =new OtherManager();
-		              otherManager.setBounds(0, 0, 800, 500);
+		              Other otherManager =new Other();
+		              otherManager.setBounds(0, 0, 900, 500);
 		               sellPanel.add(otherManager);//                                       这里加功能窗口（替换new ProgressPanel()）
 //		              MainFrame.this.repaint();
 		           
-		               if(frame_name.equals("小窗体"))
+		               if(whoShown.equals("小窗体"))
 		            	{
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            } else if (userObject.equals("帮助"))
 		            {
@@ -585,9 +509,9 @@ public class MainFrame extends JFrame {
 		              sellPanel.add(new ProgressPanel());
 		              MainFrame.this.repaint();
 		            
-		              if(frame_name.equals("小窗体"))
+		              if(whoShown.equals("小窗体"))
 		            	{
-		            	 frame.repaint();
+		            	 MainFrame.this.getFrame().repaint();
 		            	}
 		            }
 		          }
@@ -794,10 +718,12 @@ public class MainFrame extends JFrame {
 	      this.zixingchebtn = new GlassButton();
 	      this.zixingchebtn.setActionCommand("自行车");
 	      this.zixingchebtn.setToolTipText("自行车租赁");
-	      ImageIcon icon = new ImageIcon("images\\MJBtn\\自行车.png");
+	      ImageIcon icon = new ImageIcon(
+	        "images/MJBtn/自行车.png");
 	      this.zixingchebtn.setSelectedIcon(icon);
 	      this.zixingchebtn.setRolloverIcon(icon);
-	      this.zixingchebtn.setIcon(new ImageIcon("images\\MJBtn\\自行车.png"));
+	      this.zixingchebtn.setIcon(new ImageIcon(
+	        "images/MJBtn/自行车.png"));
 	      this.zixingchebtn.addActionListener(new toolsButtonActionAdapter());
 	    }
 	    return this.zixingchebtn;
@@ -925,8 +851,8 @@ public class MainFrame extends JFrame {
 		    	  MainFrame.this.backPanel.add(MainFrame.this.label_1);
 		    	  MainFrame.this.fristLabel.setBounds(133, 38, 123, 15);
 		          MainFrame.this.backPanel.add(MainFrame.this.fristLabel);
-		          MJLable mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
-			  	  mainR.setBounds(780, 340, 300, 300);
+//		          MJLable mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
+//			  	  mainR.setBounds(780, 340, 300, 300);
 //			   	  MainFrame.this.paneA2b.add(mainR);
 		          MainFrame.this.paneA2b.add(getZixingCheContentPanel("自行车",MainFrame.this));//重新加入要显示的面板y
 		          MainFrame.this.fristLabel.setText(backpaneltitle);
@@ -1025,7 +951,6 @@ public class MainFrame extends JFrame {
 			}
 
 		public void actionPerformed(WindowEvent e) {
-			System.out.println("fgfdfdggfg");
 			setVisible(true);
 			toFront();
 					
@@ -1112,11 +1037,25 @@ public class MainFrame extends JFrame {
 			this.whoShown = whoShown;
 		}
 
+	public MJLable getMainR() {
+			return mainR;
+		}
+
+		public void setMainR(MJLable mainR) {
+			this.mainR = mainR;
+		}
+
+	public BGPanel getBackPanel() {
+			return backPanel;
+		}
+
+		public void setBackPanel(BGPanel backPanel) {
+			this.backPanel = backPanel;
+		}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
-		
+
 		try {
 			MainFrame mainFrame =new MainFrame();
 			mainFrame.setResizable(false);

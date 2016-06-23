@@ -1,4 +1,4 @@
-package com.CCL.panel.glj;
+package com.CCL.panel.glj.xitongguanli.son;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -121,8 +121,8 @@ public class ShouFeiSet extends MPanel {
 
 	class ActionListener_btn implements ActionListener {
 		private ShouFeiSet shouFeiSet;
-		com.CCL.panel.glj.FixedColumnTablePanel.MTable fixedColumnTable;
-		com.CCL.panel.glj.FixedColumnTablePanel.MTable floatingColumnTable;
+		com.CCL.panel.glj.xitongguanli.son.FixedColumnTablePanel.MTable fixedColumnTable;
+		com.CCL.panel.glj.xitongguanli.son.FixedColumnTablePanel.MTable floatingColumnTable;
 
 		public ActionListener_btn(ShouFeiSet shouFeiSet) {
 
@@ -137,7 +137,6 @@ public class ShouFeiSet extends MPanel {
 			floatingColumnTable = shouFeiSet.getShouFeiTablePanel()
 					.getFixedColumnTable();
 			if (actioncommand.equals("Ôö¼Ó")) {
-				System.out.println("zhengja");
 				xuhao = floatingColumnTable.getRowCount() + 1;
 				row2 = new Vector<Object>();
 				row2.add(xuhao);

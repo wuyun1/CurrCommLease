@@ -1,4 +1,4 @@
-package com.CCL.panel.glj;
+package com.CCL.panel.glj.xitongguanli.son;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
 import com.CCL.beans.Bicycle;
 import com.CCL.beans.BicycleType;
@@ -15,7 +16,7 @@ import com.CCL.mwing.MJLable;
 import com.CCL.mwing.glj.ButtonRenderer;
 import com.CCL.mwing.glj.MButton;
 import com.CCL.panel.MPanel;
-import com.CCL.panel.glj.ShouFeiSet.ActionListener_btn;
+import com.CCL.panel.glj.xitongguanli.son.ShouFeiSet.ActionListener_btn;
 import com.CCL.service.glj.ZheKouSetService;
 
 public class ZheKouSet extends MPanel {
@@ -25,11 +26,11 @@ public class ZheKouSet extends MPanel {
 	private Vector<Vector<Object>> tableValueV;// 表格数据
 	private MJLable lbl_left;
 	private ZheKouSetService zheKouSetService;
-
-	public ZheKouSet(String imageUrl) {
+	private JPanel sellPanel;
+	public ZheKouSet(String imageUrl, JPanel sellPanel) {
 		super(imageUrl);
 		this.zheKouSetService = new ZheKouSetService();
-
+		this.sellPanel = sellPanel;
 		this.setSize(920, 520);
 		this.setLayout(null);
 		this.setVisible(true);
@@ -99,8 +100,8 @@ public class ZheKouSet extends MPanel {
 	class ActionListener_btn implements ActionListener {
 
 		private ZheKouSet zheKouSet;
-		com.CCL.panel.glj.FixedColumnTablePanel.MTable fixedColumnTable;
-		com.CCL.panel.glj.FixedColumnTablePanel.MTable floatingColumnTable;
+		com.CCL.panel.glj.xitongguanli.son.FixedColumnTablePanel.MTable fixedColumnTable;
+		com.CCL.panel.glj.xitongguanli.son.FixedColumnTablePanel.MTable floatingColumnTable;
 		ZheKouSet_Add zheKouSet_Add = null;
 
 		public ActionListener_btn(ZheKouSet zheKouSet) {
@@ -198,7 +199,8 @@ public class ZheKouSet extends MPanel {
 				zheKouSet.repaint();
 
 			} else if (actioncommand.equals("退出")) {
-
+				sellPanel.removeAll();
+				sellPanel.repaint();
 			}
 
 		}

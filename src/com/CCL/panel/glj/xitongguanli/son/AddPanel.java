@@ -4,7 +4,7 @@
  * Created on __DATE__, __TIME__
  */
 
-package com.CCL.panel.glj;
+package com.CCL.panel.glj.xitongguanli.son;
 
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
@@ -455,17 +455,18 @@ public final class AddPanel extends MPanel {
 					Bicycle bicycle = AddPanel.this.getShouFeiSet()
 							.getShouFeiSetService().get(id);// new Bicycle();
 					// bicycle.setName(name);
-					// bicycle.setBicycleType(bstatye);
+					 bicycle.setIsShow(true);
 					bicycle.setPrice(Integer.valueOf(price));
 					bicycle.setBaseTime(Integer.valueOf(basetime));
 					bicycle.setChargeTime(Integer.valueOf(chargetime));
 					bicycle.setOverTimePrice(Integer.valueOf(overtimeRMB));
-					bicycle.setIsJiFen(jifen==1);
-					bicycle.setIsDaZhe(dazhe==1);
-
+					bicycle.setIsJiFen(Integer.valueOf(jifen));
+					bicycle.setIsDaZhe(Integer.valueOf(dazhe));
+System.out.println(bicycle.getName());
 					if (shouFeiSet.getShouFeiSetService().update(bicycle)) {
 						addDialogList.dispose();//关闭AddDialogList
 						addDialog.dispose();
+						System.out.println("chenggong");
 					}
 					shouFeiSet.getShouFeiSetService().getAllBicycle();
 					Vector<Vector<Object>> tableValueV = shouFeiSet.getShouFeiSetService().getAllBicycle(); // 重新读取数据库值;

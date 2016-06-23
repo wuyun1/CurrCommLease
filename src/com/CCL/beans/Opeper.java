@@ -38,8 +38,10 @@ public class Opeper {
 	private int dataBackup=1;
 	//短息提醒
 	private int messageTel=1;
-	
-	
+	//日营业查询
+	private int tradingQuery = 1;
+	//账单明细查询
+	private int billDetails = 1;
 	
 	
 	public Opeper() {
@@ -203,10 +205,28 @@ public class Opeper {
 			return false;
 		return true;
 	}
+	
+	
+
+	public int getTradingQuery() {
+		return tradingQuery;
+	}
+
+	public void setTradingQuery(int tradingQuery) {
+		this.tradingQuery = tradingQuery;
+	}
+
+	public int getBillDetails() {
+		return billDetails;
+	}
+
+	public void setBillDetails(int billDetails) {
+		this.billDetails = billDetails;
+	}
 
 	public Opeper(OpeUser opeUser, int toChange, int billPrint, int pointsFor, int upgrade, int reCard, int cardTopup,
 			int moneyQuery, int reInfo, int reCordQuery, int chargingSet, int discountSet, int carManager,
-			int dataBackup, int messageTel) {
+			int dataBackup, int messageTel, int tradingQuery, int billDetails) {
 		super();
 		this.opeUser = opeUser;
 		this.toChange = toChange;
@@ -223,7 +243,10 @@ public class Opeper {
 		this.carManager = carManager;
 		this.dataBackup = dataBackup;
 		this.messageTel = messageTel;
+		this.tradingQuery = tradingQuery;
+		this.billDetails = billDetails;
 	}
+
 
 	
 	

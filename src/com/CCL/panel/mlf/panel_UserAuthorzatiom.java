@@ -6,6 +6,8 @@
 
 package com.CCL.panel.mlf;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
@@ -14,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -28,7 +31,9 @@ import com.CCL.Dao.impl.OpeperDaoImpl;
 import com.CCL.beans.OpeUser;
 import com.CCL.beans.Opeper;
 import com.CCL.service.mlf.opeper_service;
+import com.CCL.service.mlf.opeuser_service;
 import com.CCL.util.mlf.PublicDate;
+import com.CCL.view.huiyuan.service.CustomerTypeService;
 
 /**
  *
@@ -38,21 +43,41 @@ public class panel_UserAuthorzatiom extends javax.swing.JPanel {
 
 	private OpeUser Ouser;
 	private opeper_service opservice;
-	private OpeUserDao opusedao;
+	private  OpeUserDao opusedao;
 	private OpeperDao opedao;
 	private Opeper op;
     private   opeper_service opeservice;
-    private static String major = null;
+    private static String major =null;
     
 	public panel_UserAuthorzatiom() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				updateTypeList();
+			}
+		});
 		op = new Opeper();
 		opedao = new OpeperDaoImpl();
 		Ouser = PublicDate.getOuser();
 		opservice = new opeper_service();
 		opusedao = new OpeUserDaoImpl();
 		 opeservice=new opeper_service();
+	
 		initComponents();
 
+	}
+
+	protected void updateTypeList() {
+		jComboBox1.removeAllItems();
+		List<OpeUser> user=opusedao.queryAll();
+		for (OpeUser u : user) {
+
+			jComboBox1.addItem(u);// 添加管理员
+			op=opedao.get(Ouser.getId());
+			Ouser=(OpeUser)jComboBox1.getSelectedItem();
+			txt_name.setText(Ouser.getUserName());
+			jList_current.setListData(opeservice.readQuanXian(op,1));
+		}		
 	}
 
 	/** This method is called from within the constructor to
@@ -96,18 +121,10 @@ jScrollPane1.setViewportView(jList_major);
 
 add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 140, 470));
 
-List<OpeUser> user=opusedao.queryAll();
-for (OpeUser u : user) {
-
-	jComboBox1.addItem(u);// 添加管理员
-};
-Ouser=(OpeUser)jComboBox1.getSelectedItem();
-op=opedao.get(Ouser.getId());
-txt_name.setText(Ouser.getUserName());
-jList_current.setListData(opeservice.readQuanXian(op,1));
 panel_UserAuthorzatiom.this.repaint();
 ///////////////////
 jList_major.setSelectedIndex(0);
+major=(String)jList_major.getSelectedValue();
 jList_major.addMouseListener(new MouseAdapter() {
 	  
 	public void mouseClicked(MouseEvent e) {
@@ -125,6 +142,15 @@ jScrollPane2.setViewportView(jList_small);
 
 add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 470));
 
+jList_small.addMouseListener(new MouseAdapter() {
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	 if(e.getClickCount()==2)
+	 {
+		 btngrantright_MouseAction(e);
+	 }
+	}
+});
 lbl_majorfuction.setText("\u4e3b\u8981\u529f\u80fd");
 add(lbl_majorfuction, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
@@ -146,10 +172,9 @@ add(btn_grantright, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 
 btn_grantright.addMouseListener(new MouseAdapter() {
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount()==2)			
-		{  
+	  
               btngrantright_MouseAction(e);
-		}
+		
 	}
 });
 
@@ -212,19 +237,29 @@ jComboBox1.addItemListener(new ItemListener() {
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Ouser=(OpeUser)jComboBox1.getSelectedItem();
-		op=opedao.get(Ouser.getId());
-		txt_name.setText(Ouser.getUserName());
-		jList_current.setListData(opeservice.readQuanXian(op,1));
-		////////////////////////////////////
-		jList_small.setListData(opservice.readQuanxian_vctor(op,(jList_major.getSelectedValue()).toString(),0));
-				jList_small.repaint();
-			
-		panel_UserAuthorzatiom.this.repaint();
+		if(jComboBox1.getSelectedIndex()<0)
+		{
+//			JOptionPane.showMessageDialog(null, "请选择设置权限的管理员");
+			return;
+		}
+		else
+		{
+			Ouser=(OpeUser)jComboBox1.getSelectedItem();
+			op=opedao.get(Ouser.getId());
+			txt_name.setText(Ouser.getUserName());
+			jList_current.setListData(opeservice.readQuanXian(op,1));
+			////////////////////////////////////
+			jList_small.setListData(opservice.readQuanxian_vctor(op,(jList_major.getSelectedValue()).toString(),0));
+					jList_small.repaint();
+				
+			panel_UserAuthorzatiom.this.repaint();
+		}
+		
 	}
 });
 
 	}// </editor-fold>
+
 
 	protected void btnallremove_MouseAction(MouseEvent e) {
 		int i=jList_current.getLastVisibleIndex();

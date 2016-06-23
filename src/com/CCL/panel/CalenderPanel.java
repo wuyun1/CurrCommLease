@@ -27,6 +27,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+import com.CCL.mwing.MJLable;
+import com.CCL.panel.glj.xitongguanli.son.RiYinYeSelect;
+import com.CCL.view.MainFrame;
+
 
 
 public class CalenderPanel extends JPanel{
@@ -53,11 +57,14 @@ public class CalenderPanel extends JPanel{
 	private int startDAY  = defaultStartDAY;
 	private Date date = new Date();
 	private String format =DEFAULTFORMAT;
-	
-	
+	private MainFrame mainFrame;
+	private JPanel paneA2b,sellpanel;
     
-    public CalenderPanel(JComponent showDate) throws MalformedURLException {
+    public CalenderPanel(JComponent showDate, MainFrame mainFrame) throws MalformedURLException {
     	this.showDate = showDate;
+    	this.mainFrame = mainFrame;
+    	this.paneA2b = mainFrame.getPaneA2b();
+    	this.sellpanel = mainFrame.getSellPanel();
     	this.setLayout(new BorderLayout());
     	
     	if(startDAY > -1 && startDAY < 7) 
@@ -401,8 +408,53 @@ public class CalenderPanel extends JPanel{
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			
-//			System.out.println(day);/////////////////////////////////日历事件
+			if (e.getClickCount() == 2) {// 处理鼠标双击
+
+				if(!mainFrame.getBackPanel().getName().equals("自行车"))
+				{
+					paneA2b.removeAll();
+			     	  sellpanel.removeAll();
+			     	 RiYinYeSelect riYinYeSelect = new RiYinYeSelect("",sellpanel);
+			     	 riYinYeSelect.getTxt_stime().setText("0000");
+			     	 riYinYeSelect.getTxt_etime().setText("11100");
+			     	 sellpanel.add(riYinYeSelect);
+			    	  mainFrame.getBackPanel().add(mainFrame.getLabel_1());
+			    	  mainFrame.getFristLabel().setBounds(133, 38, 123, 15);
+			    	  mainFrame.getBackPanel().add( mainFrame.getFristLabel());
+			          MJLable mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
+				  	  mainR.setBounds(780, 340, 300, 300);
+			          paneA2b.add(mainFrame.getZixingCheContentPanel("自行车",mainFrame));//重新加入要显示的面板
+			          mainFrame.getFristLabel().setText("自行车");                          //固定死数据。显示自行车的标题
+				}else{
+					 sellpanel.removeAll();
+					 RiYinYeSelect riYinYeSelect = new RiYinYeSelect("",sellpanel);
+			     	 riYinYeSelect.getTxt_stime().setText("0000");
+			     	 riYinYeSelect.getTxt_etime().setText("11100");
+			     	 sellpanel.add(riYinYeSelect);
+			     	mainFrame.getFristLabel().setText("日营业查询");
+				}
+//				  paneA2b.removeAll();
+//		     	  sellpanel.removeAll();
+//		     	 RiYinYeSelect riYinYeSelect = new RiYinYeSelect("",sellpanel);
+//		     	 riYinYeSelect.getTxt_stime().setText("0000");
+//		     	 riYinYeSelect.getTxt_etime().setText("11100");
+//		     	 sellpanel.add(riYinYeSelect);
+//		    	  mainFrame.getBackPanel().add(mainFrame.getLabel_1());
+//		    	  mainFrame.getFristLabel().setBounds(133, 38, 123, 15);
+//		    	  mainFrame.getBackPanel().add( mainFrame.getFristLabel());
+//		          MJLable mainR = new MJLable("images/beijin_r_lbl_end.gif", 300, 300);
+//			  	  mainR.setBounds(780, 340, 300, 300);
+//		          paneA2b.add(mainFrame.getZixingCheContentPanel("自行车",mainFrame));//重新加入要显示的面板
+//		          mainFrame.getFristLabel().setText("自行车");                          //固定死数据。显示自行车的标题
+//		          
+		          mainFrame.repaint();
+				
+
+				} else if (e.isMetaDown()) {//检测鼠标右键单击
+					System.out.println("右键");
+				}
+
+			System.out.println(day);/////////////////////////////////日历事件
 		}
 
 		public void mousePressed(MouseEvent e) {

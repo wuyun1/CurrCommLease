@@ -25,9 +25,9 @@ public class Bicycle {
 	// 厂商
 	private String factory;
 	// 是否打折
-	private Boolean isDaZhe = true;
+	private Integer isDaZhe = 1;
 	// 是否参加积分
-	private Boolean isJiFen = true;
+	private Integer isJiFen = 1;
 
 	private Integer baseTime;
 	
@@ -75,7 +75,7 @@ public class Bicycle {
 	}
 	
 	public Bicycle(BicycleState state, BicycleType type, String name, String descript, Integer price, Integer inventory,
-			String factory, Boolean isDaZhe, Boolean isJiFen, Integer baseTime, Integer chargeTime,
+			String factory, Integer isDaZhe, Integer isJiFen, Integer baseTime, Integer chargeTime,
 			Integer overTimePrice) {
 		super();
 		this.state = state;
@@ -99,19 +99,19 @@ public class Bicycle {
 		this.id = id;
 	}
 
-	public Boolean getIsDaZhe() {
+	public Integer getIsDaZhe() {
 		return isDaZhe;
 	}
 
-	public void setIsDaZhe(Boolean isDaZhe) {
+	public void setIsDaZhe(Integer isDaZhe) {
 		this.isDaZhe = isDaZhe;
 	}
 
-	public Boolean getIsJiFen() {
+	public Integer getIsJiFen() {
 		return isJiFen;
 	}
 
-	public void setIsJiFen(Boolean isJiFen) {
+	public void setIsJiFen(Integer isJiFen) {
 		this.isJiFen = isJiFen;
 	}
 
